@@ -2,4 +2,14 @@
 
 The ScalaTion Analytics Ontology
 
-Contributors: Michael Cotterell, Mustafa Nural
+### Description
+
+
+### Other Ontologies Used
+
+ * [DCMI Metadata Terms](http://dublincore.org/documents/dcmi-terms/)
+
+### Contributors
+
+ * Michael E. Cotterell
+ * Mustafa Nural
