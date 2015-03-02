@@ -4,6 +4,9 @@ The ScalaTion Analytics Ontology
 
 ### Description
 
+### Download
+
+ * Latest stable release: [analytics.owl](https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl)
 
 ### Other Ontologies Used
 
