@@ -440,7 +440,9 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Identity_Function -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Identity_Function">
+        <rdfs:label xml:lang="en">Identity Function</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Function"/>
+        <terms:description xml:lang="en">The identity function, given a number x, returns x (the identity).</terms:description>
     </owl:Class>
     
 
@@ -458,7 +460,9 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Inverse_Function -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Inverse_Function">
+        <rdfs:label xml:lang="en">Inverse Function</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Function"/>
+        <terms:description xml:lang="en">The inverse function is a function that reverses another function.</terms:description>
     </owl:Class>
     
 
@@ -466,7 +470,10 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Log_Function -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Log_Function">
+        <rdfs:label xml:lang="en">Log Function</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Function"/>
+        <terms:alternative xml:lang="en">Natural Log Function</terms:alternative>
+        <terms:description xml:lang="en">The natural logarithm function, given a number x, produces a result y such that x = exp(y).</terms:description>
     </owl:Class>
     
 
@@ -514,7 +521,9 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Logit_Function -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Logit_Function">
+        <rdfs:label xml:lang="en">Logit Function</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Function"/>
+        <terms:description xml:lang="en">The logit function is the inverse of the logistic transform.</terms:description>
     </owl:Class>
     
 
@@ -731,7 +740,9 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Reciprocal_Function -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Reciprocal_Function">
+        <rdfs:label xml:lang="en">Reciprocal Function</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Function"/>
+        <terms:description xml:lang="en">The reciprocal function, given a number x, returns 1/x (i.e., the reciprocal).</terms:description>
     </owl:Class>
     
 
@@ -767,7 +778,9 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Square_Root_Function -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Square_Root_Function">
+        <rdfs:label xml:lang="en">Square Root Function</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Function"/>
+        <terms:description xml:lang="en">The square root function, given a number x, returns a value y such that y * y = x. In most cases, this function produces a positive value. If the input to the function is a negative number, then the function produces a complex number.</terms:description>
     </owl:Class>
     
 
