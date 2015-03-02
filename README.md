@@ -1,2 +1,3 @@
-# analytics
-ScalaTion Analytics Ontology
+# Analytics Ontology
+
+The ScalaTion Analytics Ontology
