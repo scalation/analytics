@@ -62,6 +62,12 @@
     
 
 
+    <!-- http://purl.org/dc/terms/source -->
+
+    <owl:AnnotationProperty rdf:about="&terms;source"/>
+    
+
+
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
@@ -287,7 +293,7 @@ iii) On each trial, the probability of success is p and the probability of failu
     <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Exponential_Family">
         <rdfs:label xml:lang="en">Exponential Family</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Distribution"/>
-        <rdfs:seeAlso xml:lang="en">FISHER, R. A. (1934). Two new properties of mathematical likelihood. Proceedings of the Royal Society A, 144, 285-307.</rdfs:seeAlso>
+        <terms:source xml:lang="en">FISHER, R. A. (1934). Two new properties of mathematical likelihood. Proceedings of the Royal Society A, 144, 285-307.</terms:source>
         <rdfs:comment xml:lang="en">The exponential family of distributions is the set of probability distributions whose probaility distribution functions (PDFs) and cumulative distribution functions (CDFs) can be written such that their terms are moved to the exponent (often called the canonical form.</rdfs:comment>
     </owl:Class>
     
@@ -331,7 +337,7 @@ iii) On each trial, the probability of success is p and the probability of failu
                     </owl:Restriction>
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasLinkFunction"/>
-                        <owl:onClass rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Log"/>
+                        <owl:onClass rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Log_Function"/>
                         <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
                     </owl:Restriction>
                 </owl:intersectionOf>
@@ -385,7 +391,7 @@ iii) On each trial, the probability of success is p and the probability of failu
                     <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GLM"/>
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasLinkFunction"/>
-                        <owl:onClass rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Identity"/>
+                        <owl:onClass rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Identity_Function"/>
                         <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
                     </owl:Restriction>
                 </owl:intersectionOf>
@@ -431,10 +437,12 @@ iii) On each trial, the probability of success is p and the probability of failu
     
 
 
-    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Identity -->
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Identity_Function -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Identity">
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Identity_Function">
+        <rdfs:label xml:lang="en">Identity Function</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Function"/>
+        <terms:description xml:lang="en">The identity function, given a number x, returns x (the identity).</terms:description>
     </owl:Class>
     
 
@@ -442,23 +450,30 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Integer -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Integer">
+        <rdfs:label xml:lang="en">Integer</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Discrete"/>
+        <terms:description xml:lang="en">A variable with an integer variable type generally denotes that the domain of discourse for the variable is the set of integer numbers.</terms:description>
     </owl:Class>
     
 
 
-    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Inverse -->
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Inverse_Function -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Inverse">
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Inverse_Function">
+        <rdfs:label xml:lang="en">Inverse Function</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Function"/>
+        <terms:description xml:lang="en">The inverse function is a function that reverses another function.</terms:description>
     </owl:Class>
     
 
 
-    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Log -->
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Log_Function -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Log">
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Log_Function">
+        <rdfs:label xml:lang="en">Log Function</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Function"/>
+        <terms:alternative xml:lang="en">Natural Log Function</terms:alternative>
+        <terms:description xml:lang="en">The natural logarithm function, given a number x, produces a result y such that x = exp(y).</terms:description>
     </owl:Class>
     
 
@@ -481,7 +496,7 @@ iii) On each trial, the probability of success is p and the probability of failu
                     </owl:Restriction>
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasLinkFunction"/>
-                        <owl:onClass rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Logit"/>
+                        <owl:onClass rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Logit_Function"/>
                         <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
                     </owl:Restriction>
                 </owl:intersectionOf>
@@ -503,10 +518,12 @@ iii) On each trial, the probability of success is p and the probability of failu
     
 
 
-    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Logit -->
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Logit_Function -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Logit">
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Logit_Function">
+        <rdfs:label xml:lang="en">Logit Function</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Function"/>
+        <terms:description xml:lang="en">The logit function is the inverse of the logistic transform.</terms:description>
     </owl:Class>
     
 
@@ -589,7 +606,10 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Non_Negative_Integer -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Non_Negative_Integer">
+        <rdfs:label xml:lang="en">Non-Negative Integer</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Integer"/>
+        <terms:description xml:lang="en">A variable with an integer non-negative variable type generally denotes that the domain of discourse for the variable is the set of all non-negative integer numbers.</terms:description>
+        <terms:alternative xml:lang="en">Natural</terms:alternative>
     </owl:Class>
     
 
@@ -607,7 +627,9 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Ordinal -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Ordinal">
+        <rdfs:label xml:lang="en">Ordinal</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Categorical"/>
+        <terms:description xml:lang="en">A variable with an ordinal variable type generally denotes that the domain of discourse of the variable is polychotomous and ordered. This means that the variable can take on one of a finite number of values and that the set has an ordering.</terms:description>
     </owl:Class>
     
 
@@ -657,17 +679,6 @@ iii) On each trial, the probability of success is p and the probability of failu
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Poisson_Regression"/>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasResidualDistribution"/>
-                        <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Binomial_Distribution"/>
-                    </owl:Restriction>
-                </owl:intersectionOf>
-            </owl:Class>
-        </owl:equivalentClass>
-        <owl:equivalentClass>
-            <owl:Class>
-                <owl:intersectionOf rdf:parseType="Collection">
                     <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GZLM"/>
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasResponseVariable"/>
@@ -683,13 +694,24 @@ iii) On each trial, the probability of success is p and the probability of failu
                         <owl:onClass>
                             <owl:Class>
                                 <owl:unionOf rdf:parseType="Collection">
-                                    <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Identity"/>
-                                    <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Log"/>
-                                    <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Square_Root"/>
+                                    <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Identity_Function"/>
+                                    <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Log_Function"/>
+                                    <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Square_Root_Function"/>
                                 </owl:unionOf>
                             </owl:Class>
                         </owl:onClass>
                         <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Poisson_Regression"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasResidualDistribution"/>
+                        <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Binomial_Distribution"/>
                     </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
@@ -715,10 +737,12 @@ iii) On each trial, the probability of success is p and the probability of failu
     
 
 
-    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Reciprocal -->
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Reciprocal_Function -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Reciprocal">
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Reciprocal_Function">
+        <rdfs:label xml:lang="en">Reciprocal Function</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Function"/>
+        <terms:description xml:lang="en">The reciprocal function, given a number x, returns 1/x (i.e., the reciprocal).</terms:description>
     </owl:Class>
     
 
@@ -751,10 +775,12 @@ iii) On each trial, the probability of success is p and the probability of failu
     
 
 
-    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Square_Root -->
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Square_Root_Function -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Square_Root">
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Square_Root_Function">
+        <rdfs:label xml:lang="en">Square Root Function</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Function"/>
+        <terms:description xml:lang="en">The square root function, given a number x, returns a value y such that y * y = x. In most cases, this function produces a positive value. If the input to the function is a negative number, then the function produces a complex number.</terms:description>
     </owl:Class>
     
 
@@ -779,6 +805,7 @@ iii) On each trial, the probability of success is p and the probability of failu
 
     <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Variable">
         <rdfs:label xml:lang="en">Variable</rdfs:label>
+        <terms:description xml:lang="en">A variable is an element, feature, or factor that is liable to vary or change.</terms:description>
     </owl:Class>
     
 
@@ -1038,7 +1065,7 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Identity_Function -->
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Identity_Function">
-        <rdf:type rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Identity"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Identity_Function"/>
     </owl:NamedIndividual>
     
 
@@ -1054,7 +1081,7 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Log_Function -->
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Log_Function">
-        <rdf:type rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Log"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Log_Function"/>
     </owl:NamedIndividual>
     
 
@@ -1062,7 +1089,7 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Logit_Function -->
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Logit_Function">
-        <rdf:type rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Logit"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Logit_Function"/>
     </owl:NamedIndividual>
     
 
@@ -1289,17 +1316,6 @@ iii) On each trial, the probability of success is p and the probability of failu
      -->
 
     <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
-        <owl:members rdf:parseType="Collection">
-            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Identity"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Inverse"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Log"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Logit"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Reciprocal"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Square_Root"/>
-        </owl:members>
-    </rdf:Description>
-    <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
             <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Binary_Variable_Type"/>
@@ -1308,6 +1324,17 @@ iii) On each trial, the probability of success is p and the probability of failu
             <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Integer_Variable_Type"/>
             <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Ordinal_Variable_Type"/>
         </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Identity_Function"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Inverse_Function"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Log_Function"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Logit_Function"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Reciprocal_Function"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Square_Root_Function"/>
+        </owl:members>
     </rdf:Description>
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
