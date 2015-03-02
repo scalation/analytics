@@ -1,0 +1,1072 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY terms "http://purl.org/dc/terms/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY protege "http://protege.stanford.edu/plugins/owl/protege#" >
+    <!ENTITY xsp "http://www.owl-ontologies.com/2005/08/07/xsp.owl#" >
+]>
+
+
+<rdf:RDF xmlns="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#"
+     xml:base="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics"
+     xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:terms="http://purl.org/dc/terms/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics">
+        <rdfs:label rdf:datatype="&xsd;string">Analytics Ontology</rdfs:label>
+        <owl:versionInfo rdf:datatype="&xsd;string">1.0</owl:versionInfo>
+        <rdfs:comment rdf:datatype="&xsd;string">This ontology aims to provide comphresensive yet practical representation of data analytics framework.</rdfs:comment>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://cobweb.cs.uga.edu/~jam/scalation.html</rdfs:seeAlso>
+        <terms:creator xml:lang="en">John A. Miller</terms:creator>
+        <terms:creator xml:lang="en">Michael E. Cotterell</terms:creator>
+        <terms:creator xml:lang="en">Mustafa V. Nural</terms:creator>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/dc/terms/alternative -->
+
+    <owl:AnnotationProperty rdf:about="&terms;alternative"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/creator -->
+
+    <owl:AnnotationProperty rdf:about="&terms;creator"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasLinkFunction -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasLinkFunction">
+        <rdfs:range rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Function"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GZLM"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasPredictorVariable -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasPredictorVariable">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Model"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Variable"/>
+        <owl:propertyDisjointWith rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasResponseVariable"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasVariable"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasResidualDistribution -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasResidualDistribution">
+        <rdfs:range rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Distribution"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Model"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasResponseVariable -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasResponseVariable">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Model"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Variable"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasVariable"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasVariable -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasVariable">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Model"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Variable"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasVariableType -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasVariableType">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Variable"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Variable_Type"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#ANCOVA -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#ANCOVA">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GLM"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasPredictorVariable"/>
+                        <owl:someValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasVariableType"/>
+                                <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Continuous"/>
+                            </owl:Restriction>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasPredictorVariable"/>
+                        <owl:someValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasVariableType"/>
+                                <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Discrete"/>
+                            </owl:Restriction>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GLM"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#ANOVA -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#ANOVA">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GLM"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasPredictorVariable"/>
+                        <owl:allValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasVariableType"/>
+                                <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Categorical"/>
+                            </owl:Restriction>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GLM"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Bernoulli_Distribution -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Bernoulli_Distribution">
+        <rdfs:label xml:lang="en">Bernoulli Distribution</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Exponential_Family"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://www.math.uah.edu/stat/bernoulli/Introduction.html</rdfs:seeAlso>
+        <rdfs:seeAlso xml:lang="en">A Bernoulli distribution is a probability distribution that models the Bernoulli trials process. A sequence of Bernoulli trials satisfies the following assumptions: i) Each trial has two possible outcomes, in the language of reliability called success and failure; ii) The trials are independent;
+iii) On each trial, the probability of success is p and the probability of failure is 1−p where p is an element of [0,1].</rdfs:seeAlso>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Binary -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Binary">
+        <rdfs:label xml:lang="en">Binary</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Categorical"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Ordinal"/>
+        <rdfs:comment xml:lang="en">A variable with a binary variable type generally denotes that the domain of discourse of the variable is dichotomous. This means that the variable can only take on one of two values.</rdfs:comment>
+        <terms:alternative xml:lang="en">Dichotomous</terms:alternative>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Binomial_Distribution -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Binomial_Distribution">
+        <rdfs:label xml:lang="en">Binomial Distribution</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Exponential_Family"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Categorical -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Categorical">
+        <rdfs:label xml:lang="en">Categorical</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Discrete"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Integer"/>
+        <rdfs:comment xml:lang="en">A variable with a categorical variable type generally denotes that the domain of discourse of the variable is polychotomous. This means that the variable can take on one of a finite number of values.</rdfs:comment>
+        <terms:alternative xml:lang="en">Polychotomous</terms:alternative>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Continuous -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Continuous">
+        <rdfs:label xml:lang="en">Continuous</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Variable_Type"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Discrete"/>
+        <rdfs:comment xml:lang="en">A variable with a continuous variable type generally denotes that domain of discourse for the variable is the set of real numbers.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Discrete -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Discrete">
+        <rdfs:label xml:lang="en">Discrete</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Variable_Type"/>
+        <rdfs:comment xml:lang="en">A variable with a discrete variable type generally denotes that the domain of discourse of the variable includes only elements that are individually separate and distinct.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Distribution -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Distribution">
+        <rdfs:label xml:lang="en">Distribution</rdfs:label>
+        <rdfs:comment xml:lang="en">A probability distribution assigns a probability to each measurable subset of the possible outcomes of a random experiment, survey, or procedure of statistical inference.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Estimation_Procedure -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Estimation_Procedure"/>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Exponential_Distribution -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Exponential_Distribution">
+        <rdfs:label xml:lang="en">Exponential Distribution</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Exponential_Family"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://www.math.uah.edu/stat/poisson/Exponential.html</rdfs:seeAlso>
+        <rdfs:comment xml:lang="en">An exponential distribution is a probability distribution that models the time between subsequent events based on a rate parameter.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Exponential_Family -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Exponential_Family">
+        <rdfs:label xml:lang="en">Exponential Family</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Distribution"/>
+        <rdfs:seeAlso xml:lang="en">FISHER, R. A. (1934). Two new properties of mathematical likelihood. Proceedings of the Royal Society A, 144, 285-307.</rdfs:seeAlso>
+        <rdfs:comment xml:lang="en">The exponential family of distributions is the set of probability distributions whose probaility distribution functions (PDFs) and cumulative distribution functions (CDFs) can be written such that their terms are moved to the exponent (often called the canonical form.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Exponential_Regression -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Exponential_Regression">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GZLM"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Function -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Function">
+        <rdfs:label xml:lang="en">Function</rdfs:label>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://mathworld.wolfram.com/Function.html</rdfs:seeAlso>
+        <rdfs:comment xml:lang="en">A function is a relation that uniquely associates members of one set with members of another set.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GEE -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GEE">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Model"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GLM -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GLM">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GZLM"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasResponseVariable"/>
+                        <owl:allValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasVariableType"/>
+                                <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Continuous"/>
+                            </owl:Restriction>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasLinkFunction"/>
+                        <owl:onClass rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Identity"/>
+                        <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GZLM"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GLMM -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GLMM">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Model"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GZLM -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GZLM">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GLMM"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Gamma_Distribution -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Gamma_Distribution">
+        <rdfs:label xml:lang="en">Gamma Distribution</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Exponential_Family"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://www.math.uah.edu/stat/special/Gamma.html</rdfs:seeAlso>
+        <rdfs:comment xml:lang="en">The gamma distribution family is a subset of the exponential family of distributions that have a shape parameter and a rate parameter.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Gamma_Regression -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Gamma_Regression">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GZLM"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Identity -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Identity">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Function"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Integer -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Integer">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Discrete"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Inverse -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Inverse">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Function"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Log -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Log">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Function"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Logistic_Regression -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Logistic_Regression">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GZLM"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Logit -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Logit">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Function"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Maximum_Likelihood -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Maximum_Likelihood">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Estimation_Procedure"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Model -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Model">
+        <rdfs:label xml:lang="en">Model</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Multiple_Linear_Regression -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Multiple_Linear_Regression">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GLM"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasPredictorVariable"/>
+                        <owl:allValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasVariableType"/>
+                                <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Continuous"/>
+                            </owl:Restriction>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GLM"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Naive_Bayes -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Naive_Bayes">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Model"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Negative_Binomial_Distribution -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Negative_Binomial_Distribution">
+        <rdfs:label xml:lang="en">Negative Binomial Distribution</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Exponential_Family"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Negative_Binomial_Regression -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Negative_Binomial_Regression">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GZLM"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Non_Negative -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Non_Negative">
+        <rdfs:label xml:lang="en">Non-Negative</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Continuous"/>
+        <rdfs:comment xml:lang="en">A variable with a non-negative variable type generally denotes that the domain of discourse for the variable is the set of all non-negative real numbers.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Normal_Distribution -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Normal_Distribution">
+        <rdfs:label xml:lang="en">Normal Distribution</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Exponential_Family"/>
+        <terms:alternative xml:lang="en">Gaussian Distribution</terms:alternative>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Ordinal -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Ordinal">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Categorical"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Ordinal_Logistic_Regression -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Ordinal_Logistic_Regression">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GZLM"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Ordinary_Least_Squares -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Ordinary_Least_Squares">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Estimation_Procedure"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Parameter -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Parameter"/>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Perceptron -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Perceptron">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Model"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Poisson_Distribution -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Poisson_Distribution">
+        <rdfs:label xml:lang="en">Poisson Distribution</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Exponential_Family"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Poisson_Regression -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Poisson_Regression">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GZLM"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Polynomial_Regression -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Polynomial_Regression">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GLM"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Quasi_Likelihood -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Quasi_Likelihood">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Estimation_Procedure"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Reciprocal -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Reciprocal">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Function"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Response_Surface_Analysis -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Response_Surface_Analysis">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GLM"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Simple_Linear_Regression -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Simple_Linear_Regression">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Multiple_Linear_Regression"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Square_Root -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Square_Root">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Function"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Transformed_Multiple_Linear_Regression -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Transformed_Multiple_Linear_Regression">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GLM"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Trigonometric_Regression -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Trigonometric_Regression">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GLM"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Variable -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Variable">
+        <rdfs:label xml:lang="en">Variable</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Variable_Type -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Variable_Type">
+        <rdfs:label xml:lang="en">Variable Type</rdfs:label>
+        <rdfs:comment xml:lang="en">The type of variable usually denotes or restricts its corresponding domain of discourse.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Weighted_Least_Squares -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Weighted_Least_Squares">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Estimation_Procedure"/>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Binary_Variable_Type -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Binary_Variable_Type">
+        <rdf:type rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Binary"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Categorical_Variable_Type -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Categorical_Variable_Type">
+        <rdf:type rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Categorical"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Continuous_Variable_Type -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Continuous_Variable_Type">
+        <rdf:type rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Continuous"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GenericANCOVAModel -->
+
+    <owl:Thing rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GenericANCOVAModel">
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasVariable"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#mpg"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#cylinders"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#horsepower"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdf:type>
+        <hasLinkFunction rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Identity_Function"/>
+        <hasPredictorVariable rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#cylinders"/>
+        <hasPredictorVariable rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#horsepower"/>
+        <hasResponseVariable rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#mpg"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GenericANOVAModel -->
+
+    <owl:Thing rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GenericANOVAModel">
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasVariable"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#mpg"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#cylinders"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdf:type>
+        <hasLinkFunction rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Identity_Function"/>
+        <hasPredictorVariable rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#cylinders"/>
+        <hasResponseVariable rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#mpg"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GenericMLRModel -->
+
+    <owl:Thing rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GenericMLRModel">
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasVariable"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#mpg"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#horsepower"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdf:type>
+        <hasLinkFunction rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Identity_Function"/>
+        <hasPredictorVariable rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#horsepower"/>
+        <hasResponseVariable rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#mpg"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GenericModel -->
+
+    <owl:Thing rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#GenericModel">
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasVariable"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#origin"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#mpg"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#model_year"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#weight"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#cylinders"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#horsepower"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#displacement"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#acceleration"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasLinkFunction"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Identity_Function"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Log_Function"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdf:type>
+        <hasLinkFunction rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Identity_Function"/>
+        <hasLinkFunction rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Log_Function"/>
+        <hasPredictorVariable rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#acceleration"/>
+        <hasPredictorVariable rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#cylinders"/>
+        <hasPredictorVariable rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#displacement"/>
+        <hasPredictorVariable rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#horsepower"/>
+        <hasPredictorVariable rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#model_year"/>
+        <hasResponseVariable rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#mpg"/>
+        <hasPredictorVariable rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#origin"/>
+        <hasPredictorVariable rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#weight"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Identity_Function -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Identity_Function">
+        <rdf:type rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Identity"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Integer_Variable_Type -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Integer_Variable_Type">
+        <rdf:type rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Integer"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Log_Function -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Log_Function">
+        <rdf:type rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Log"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Ordinal_Variable_Type -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Ordinal_Variable_Type">
+        <rdf:type rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Ordinal"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#acceleration -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#acceleration">
+        <rdf:type rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Variable"/>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasVariableType"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Continuous_Variable_Type"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdf:type>
+        <hasVariableType rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Continuous_Variable_Type"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#cylinders -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#cylinders">
+        <rdf:type rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Variable"/>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasVariableType"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Ordinal_Variable_Type"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdf:type>
+        <hasVariableType rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Ordinal_Variable_Type"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#displacement -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#displacement">
+        <rdf:type rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Variable"/>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasVariableType"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Continuous_Variable_Type"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdf:type>
+        <hasVariableType rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Continuous_Variable_Type"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#horsepower -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#horsepower">
+        <rdf:type rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Variable"/>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasVariableType"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Continuous_Variable_Type"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdf:type>
+        <hasVariableType rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Continuous_Variable_Type"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#model_year -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#model_year">
+        <rdf:type rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Variable"/>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasVariableType"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Integer_Variable_Type"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdf:type>
+        <hasVariableType rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Integer_Variable_Type"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#mpg -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#mpg">
+        <rdf:type rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Variable"/>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasVariableType"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Continuous_Variable_Type"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdf:type>
+        <hasVariableType rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Continuous_Variable_Type"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#origin -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#origin">
+        <rdf:type rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Variable"/>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasVariableType"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Categorical_Variable_Type"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdf:type>
+        <hasVariableType rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Categorical_Variable_Type"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#weight -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#weight">
+        <rdf:type rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Variable"/>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#hasVariableType"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Continuous_Variable_Type"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdf:type>
+        <hasVariableType rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Continuous_Variable_Type"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Identity"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Inverse"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Log"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Logit"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Reciprocal"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Square_Root"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Binary_Variable_Type"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Categorical_Variable_Type"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Continuous_Variable_Type"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Integer_Variable_Type"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Ordinal_Variable_Type"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#acceleration"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#cylinders"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#displacement"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#horsepower"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#model_year"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#mpg"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#origin"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#weight"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.5.0) http://owlapi.sourceforge.net -->
+
