@@ -62,6 +62,12 @@
     
 
 
+    <!-- http://purl.org/dc/terms/source -->
+
+    <owl:AnnotationProperty rdf:about="&terms;source"/>
+    
+
+
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
@@ -287,7 +293,7 @@ iii) On each trial, the probability of success is p and the probability of failu
     <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Exponential_Family">
         <rdfs:label xml:lang="en">Exponential Family</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Distribution"/>
-        <rdfs:seeAlso xml:lang="en">FISHER, R. A. (1934). Two new properties of mathematical likelihood. Proceedings of the Royal Society A, 144, 285-307.</rdfs:seeAlso>
+        <terms:source xml:lang="en">FISHER, R. A. (1934). Two new properties of mathematical likelihood. Proceedings of the Royal Society A, 144, 285-307.</terms:source>
         <rdfs:comment xml:lang="en">The exponential family of distributions is the set of probability distributions whose probaility distribution functions (PDFs) and cumulative distribution functions (CDFs) can be written such that their terms are moved to the exponent (often called the canonical form.</rdfs:comment>
     </owl:Class>
     
@@ -442,7 +448,9 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Integer -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Integer">
+        <rdfs:label xml:lang="en">Integer</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Discrete"/>
+        <terms:description xml:lang="en">A variable with an integer variable type generally denotes that the domain of discourse for the variable is the set of integer numbers.</terms:description>
     </owl:Class>
     
 
@@ -589,7 +597,10 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Non_Negative_Integer -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Non_Negative_Integer">
+        <rdfs:label xml:lang="en">Non-Negative Integer</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Integer"/>
+        <terms:description xml:lang="en">A variable with an integer non-negative variable type generally denotes that the domain of discourse for the variable is the set of all non-negative integer numbers.</terms:description>
+        <terms:alternative xml:lang="en">Natural</terms:alternative>
     </owl:Class>
     
 
@@ -607,7 +618,9 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Ordinal -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Ordinal">
+        <rdfs:label xml:lang="en">Ordinal</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Categorical"/>
+        <terms:description xml:lang="en">A variable with an ordinal variable type generally denotes that the domain of discourse of the variable is polychotomous and ordered. This means that the variable can take on one of a finite number of values and that the set has an ordering.</terms:description>
     </owl:Class>
     
 
@@ -779,6 +792,7 @@ iii) On each trial, the probability of success is p and the probability of failu
 
     <owl:Class rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Variable">
         <rdfs:label xml:lang="en">Variable</rdfs:label>
+        <terms:description xml:lang="en">A variable is an element, feature, or factor that is liable to vary or change.</terms:description>
     </owl:Class>
     
 
@@ -1289,6 +1303,16 @@ iii) On each trial, the probability of success is p and the probability of failu
      -->
 
     <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Binary_Variable_Type"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Categorical_Variable_Type"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Continuous_Variable_Type"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Integer_Variable_Type"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Ordinal_Variable_Type"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
         <owl:members rdf:parseType="Collection">
             <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Identity"/>
@@ -1298,16 +1322,6 @@ iii) On each trial, the probability of success is p and the probability of failu
             <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Reciprocal"/>
             <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Square_Root"/>
         </owl:members>
-    </rdf:Description>
-    <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDifferent"/>
-        <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Binary_Variable_Type"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Categorical_Variable_Type"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Continuous_Variable_Type"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Integer_Variable_Type"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#Ordinal_Variable_Type"/>
-        </owl:distinctMembers>
     </rdf:Description>
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
