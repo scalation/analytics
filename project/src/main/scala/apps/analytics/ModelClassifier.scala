@@ -17,6 +17,6 @@ object ModelClassifierTest extends App
     val ontology = manager.loadOntologyFromOntologyDocument (iri)
     val reasoner = (new Reasoner.ReasonerFactory()).createReasoner (ontology);
 
-    println (reasoner.isConsistent ())
+    println ("Ontology is consistent: " + reasoner.isConsistent ())
 
 } // ModelClassifierTest
