@@ -31,9 +31,7 @@ one dependency that is required that is not hosted there, ScalaTion.
  * Now, type the following commands to make ScalaTion available to SBT
    projects:
 
-   ```
-   $ sbt publishLocal
-   ```
+   ```$ sbt publishLocal```
 
  * You should now be able to proceed with the Build Instructions for this
    project.
