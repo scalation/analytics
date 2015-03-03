@@ -1,9 +1,14 @@
 package apps.analytics
 
+import scala.language.reflectiveCalls
+
 import org.scalatest._
 
 import org.semanticweb.HermiT.{ Reasoner => HermiTReasoner }
+
 import uk.ac.manchester.cs.jfact.JFactFactory
+
+import org.semanticweb.owlapi.model.OWLIndividual
 
 /**
  * 
@@ -19,6 +24,7 @@ class AnalyticsTestSuite extends FunSuite with GivenWhenThen
             val (manager, ontology) = AnalyticsOntology.loadLocal ()
             val hreasoner = (new HermiTReasoner.ReasonerFactory()).createReasoner (ontology);
             val jreasoner = (new JFactFactory()).createReasoner (ontology)
+            val factory   = manager.getOWLDataFactory ()
         } // new
     } // fixture
 
