@@ -205,8 +205,8 @@
         <rdfs:label xml:lang="en">Bernoulli Distribution</rdfs:label>
         <rdfs:subClassOf rdf:resource="&analytics;Exponential_Family"/>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://www.math.uah.edu/stat/bernoulli/Introduction.html</rdfs:seeAlso>
-        <rdfs:seeAlso xml:lang="en">A Bernoulli distribution is a probability distribution that models the Bernoulli trials process. A sequence of Bernoulli trials satisfies the following assumptions: i) Each trial has two possible outcomes, in the language of reliability called success and failure; ii) The trials are independent;
-iii) On each trial, the probability of success is p and the probability of failure is 1−p where p is an element of [0,1].</rdfs:seeAlso>
+        <terms:description xml:lang="en">A Bernoulli distribution is a probability distribution that models the Bernoulli trials process. A sequence of Bernoulli trials satisfies the following assumptions: i) Each trial has two possible outcomes, in the language of reliability called success and failure; ii) The trials are independent;
+iii) On each trial, the probability of success is p and the probability of failure is 1−p where p is an element of [0,1].</terms:description>
     </owl:Class>
     
 
@@ -286,7 +286,7 @@ iii) On each trial, the probability of success is p and the probability of failu
         <rdfs:label xml:lang="en">Exponential Distribution</rdfs:label>
         <rdfs:subClassOf rdf:resource="&analytics;Exponential_Family"/>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://www.math.uah.edu/stat/poisson/Exponential.html</rdfs:seeAlso>
-        <rdfs:comment xml:lang="en">An exponential distribution is a probability distribution that models the time between subsequent events based on a rate parameter.</rdfs:comment>
+        <terms:description xml:lang="en">An exponential distribution is a probability distribution that models the time between subsequent events based on a rate parameter.</terms:description>
     </owl:Class>
     
 
@@ -297,7 +297,7 @@ iii) On each trial, the probability of success is p and the probability of failu
         <rdfs:label xml:lang="en">Exponential Family</rdfs:label>
         <rdfs:subClassOf rdf:resource="&analytics;Distribution"/>
         <terms:source xml:lang="en">FISHER, R. A. (1934). Two new properties of mathematical likelihood. Proceedings of the Royal Society A, 144, 285-307.</terms:source>
-        <rdfs:comment xml:lang="en">The exponential family of distributions is the set of probability distributions whose probaility distribution functions (PDFs) and cumulative distribution functions (CDFs) can be written such that their terms are moved to the exponent (often called the canonical form.</rdfs:comment>
+        <terms:description xml:lang="en">The exponential family of distributions is the set of probability distributions whose probaility distribution functions (PDFs) and cumulative distribution functions (CDFs) can be written such that their terms are moved to the exponent (often called the canonical form.</terms:description>
     </owl:Class>
     
 
@@ -375,18 +375,6 @@ iii) On each trial, the probability of success is p and the probability of failu
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&analytics;GLM"/>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasLinkFunction"/>
-                        <owl:onClass rdf:resource="&analytics;Identity_Function"/>
-                        <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
-                    </owl:Restriction>
-                </owl:intersectionOf>
-            </owl:Class>
-        </owl:equivalentClass>
-        <owl:equivalentClass>
-            <owl:Class>
-                <owl:intersectionOf rdf:parseType="Collection">
                     <rdf:Description rdf:about="&analytics;GZLM"/>
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="&analytics;hasResponseVariable"/>
@@ -396,6 +384,18 @@ iii) On each trial, the probability of success is p and the probability of failu
                                 <owl:allValuesFrom rdf:resource="&analytics;Continuous"/>
                             </owl:Restriction>
                         </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&analytics;GLM"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&analytics;hasLinkFunction"/>
+                        <owl:onClass rdf:resource="&analytics;Identity_Function"/>
+                        <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
                     </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
@@ -427,7 +427,7 @@ iii) On each trial, the probability of success is p and the probability of failu
         <rdfs:label xml:lang="en">Gamma Distribution</rdfs:label>
         <rdfs:subClassOf rdf:resource="&analytics;Exponential_Family"/>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://www.math.uah.edu/stat/special/Gamma.html</rdfs:seeAlso>
-        <rdfs:comment xml:lang="en">The gamma distribution family is a subset of the exponential family of distributions that have a shape parameter and a rate parameter.</rdfs:comment>
+        <terms:description xml:lang="en">The gamma distribution family is a subset of the exponential family of distributions that have a shape parameter and a rate parameter.</terms:description>
     </owl:Class>
     
 
@@ -487,17 +487,6 @@ iii) On each trial, the probability of success is p and the probability of failu
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&analytics;Logistic_Regression"/>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
-                        <owl:allValuesFrom rdf:resource="&analytics;Bernoulli_Distribution"/>
-                    </owl:Restriction>
-                </owl:intersectionOf>
-            </owl:Class>
-        </owl:equivalentClass>
-        <owl:equivalentClass>
-            <owl:Class>
-                <owl:intersectionOf rdf:parseType="Collection">
                     <rdf:Description rdf:about="&analytics;GZLM"/>
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="&analytics;hasResponseVariable"/>
@@ -512,6 +501,17 @@ iii) On each trial, the probability of success is p and the probability of failu
                         <owl:onProperty rdf:resource="&analytics;hasLinkFunction"/>
                         <owl:onClass rdf:resource="&analytics;Logit_Function"/>
                         <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&analytics;Logistic_Regression"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
+                        <owl:allValuesFrom rdf:resource="&analytics;Bernoulli_Distribution"/>
                     </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
@@ -682,17 +682,6 @@ iii) On each trial, the probability of success is p and the probability of failu
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&analytics;Poisson_Regression"/>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
-                        <owl:allValuesFrom rdf:resource="&analytics;Binomial_Distribution"/>
-                    </owl:Restriction>
-                </owl:intersectionOf>
-            </owl:Class>
-        </owl:equivalentClass>
-        <owl:equivalentClass>
-            <owl:Class>
-                <owl:intersectionOf rdf:parseType="Collection">
                     <rdf:Description rdf:about="&analytics;GZLM"/>
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="&analytics;hasResponseVariable"/>
@@ -715,6 +704,17 @@ iii) On each trial, the probability of success is p and the probability of failu
                             </owl:Class>
                         </owl:onClass>
                         <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&analytics;Poisson_Regression"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
+                        <owl:allValuesFrom rdf:resource="&analytics;Binomial_Distribution"/>
                     </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
@@ -1319,14 +1319,15 @@ iii) On each trial, the probability of success is p and the probability of failu
      -->
 
     <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDifferent"/>
-        <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&analytics;Binary_Variable_Type"/>
-            <rdf:Description rdf:about="&analytics;Categorical_Variable_Type"/>
-            <rdf:Description rdf:about="&analytics;Continuous_Variable_Type"/>
-            <rdf:Description rdf:about="&analytics;Integer_Variable_Type"/>
-            <rdf:Description rdf:about="&analytics;Ordinal_Variable_Type"/>
-        </owl:distinctMembers>
+        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="&analytics;Identity_Function"/>
+            <rdf:Description rdf:about="&analytics;Inverse_Function"/>
+            <rdf:Description rdf:about="&analytics;Log_Function"/>
+            <rdf:Description rdf:about="&analytics;Logit_Function"/>
+            <rdf:Description rdf:about="&analytics;Reciprocal_Function"/>
+            <rdf:Description rdf:about="&analytics;Square_Root_Function"/>
+        </owl:members>
     </rdf:Description>
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
@@ -1343,15 +1344,14 @@ iii) On each trial, the probability of success is p and the probability of failu
         </owl:distinctMembers>
     </rdf:Description>
     <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
-        <owl:members rdf:parseType="Collection">
-            <rdf:Description rdf:about="&analytics;Identity_Function"/>
-            <rdf:Description rdf:about="&analytics;Inverse_Function"/>
-            <rdf:Description rdf:about="&analytics;Log_Function"/>
-            <rdf:Description rdf:about="&analytics;Logit_Function"/>
-            <rdf:Description rdf:about="&analytics;Reciprocal_Function"/>
-            <rdf:Description rdf:about="&analytics;Square_Root_Function"/>
-        </owl:members>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="&analytics;Binary_Variable_Type"/>
+            <rdf:Description rdf:about="&analytics;Categorical_Variable_Type"/>
+            <rdf:Description rdf:about="&analytics;Continuous_Variable_Type"/>
+            <rdf:Description rdf:about="&analytics;Integer_Variable_Type"/>
+            <rdf:Description rdf:about="&analytics;Ordinal_Variable_Type"/>
+        </owl:distinctMembers>
     </rdf:Description>
 </rdf:RDF>
 
