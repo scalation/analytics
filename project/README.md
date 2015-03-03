@@ -1,7 +1,7 @@
 # ScalaTion Analytics Ontology Library
 
 This project contains an API for utilizing the ScalaTion Analytics Ontology in
-both Scala and Java applications.
+both Scala and Java applications. 
 
 ### Notes
 
