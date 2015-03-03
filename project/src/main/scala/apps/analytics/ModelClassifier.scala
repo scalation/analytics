@@ -1,8 +1,6 @@
 package apps.analytics
 
 import org.semanticweb.HermiT.{ Reasoner => HermiTReasoner }
-import org.semanticweb.owlapi.model.{ IRI, OWLOntology, OWLOntologyManager }
-import org.semanticweb.owlapi.apibinding.OWLManager
 
 object ModelClassifier
 {
