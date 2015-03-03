@@ -5,7 +5,7 @@ both Scala and Java applications.
 
 ### Notes
 
-Currently, the API utilizes the [```HermiT``` Reasoner](http://hermit-reasoner.com).
+Currently, the API utilizes the [```HermiT```](http://hermit-reasoner.com) reasoner.
 However, since our code is written against the [```OWL API```](http://owlapi.sourceforge.net),
 any working reasoner that is compatible with ```OWL API``` should work with our
 API.
@@ -21,12 +21,12 @@ one dependency that is required that is not hosted there, ScalaTion.
    
  * Extract the archive.
  
- * Change (```cd``) into the directory.
+ * Change (```cd```) into the directory.
  
  * Inspect the ```build.sbt``` file. If there is no line starting with
    ```organization```, then add the following to that file (and save):
 
-   ```organization := "scalation"
+   ```organization := "scalation"```
 
  * Now, type the following commands to make ScalaTion available to SBT
    projects:
