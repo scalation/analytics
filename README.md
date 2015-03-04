@@ -9,6 +9,11 @@ specifications to be declared then classified using ontological inferencing.
  * Ontology IRI: ```https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl```
  * Latest stable release: [analytics.owl](https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl)
 
+### Want to Contribute?
+
+Feel free to fork our repository. Please make any pull requests against
+the ```develop``` branch. 
+
 ### Other Ontologies Used
 
  * [DCMI Metadata Terms](http://dublincore.org/documents/dcmi-terms/): Used to
