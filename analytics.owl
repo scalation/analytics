@@ -13,8 +13,8 @@
 ]>
 
 
-<rdf:RDF xmlns="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics#"
-     xml:base="http://www.semanticweb.org/mnural/ontologies/2015/0/analytics"
+<rdf:RDF xmlns="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#"
+     xml:base="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl"
      xmlns:analytics="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#"
      xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -154,6 +154,7 @@
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#ANCOVA -->
 
     <owl:Class rdf:about="&analytics;ANCOVA">
+        <rdfs:label xml:lang="en">ANCOVA</rdfs:label>
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -171,6 +172,7 @@
             </owl:Class>
         </owl:equivalentClass>
         <rdfs:subClassOf rdf:resource="&analytics;GLM"/>
+        <terms:alternative xml:lang="en">Analysis of Covariance</terms:alternative>
     </owl:Class>
     
 
@@ -178,6 +180,7 @@
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#ANOVA -->
 
     <owl:Class rdf:about="&analytics;ANOVA">
+        <rdfs:label xml:lang="en">ANOVA</rdfs:label>
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -195,6 +198,7 @@
             </owl:Class>
         </owl:equivalentClass>
         <rdfs:subClassOf rdf:resource="&analytics;ANCOVA"/>
+        <terms:alternative xml:lang="en">Analysis of Variance</terms:alternative>
     </owl:Class>
     
 
@@ -305,6 +309,18 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Exponential_Regression -->
 
     <owl:Class rdf:about="&analytics;Exponential_Regression">
+        <rdfs:label xml:lang="en">Exponential Regression</rdfs:label>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&analytics;Exponential_Regression"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
+                        <owl:allValuesFrom rdf:resource="&analytics;Exponential_Distribution"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -335,17 +351,6 @@ iii) On each trial, the probability of success is p and the probability of failu
                 </owl:intersectionOf>
             </owl:Class>
         </owl:equivalentClass>
-        <owl:equivalentClass>
-            <owl:Class>
-                <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&analytics;Exponential_Regression"/>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
-                        <owl:allValuesFrom rdf:resource="&analytics;Exponential_Distribution"/>
-                    </owl:Restriction>
-                </owl:intersectionOf>
-            </owl:Class>
-        </owl:equivalentClass>
         <rdfs:subClassOf rdf:resource="&analytics;GZLM"/>
     </owl:Class>
     
@@ -364,7 +369,9 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GEE -->
 
     <owl:Class rdf:about="&analytics;GEE">
+        <rdfs:label xml:lang="en">GEE</rdfs:label>
         <rdfs:subClassOf rdf:resource="&analytics;Model"/>
+        <terms:alternative xml:lang="en">Generalized Estimating Equation</terms:alternative>
     </owl:Class>
     
 
@@ -372,6 +379,19 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GLM -->
 
     <owl:Class rdf:about="&analytics;GLM">
+        <rdfs:label xml:lang="en">GLM</rdfs:label>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&analytics;GLM"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&analytics;hasLinkFunction"/>
+                        <owl:onClass rdf:resource="&analytics;Identity_Function"/>
+                        <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -388,19 +408,8 @@ iii) On each trial, the probability of success is p and the probability of failu
                 </owl:intersectionOf>
             </owl:Class>
         </owl:equivalentClass>
-        <owl:equivalentClass>
-            <owl:Class>
-                <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&analytics;GLM"/>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasLinkFunction"/>
-                        <owl:onClass rdf:resource="&analytics;Identity_Function"/>
-                        <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
-                    </owl:Restriction>
-                </owl:intersectionOf>
-            </owl:Class>
-        </owl:equivalentClass>
         <rdfs:subClassOf rdf:resource="&analytics;GZLM"/>
+        <terms:alternative xml:lang="en">General Linear Model</terms:alternative>
     </owl:Class>
     
 
@@ -408,7 +417,9 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GLMM -->
 
     <owl:Class rdf:about="&analytics;GLMM">
+        <rdfs:label xml:lang="en">GLMM</rdfs:label>
         <rdfs:subClassOf rdf:resource="&analytics;Model"/>
+        <terms:alternative xml:lang="en">Generalized Linear Mixed Model</terms:alternative>
     </owl:Class>
     
 
@@ -416,7 +427,9 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GZLM -->
 
     <owl:Class rdf:about="&analytics;GZLM">
+        <rdfs:label xml:lang="en">GZLM</rdfs:label>
         <rdfs:subClassOf rdf:resource="&analytics;GLMM"/>
+        <terms:alternative xml:lang="en">Generalized Linear Model</terms:alternative>
     </owl:Class>
     
 
@@ -435,6 +448,7 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Gamma_Regression -->
 
     <owl:Class rdf:about="&analytics;Gamma_Regression">
+        <rdfs:label xml:lang="en">Gamma Regression</rdfs:label>
         <rdfs:subClassOf rdf:resource="&analytics;GZLM"/>
     </owl:Class>
     
@@ -484,6 +498,7 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Logistic_Regression -->
 
     <owl:Class rdf:about="&analytics;Logistic_Regression">
+        <rdfs:label xml:lang="en">Logistic Regression</rdfs:label>
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -550,6 +565,7 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Multiple_Linear_Regression -->
 
     <owl:Class rdf:about="&analytics;Multiple_Linear_Regression">
+        <rdfs:label xml:lang="en">Muliple Linear Regression</rdfs:label>
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -567,6 +583,8 @@ iii) On each trial, the probability of success is p and the probability of failu
             </owl:Class>
         </owl:equivalentClass>
         <rdfs:subClassOf rdf:resource="&analytics;GLM"/>
+        <terms:alternative xml:lang="en">MLR</terms:alternative>
+        <terms:alternative xml:lang="en">Multiple Regression</terms:alternative>
     </owl:Class>
     
 
@@ -574,7 +592,9 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Naive_Bayes -->
 
     <owl:Class rdf:about="&analytics;Naive_Bayes">
+        <rdfs:label xml:lang="en">Naive Bayes</rdfs:label>
         <rdfs:subClassOf rdf:resource="&analytics;Model"/>
+        <terms:alternative xml:lang="en">Naïve Bayes</terms:alternative>
     </owl:Class>
     
 
@@ -591,6 +611,7 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Negative_Binomial_Regression -->
 
     <owl:Class rdf:about="&analytics;Negative_Binomial_Regression">
+        <rdfs:label xml:lang="en">Negative Binomial Regression</rdfs:label>
         <rdfs:subClassOf rdf:resource="&analytics;GZLM"/>
     </owl:Class>
     
@@ -640,6 +661,7 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Ordinal_Logistic_Regression -->
 
     <owl:Class rdf:about="&analytics;Ordinal_Logistic_Regression">
+        <rdfs:label xml:lang="en">Ordinal Logistic Regression</rdfs:label>
         <rdfs:subClassOf rdf:resource="&analytics;GZLM"/>
     </owl:Class>
     
@@ -662,6 +684,7 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Perceptron -->
 
     <owl:Class rdf:about="&analytics;Perceptron">
+        <rdfs:label xml:lang="en">Perceptron</rdfs:label>
         <rdfs:subClassOf rdf:resource="&analytics;Model"/>
     </owl:Class>
     
@@ -679,6 +702,18 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Poisson_Regression -->
 
     <owl:Class rdf:about="&analytics;Poisson_Regression">
+        <rdfs:label xml:lang="en">Poisson Regression</rdfs:label>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&analytics;Poisson_Regression"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
+                        <owl:allValuesFrom rdf:resource="&analytics;Binomial_Distribution"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -708,17 +743,6 @@ iii) On each trial, the probability of success is p and the probability of failu
                 </owl:intersectionOf>
             </owl:Class>
         </owl:equivalentClass>
-        <owl:equivalentClass>
-            <owl:Class>
-                <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&analytics;Poisson_Regression"/>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
-                        <owl:allValuesFrom rdf:resource="&analytics;Binomial_Distribution"/>
-                    </owl:Restriction>
-                </owl:intersectionOf>
-            </owl:Class>
-        </owl:equivalentClass>
         <rdfs:subClassOf rdf:resource="&analytics;GZLM"/>
     </owl:Class>
     
@@ -727,6 +751,7 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Polynomial_Regression -->
 
     <owl:Class rdf:about="&analytics;Polynomial_Regression">
+        <rdfs:label xml:lang="en">Polynomial Regression</rdfs:label>
         <rdfs:subClassOf rdf:resource="&analytics;GLM"/>
     </owl:Class>
     
@@ -753,6 +778,7 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Response_Surface_Analysis -->
 
     <owl:Class rdf:about="&analytics;Response_Surface_Analysis">
+        <rdfs:label xml:lang="en">Response Surface Analysis</rdfs:label>
         <rdfs:subClassOf rdf:resource="&analytics;GLM"/>
     </owl:Class>
     
@@ -761,6 +787,7 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Simple_Linear_Regression -->
 
     <owl:Class rdf:about="&analytics;Simple_Linear_Regression">
+        <rdfs:label xml:lang="en">Simple Linear Regression</rdfs:label>
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -774,6 +801,7 @@ iii) On each trial, the probability of success is p and the probability of failu
             </owl:Class>
         </owl:equivalentClass>
         <rdfs:subClassOf rdf:resource="&analytics;Multiple_Linear_Regression"/>
+        <terms:alternative xml:lang="en">SLR</terms:alternative>
     </owl:Class>
     
 
@@ -791,7 +819,9 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Transformed_Multiple_Linear_Regression -->
 
     <owl:Class rdf:about="&analytics;Transformed_Multiple_Linear_Regression">
+        <rdfs:label xml:lang="en">Transformed Multiple Linear Regression</rdfs:label>
         <rdfs:subClassOf rdf:resource="&analytics;GLM"/>
+        <terms:alternative xml:lang="en">Transformed Multiple Regression</terms:alternative>
     </owl:Class>
     
 
@@ -799,6 +829,7 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Trigonometric_Regression -->
 
     <owl:Class rdf:about="&analytics;Trigonometric_Regression">
+        <rdfs:label xml:lang="en">Trigonometric Regression</rdfs:label>
         <rdfs:subClassOf rdf:resource="&analytics;GLM"/>
     </owl:Class>
     
@@ -883,10 +914,10 @@ iii) On each trial, the probability of success is p and the probability of failu
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <analytics:hasLinkFunction rdf:resource="&analytics;Identity_Function"/>
-        <analytics:hasPredictorVariable rdf:resource="&analytics;cylinders"/>
-        <analytics:hasPredictorVariable rdf:resource="&analytics;horsepower"/>
-        <analytics:hasResponseVariable rdf:resource="&analytics;mpg"/>
+        <hasLinkFunction rdf:resource="&analytics;Identity_Function"/>
+        <hasPredictorVariable rdf:resource="&analytics;cylinders"/>
+        <hasPredictorVariable rdf:resource="&analytics;horsepower"/>
+        <hasResponseVariable rdf:resource="&analytics;mpg"/>
     </owl:Thing>
     
 
@@ -908,9 +939,9 @@ iii) On each trial, the probability of success is p and the probability of failu
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <analytics:hasLinkFunction rdf:resource="&analytics;Identity_Function"/>
-        <analytics:hasPredictorVariable rdf:resource="&analytics;cylinders"/>
-        <analytics:hasResponseVariable rdf:resource="&analytics;mpg"/>
+        <hasLinkFunction rdf:resource="&analytics;Identity_Function"/>
+        <hasPredictorVariable rdf:resource="&analytics;cylinders"/>
+        <hasResponseVariable rdf:resource="&analytics;mpg"/>
     </owl:Thing>
     
 
@@ -932,9 +963,9 @@ iii) On each trial, the probability of success is p and the probability of failu
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <analytics:hasLinkFunction rdf:resource="&analytics;Log_Function"/>
-        <analytics:hasPredictorVariable rdf:resource="&analytics;horsepower"/>
-        <analytics:hasResponseVariable rdf:resource="&analytics;mpg"/>
+        <hasLinkFunction rdf:resource="&analytics;Log_Function"/>
+        <hasPredictorVariable rdf:resource="&analytics;horsepower"/>
+        <hasResponseVariable rdf:resource="&analytics;mpg"/>
     </owl:Thing>
     
 
@@ -957,10 +988,10 @@ iii) On each trial, the probability of success is p and the probability of failu
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <analytics:hasLinkFunction rdf:resource="&analytics;Logit_Function"/>
-        <analytics:hasPredictorVariable rdf:resource="&analytics;cylinders"/>
-        <analytics:hasResponseVariable rdf:resource="&analytics;isDomestic"/>
-        <analytics:hasPredictorVariable rdf:resource="&analytics;mpg"/>
+        <hasLinkFunction rdf:resource="&analytics;Logit_Function"/>
+        <hasPredictorVariable rdf:resource="&analytics;cylinders"/>
+        <hasResponseVariable rdf:resource="&analytics;isDomestic"/>
+        <hasPredictorVariable rdf:resource="&analytics;mpg"/>
     </owl:Thing>
     
 
@@ -983,10 +1014,10 @@ iii) On each trial, the probability of success is p and the probability of failu
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <analytics:hasLinkFunction rdf:resource="&analytics;Identity_Function"/>
-        <analytics:hasPredictorVariable rdf:resource="&analytics;acceleration"/>
-        <analytics:hasPredictorVariable rdf:resource="&analytics;horsepower"/>
-        <analytics:hasResponseVariable rdf:resource="&analytics;mpg"/>
+        <hasLinkFunction rdf:resource="&analytics;Identity_Function"/>
+        <hasPredictorVariable rdf:resource="&analytics;acceleration"/>
+        <hasPredictorVariable rdf:resource="&analytics;horsepower"/>
+        <hasResponseVariable rdf:resource="&analytics;mpg"/>
     </owl:Thing>
     
 
@@ -1027,16 +1058,16 @@ iii) On each trial, the probability of success is p and the probability of failu
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <analytics:hasLinkFunction rdf:resource="&analytics;Identity_Function"/>
-        <analytics:hasLinkFunction rdf:resource="&analytics;Log_Function"/>
-        <analytics:hasPredictorVariable rdf:resource="&analytics;acceleration"/>
-        <analytics:hasPredictorVariable rdf:resource="&analytics;cylinders"/>
-        <analytics:hasPredictorVariable rdf:resource="&analytics;displacement"/>
-        <analytics:hasPredictorVariable rdf:resource="&analytics;horsepower"/>
-        <analytics:hasPredictorVariable rdf:resource="&analytics;model_year"/>
-        <analytics:hasResponseVariable rdf:resource="&analytics;mpg"/>
-        <analytics:hasPredictorVariable rdf:resource="&analytics;origin"/>
-        <analytics:hasPredictorVariable rdf:resource="&analytics;weight"/>
+        <hasLinkFunction rdf:resource="&analytics;Identity_Function"/>
+        <hasLinkFunction rdf:resource="&analytics;Log_Function"/>
+        <hasPredictorVariable rdf:resource="&analytics;acceleration"/>
+        <hasPredictorVariable rdf:resource="&analytics;cylinders"/>
+        <hasPredictorVariable rdf:resource="&analytics;displacement"/>
+        <hasPredictorVariable rdf:resource="&analytics;horsepower"/>
+        <hasPredictorVariable rdf:resource="&analytics;model_year"/>
+        <hasResponseVariable rdf:resource="&analytics;mpg"/>
+        <hasPredictorVariable rdf:resource="&analytics;origin"/>
+        <hasPredictorVariable rdf:resource="&analytics;weight"/>
     </owl:Thing>
     
 
@@ -1058,9 +1089,9 @@ iii) On each trial, the probability of success is p and the probability of failu
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <analytics:hasLinkFunction rdf:resource="&analytics;Identity_Function"/>
-        <analytics:hasPredictorVariable rdf:resource="&analytics;horsepower"/>
-        <analytics:hasResponseVariable rdf:resource="&analytics;mpg"/>
+        <hasLinkFunction rdf:resource="&analytics;Identity_Function"/>
+        <hasPredictorVariable rdf:resource="&analytics;horsepower"/>
+        <hasResponseVariable rdf:resource="&analytics;mpg"/>
     </owl:Thing>
     
 
@@ -1137,7 +1168,7 @@ iii) On each trial, the probability of success is p and the probability of failu
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <analytics:hasVariableType rdf:resource="&analytics;Continuous_Variable_Type"/>
+        <hasVariableType rdf:resource="&analytics;Continuous_Variable_Type"/>
     </owl:NamedIndividual>
     
 
@@ -1158,7 +1189,7 @@ iii) On each trial, the probability of success is p and the probability of failu
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <analytics:hasVariableType rdf:resource="&analytics;Ordinal_Variable_Type"/>
+        <hasVariableType rdf:resource="&analytics;Ordinal_Variable_Type"/>
     </owl:NamedIndividual>
     
 
@@ -1179,7 +1210,7 @@ iii) On each trial, the probability of success is p and the probability of failu
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <analytics:hasVariableType rdf:resource="&analytics;Continuous_Variable_Type"/>
+        <hasVariableType rdf:resource="&analytics;Continuous_Variable_Type"/>
     </owl:NamedIndividual>
     
 
@@ -1200,7 +1231,7 @@ iii) On each trial, the probability of success is p and the probability of failu
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <analytics:hasVariableType rdf:resource="&analytics;Non_Negative_Variable_Type"/>
+        <hasVariableType rdf:resource="&analytics;Non_Negative_Variable_Type"/>
     </owl:NamedIndividual>
     
 
@@ -1221,7 +1252,7 @@ iii) On each trial, the probability of success is p and the probability of failu
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <analytics:hasVariableType rdf:resource="&analytics;Binary_Variable_Type"/>
+        <hasVariableType rdf:resource="&analytics;Binary_Variable_Type"/>
     </owl:NamedIndividual>
     
 
@@ -1242,7 +1273,7 @@ iii) On each trial, the probability of success is p and the probability of failu
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <analytics:hasVariableType rdf:resource="&analytics;Integer_Variable_Type"/>
+        <hasVariableType rdf:resource="&analytics;Integer_Variable_Type"/>
     </owl:NamedIndividual>
     
 
@@ -1263,7 +1294,7 @@ iii) On each trial, the probability of success is p and the probability of failu
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <analytics:hasVariableType rdf:resource="&analytics;Non_Negative_Variable_Type"/>
+        <hasVariableType rdf:resource="&analytics;Non_Negative_Variable_Type"/>
     </owl:NamedIndividual>
     
 
@@ -1284,7 +1315,7 @@ iii) On each trial, the probability of success is p and the probability of failu
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <analytics:hasVariableType rdf:resource="&analytics;Categorical_Variable_Type"/>
+        <hasVariableType rdf:resource="&analytics;Categorical_Variable_Type"/>
     </owl:NamedIndividual>
     
 
@@ -1305,7 +1336,7 @@ iii) On each trial, the probability of success is p and the probability of failu
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <analytics:hasVariableType rdf:resource="&analytics;Continuous_Variable_Type"/>
+        <hasVariableType rdf:resource="&analytics;Continuous_Variable_Type"/>
     </owl:NamedIndividual>
     
 
@@ -1332,6 +1363,16 @@ iii) On each trial, the probability of success is p and the probability of failu
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="&analytics;Binary_Variable_Type"/>
+            <rdf:Description rdf:about="&analytics;Categorical_Variable_Type"/>
+            <rdf:Description rdf:about="&analytics;Continuous_Variable_Type"/>
+            <rdf:Description rdf:about="&analytics;Integer_Variable_Type"/>
+            <rdf:Description rdf:about="&analytics;Ordinal_Variable_Type"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
             <rdf:Description rdf:about="&analytics;acceleration"/>
             <rdf:Description rdf:about="&analytics;cylinders"/>
             <rdf:Description rdf:about="&analytics;displacement"/>
@@ -1341,16 +1382,6 @@ iii) On each trial, the probability of success is p and the probability of failu
             <rdf:Description rdf:about="&analytics;mpg"/>
             <rdf:Description rdf:about="&analytics;origin"/>
             <rdf:Description rdf:about="&analytics;weight"/>
-        </owl:distinctMembers>
-    </rdf:Description>
-    <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDifferent"/>
-        <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&analytics;Binary_Variable_Type"/>
-            <rdf:Description rdf:about="&analytics;Categorical_Variable_Type"/>
-            <rdf:Description rdf:about="&analytics;Continuous_Variable_Type"/>
-            <rdf:Description rdf:about="&analytics;Integer_Variable_Type"/>
-            <rdf:Description rdf:about="&analytics;Ordinal_Variable_Type"/>
         </owl:distinctMembers>
     </rdf:Description>
 </rdf:RDF>
