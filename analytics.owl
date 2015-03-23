@@ -203,6 +203,12 @@
     
 
 
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Algorithm -->
+
+    <owl:Class rdf:about="&analytics;Algorithm"/>
+    
+
+
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Bernoulli_Distribution -->
 
     <owl:Class rdf:about="&analytics;Bernoulli_Distribution">
@@ -248,6 +254,14 @@ iii) On each trial, the probability of success is p and the probability of failu
     
 
 
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Cholesky_Factorization -->
+
+    <owl:Class rdf:about="&analytics;Cholesky_Factorization">
+        <rdfs:subClassOf rdf:resource="&analytics;Algorithm"/>
+    </owl:Class>
+    
+
+
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Continuous -->
 
     <owl:Class rdf:about="&analytics;Continuous">
@@ -274,6 +288,14 @@ iii) On each trial, the probability of success is p and the probability of failu
     <owl:Class rdf:about="&analytics;Distribution">
         <rdfs:label xml:lang="en">Distribution</rdfs:label>
         <terms:description xml:lang="en">A probability distribution assigns a probability to each measurable subset of the possible outcomes of a random experiment, survey, or procedure of statistical inference.</terms:description>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Eigenvector_Approach -->
+
+    <owl:Class rdf:about="&analytics;Eigenvector_Approach">
+        <rdfs:subClassOf rdf:resource="&analytics;Singular_Value_Decomposition"/>
     </owl:Class>
     
 
@@ -313,17 +335,6 @@ iii) On each trial, the probability of success is p and the probability of failu
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&analytics;Exponential_Regression"/>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
-                        <owl:allValuesFrom rdf:resource="&analytics;Exponential_Distribution"/>
-                    </owl:Restriction>
-                </owl:intersectionOf>
-            </owl:Class>
-        </owl:equivalentClass>
-        <owl:equivalentClass>
-            <owl:Class>
-                <owl:intersectionOf rdf:parseType="Collection">
                     <rdf:Description rdf:about="&analytics;GZLM"/>
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="&analytics;hasPredictorVariable"/>
@@ -347,6 +358,17 @@ iii) On each trial, the probability of success is p and the probability of failu
                         <owl:onProperty rdf:resource="&analytics;hasLinkFunction"/>
                         <owl:onClass rdf:resource="&analytics;Log_Function"/>
                         <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&analytics;Exponential_Regression"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
+                        <owl:allValuesFrom rdf:resource="&analytics;Exponential_Distribution"/>
                     </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
@@ -454,12 +476,44 @@ iii) On each trial, the probability of success is p and the probability of failu
     
 
 
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Gaussian_Inverse -->
+
+    <owl:Class rdf:about="&analytics;Gaussian_Inverse">
+        <rdfs:subClassOf rdf:resource="&analytics;Algorithm"/>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Golub-Kahan-Reinsch -->
+
+    <owl:Class rdf:about="&analytics;Golub-Kahan-Reinsch">
+        <rdfs:subClassOf rdf:resource="&analytics;Singular_Value_Decomposition"/>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Householder_Rotations -->
+
+    <owl:Class rdf:about="&analytics;Householder_Rotations">
+        <rdfs:subClassOf rdf:resource="&analytics;Algorithm"/>
+    </owl:Class>
+    
+
+
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Identity_Function -->
 
     <owl:Class rdf:about="&analytics;Identity_Function">
         <rdfs:label xml:lang="en">Identity Function</rdfs:label>
         <rdfs:subClassOf rdf:resource="&analytics;Function"/>
         <terms:description xml:lang="en">The identity function, given a number x, returns x (the identity).</terms:description>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Implicit_QR_Shift -->
+
+    <owl:Class rdf:about="&analytics;Implicit_QR_Shift">
+        <rdfs:subClassOf rdf:resource="&analytics;Singular_Value_Decomposition"/>
     </owl:Class>
     
 
@@ -480,6 +534,14 @@ iii) On each trial, the probability of success is p and the probability of failu
         <rdfs:label xml:lang="en">Inverse Function</rdfs:label>
         <rdfs:subClassOf rdf:resource="&analytics;Function"/>
         <terms:description xml:lang="en">The inverse function is a function that reverses another function.</terms:description>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#LU_Factorization -->
+
+    <owl:Class rdf:about="&analytics;LU_Factorization">
+        <rdfs:subClassOf rdf:resource="&analytics;Algorithm"/>
     </owl:Class>
     
 
@@ -562,6 +624,14 @@ iii) On each trial, the probability of success is p and the probability of failu
     
 
 
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Modified_Gram_Schmidt_Orthogonalization -->
+
+    <owl:Class rdf:about="&analytics;Modified_Gram_Schmidt_Orthogonalization">
+        <rdfs:subClassOf rdf:resource="&analytics;QR_Factorization"/>
+    </owl:Class>
+    
+
+
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Multiple_Linear_Regression -->
 
     <owl:Class rdf:about="&analytics;Multiple_Linear_Regression">
@@ -572,12 +642,12 @@ iii) On each trial, the probability of success is p and the probability of failu
                     <rdf:Description rdf:about="&analytics;GLM"/>
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="&analytics;hasPredictorVariable"/>
-                        <owl:allValuesFrom>
+                        <owl:someValuesFrom>
                             <owl:Restriction>
                                 <owl:onProperty rdf:resource="&analytics;hasVariableType"/>
                                 <owl:allValuesFrom rdf:resource="&analytics;Continuous"/>
                             </owl:Restriction>
-                        </owl:allValuesFrom>
+                        </owl:someValuesFrom>
                     </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
@@ -706,17 +776,6 @@ iii) On each trial, the probability of success is p and the probability of failu
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&analytics;Poisson_Regression"/>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
-                        <owl:allValuesFrom rdf:resource="&analytics;Binomial_Distribution"/>
-                    </owl:Restriction>
-                </owl:intersectionOf>
-            </owl:Class>
-        </owl:equivalentClass>
-        <owl:equivalentClass>
-            <owl:Class>
-                <owl:intersectionOf rdf:parseType="Collection">
                     <rdf:Description rdf:about="&analytics;GZLM"/>
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="&analytics;hasResponseVariable"/>
@@ -743,6 +802,17 @@ iii) On each trial, the probability of success is p and the probability of failu
                 </owl:intersectionOf>
             </owl:Class>
         </owl:equivalentClass>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&analytics;Poisson_Regression"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
+                        <owl:allValuesFrom rdf:resource="&analytics;Binomial_Distribution"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
         <rdfs:subClassOf rdf:resource="&analytics;GZLM"/>
     </owl:Class>
     
@@ -753,6 +823,14 @@ iii) On each trial, the probability of success is p and the probability of failu
     <owl:Class rdf:about="&analytics;Polynomial_Regression">
         <rdfs:label xml:lang="en">Polynomial Regression</rdfs:label>
         <rdfs:subClassOf rdf:resource="&analytics;GLM"/>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#QR_Factorization -->
+
+    <owl:Class rdf:about="&analytics;QR_Factorization">
+        <rdfs:subClassOf rdf:resource="&analytics;Algorithm"/>
     </owl:Class>
     
 
@@ -802,6 +880,14 @@ iii) On each trial, the probability of success is p and the probability of failu
         </owl:equivalentClass>
         <rdfs:subClassOf rdf:resource="&analytics;Multiple_Linear_Regression"/>
         <terms:alternative xml:lang="en">SLR</terms:alternative>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Singular_Value_Decomposition -->
+
+    <owl:Class rdf:about="&analytics;Singular_Value_Decomposition">
+        <rdfs:subClassOf rdf:resource="&analytics;Algorithm"/>
     </owl:Class>
     
 
@@ -892,6 +978,14 @@ iii) On each trial, the probability of success is p and the probability of failu
 
     <owl:NamedIndividual rdf:about="&analytics;Continuous_Variable_Type">
         <rdf:type rdf:resource="&analytics;Continuous"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Exponential_Distribution_Instance -->
+
+    <owl:NamedIndividual rdf:about="&analytics;Exponential_Distribution_Instance">
+        <rdf:type rdf:resource="&analytics;Exponential_Distribution"/>
     </owl:NamedIndividual>
     
 
@@ -1363,16 +1457,6 @@ iii) On each trial, the probability of success is p and the probability of failu
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&analytics;Binary_Variable_Type"/>
-            <rdf:Description rdf:about="&analytics;Categorical_Variable_Type"/>
-            <rdf:Description rdf:about="&analytics;Continuous_Variable_Type"/>
-            <rdf:Description rdf:about="&analytics;Integer_Variable_Type"/>
-            <rdf:Description rdf:about="&analytics;Ordinal_Variable_Type"/>
-        </owl:distinctMembers>
-    </rdf:Description>
-    <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDifferent"/>
-        <owl:distinctMembers rdf:parseType="Collection">
             <rdf:Description rdf:about="&analytics;acceleration"/>
             <rdf:Description rdf:about="&analytics;cylinders"/>
             <rdf:Description rdf:about="&analytics;displacement"/>
@@ -1382,6 +1466,16 @@ iii) On each trial, the probability of success is p and the probability of failu
             <rdf:Description rdf:about="&analytics;mpg"/>
             <rdf:Description rdf:about="&analytics;origin"/>
             <rdf:Description rdf:about="&analytics;weight"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="&analytics;Binary_Variable_Type"/>
+            <rdf:Description rdf:about="&analytics;Categorical_Variable_Type"/>
+            <rdf:Description rdf:about="&analytics;Continuous_Variable_Type"/>
+            <rdf:Description rdf:about="&analytics;Integer_Variable_Type"/>
+            <rdf:Description rdf:about="&analytics;Ordinal_Variable_Type"/>
         </owl:distinctMembers>
     </rdf:Description>
 </rdf:RDF>
