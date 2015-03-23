@@ -1,14 +1,10 @@
 package apps.analytics
 
-import scala.language.reflectiveCalls
-
 import org.scalatest._
-
-import org.semanticweb.HermiT.{ Reasoner => HermiTReasoner }
-
+import org.semanticweb.HermiT.{Reasoner => HermiTReasoner}
 import uk.ac.manchester.cs.jfact.JFactFactory
 
-import org.semanticweb.owlapi.model.OWLIndividual
+import scala.language.reflectiveCalls
 
 /**
  * 
@@ -31,13 +27,13 @@ class AnalyticsTestSuite extends FunSuite with GivenWhenThen
     test ("The ontology should be consistent with all supported reasoners")
     {
         // test with HermiT
-        Given ("the unalterted ontology")
+        Given ("the unaltered ontology")
         When ("using HermiT")
         Then ("the ontology should be consistent")
         assert (fixture.hreasoner.isConsistent ())
 
         // test with JFact
-        Given ("the unalterted ontology")
+        Given ("the unaltered ontology")
         When ("using JFact")
         Then ("the ontology should be consistent")
         assert (fixture.jreasoner.isConsistent ())
