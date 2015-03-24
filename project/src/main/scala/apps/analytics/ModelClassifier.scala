@@ -81,7 +81,7 @@ object ModelClassifierInferenceTest extends App
     println("\nAll (direct + indirect) inferred types of:" + sfProvıder.getShortForm(genericModel))
 
     //Retrieve Both direct and indirect inferred types.
-    val allTypes = hreasoner.getTypes(genericModel, false)
+    val allTypes = hreasoner.getTypes(genericModel, false) // get all inferred types
     for (modelType <- allTypes.getFlattened){
         println("\t" + sfProvıder.getShortForm(modelType))
     }
