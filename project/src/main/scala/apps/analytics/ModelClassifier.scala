@@ -73,7 +73,7 @@ object ModelClassifierInferenceTest extends App
 
     println("Direct Inferred types of:" + sfProvıder.getShortForm(genericModel))
     //Only retrieve direct inferred types.
-    val directTypes = hreasoner.getTypes(genericModel, true)
+    val directTypes = hreasoner.getTypes(genericModel, true) // only get direct inferred types
     for (modelType <- directTypes.getFlattened){
         println("\t" + sfProvıder.getShortForm(modelType))
     }
