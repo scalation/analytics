@@ -3,14 +3,11 @@ package apps.analytics
 import java.io.File
 import java.net.URI
 
-import org.semanticweb.owlapi.model.{ IRI, OWLOntology, OWLOntologyManager }
 import org.semanticweb.owlapi.apibinding.OWLManager
+import org.semanticweb.owlapi.model.{IRI, OWLOntology}
 
 object AnalyticsOntology
 {
-
-    /** The return type of various loading functions. */
-    type MO = Tuple2[OWLOntologyManager, OWLOntology]
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     /** The default IRI for the ScalaTion Analytics Ontology 
@@ -26,18 +23,17 @@ object AnalyticsOntology
     /** Load an ontology from a given IRI 
      *  @param iri  the IRI of the ontology
      */
-    private def load (iri: IRI): MO =
+    private def load (iri: IRI): OWLOntology =
     {
         val manager  = OWLManager.createOWLOntologyManager()
-        val ontology = manager.loadOntologyFromOntologyDocument(iri)
-        (manager, ontology)
+        manager.loadOntologyFromOntologyDocument(iri)
     } // load
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     /** Load the ScalaTion Analytics Ontology locally from the default file
      *  path. 
      */
-    def loadLocal (): MO =
+    def loadLocal (): OWLOntology =
     {
         load(AnalyticsOntology.localIRI(new File("../analytics.owl")))
     } // loadLocal
@@ -45,9 +41,9 @@ object AnalyticsOntology
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     /** Load the ScalaTion Analytics Ontology locally from the specified file
      *  path. 
-     *   @parm file  the file containing the ontology
+     *   @param file  the file containing the ontology
      */
-    def loadLocal (file: File): MO =
+    def loadLocal (file: File): OWLOntology =
     {
         load(AnalyticsOntology.localIRI(file))
     } // loadLocal
@@ -56,7 +52,7 @@ object AnalyticsOntology
     /** Load the ScalaTion Analytics Ontology locally from the default remote
      *  location.
      */
-    def loadRemote (): MO =
+    def loadRemote (): OWLOntology =
     {
         load(AnalyticsOntology.remoteIRI)
     } // loadRemote
@@ -66,7 +62,7 @@ object AnalyticsOntology
      *  location.
      *   @param uri  the URI of the remote ontology
      */
-    def loadRemote (uri: URI): MO =
+    def loadRemote (uri: URI): OWLOntology =
     {
         load(IRI.create(uri))
     } // loadRemote
