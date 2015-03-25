@@ -17,10 +17,10 @@ class AnalyticsTestSuite extends FunSuite with GivenWhenThen
       */
     def fixture = {
         new {
-            val (manager, ontology) = AnalyticsOntology.loadLocal ()
+            val ontology = AnalyticsOntology.loadLocal ()
             val hreasoner = (new HermiTReasoner.ReasonerFactory()).createReasoner (ontology);
             val jreasoner = (new JFactFactory()).createReasoner (ontology)
-            val factory   = manager.getOWLDataFactory ()
+            val factory   = ontology.getOWLOntologyManager.getOWLDataFactory ()
         } // new
     } // fixture
 

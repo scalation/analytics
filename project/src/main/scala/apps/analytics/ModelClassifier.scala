@@ -20,7 +20,7 @@ object ModelClassifier
  */
 object ModelClassifierConsistencyTest extends App
 {
-    val (manager, ontology) = AnalyticsOntology.loadRemote ()
+    val ontology = AnalyticsOntology.loadRemote ()
     
     val hreasoner = (new HermiTReasoner.ReasonerFactory()).createReasoner (ontology);
     val jreasoner = (new JFactFactory()).createReasoner (ontology)
@@ -33,11 +33,11 @@ object ModelClassifierConsistencyTest extends App
 
 object ModelClassifierInferenceTest extends App
 {
-    val (manager, ontology) = AnalyticsOntology.loadLocal()
-    val dataFactory: OWLDataFactory = manager.getOWLDataFactory
+    val ontology = AnalyticsOntology.loadLocal()
+    val dataFactory: OWLDataFactory = ontology.getOWLOntologyManager.getOWLDataFactory
 
     // Short form provider using qname prefixes. e.g., owl:Thing, analytics:Model etc.
-    val sfProvıder = new BidirectionalShortFormProviderAdapter(manager, ontology.getImportsClosure(), new QNameShortFormProvider())
+    val sfProvıder = new BidirectionalShortFormProviderAdapter(ontology.getOWLOntologyManager, ontology.getImportsClosure(), new QNameShortFormProvider())
 
     // Hermit reasoner used for retrieving the inferred axioms.
     val hreasoner = (new HermiTReasoner.ReasonerFactory()).createReasoner (ontology)
@@ -85,5 +85,10 @@ object ModelClassifierInferenceTest extends App
     for (modelType <- allTypes.getFlattened){
         println("\t" + sfProvıder.getShortForm(modelType))
     }
+
+}
+
+object ModelClassifierInferenceTest2 extends App
+{
 
 }
