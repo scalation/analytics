@@ -90,5 +90,22 @@ object ModelClassifierInferenceTest extends App
 
 object ModelClassifierInferenceTest2 extends App
 {
+    val ontology = new AnalyticsOntology(AnalyticsOntologyFactory.loadRemote())
+    val model = ontology.retrieveIndividual("analytics:GenericModel")
+
+    println("Direct Inferred types of:\t" + ontology.getShortForm(model))
+    //Only retrieve direct inferred types.
+    val modelTypes = ontology.retrieveTypes(model)
+    for (modelType <- modelTypes){
+        println("\t" + ontology.getShortForm(modelType))
+    }
+
+    println("All Inferred types of:\t" + ontology.getShortForm(model))
+    //Retrieve both direct and indirect inferred types.
+    val modelTypesAll = ontology.retrieveTypes(model,false)
+    for (modelType <- modelTypesAll){
+        println("\t" + ontology.getShortForm(modelType))
+    }
+
 
 }

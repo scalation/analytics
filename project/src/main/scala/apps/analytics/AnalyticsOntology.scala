@@ -1,71 +1,52 @@
 package apps.analytics
 
-import java.io.File
-import java.net.URI
+import org.semanticweb.HermiT.{Reasoner => HermiTReasoner}
+import org.semanticweb.owlapi.model.{OWLEntity, OWLNamedIndividual, OWLOntology}
+import org.semanticweb.owlapi.util.{BidirectionalShortFormProviderAdapter, QNameShortFormProvider}
 
-import org.semanticweb.owlapi.apibinding.OWLManager
-import org.semanticweb.owlapi.model.{IRI, OWLOntology}
-
-object AnalyticsOntology
+class AnalyticsOntology (ontology: OWLOntology)
 {
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-    /** The default IRI for the ScalaTion Analytics Ontology 
+    /** The ontology manager  
      */
-    val remoteIRI = IRI.create("https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl")
+    val manager = ontology.getOWLOntologyManager
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-    /** A local IRI for the ScalaTion Analytics Ontology based on a `File` path.
-     */
-    def localIRI (file: File) = IRI.create(file.toURI())
+    /** The short form provider to avoid using the full IRI of an entity 
+      * during search. Currently, it is using qname short form provider which 
+      * allows forms such as owl:Thing, analytics:Model, etc.
+      */
+    val sfProvıder = new BidirectionalShortFormProviderAdapter(manager, ontology.getImportsClosure(), new QNameShortFormProvider())
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-    /** Load an ontology from a given IRI 
-     *  @param iri  the IRI of the ontology
-     */
-    private def load (iri: IRI): OWLOntology =
+    /** The reasoner used for inference. Loads HermiT Reasoner by default.
+      * This might be configurable in the future.
+      */
+    val hreasoner = (new HermiTReasoner.ReasonerFactory()).createReasoner (ontology)
+
+    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+    /** Retrieve short form of an entity as a String.  
+      *  @param entity the entity for which the short form is required.
+      */
+    def getShortForm(entity: OWLEntity): String = sfProvıder.getShortForm(entity)
+
+    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+    /** Retrieve the individual identified with the given qualified name.
+      *  @param qName  The qualified name of the individual. eg., analytics:GenericModel.
+      */
+    def retrieveIndividual (qName : String) : OWLNamedIndividual =
     {
-        val manager  = OWLManager.createOWLOntologyManager()
-        manager.loadOntologyFromOntologyDocument(iri)
-    } // load
+        ontology.getEntitiesInSignature(sfProvıder.getEntity(qName).getIRI).iterator().next().asOWLNamedIndividual()
+    }
 
-    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-    /** Load the ScalaTion Analytics Ontology locally from the default file
-     *  path. 
-     */
-    def loadLocal (): OWLOntology =
+    def retrieveTypes(individual: OWLNamedIndividual, isDirect: Boolean = true) =
     {
-        load(AnalyticsOntology.localIRI(new File("../analytics.owl")))
-    } // loadLocal
+        hreasoner.precomputeInferences()
+        hreasoner.getTypes(individual, isDirect).getFlattened
+    }
 
-    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-    /** Load the ScalaTion Analytics Ontology locally from the specified file
-     *  path. 
-     *   @param file  the file containing the ontology
-     */
-    def loadLocal (file: File): OWLOntology =
-    {
-        load(AnalyticsOntology.localIRI(file))
-    } // loadLocal
+}
 
-    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-    /** Load the ScalaTion Analytics Ontology locally from the default remote
-     *  location.
-     */
-    def loadRemote (): OWLOntology =
-    {
-        load(AnalyticsOntology.remoteIRI)
-    } // loadRemote
-
-    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-    /** Load the ScalaTion Analytics Ontology locally from the specified remote
-     *  location.
-     *   @param uri  the URI of the remote ontology
-     */
-    def loadRemote (uri: URI): OWLOntology =
-    {
-        load(IRI.create(uri))
-    } // loadRemote
-
-} // AnalyticsOntology
+// AnalyticsOntology
 
