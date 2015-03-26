@@ -40,6 +40,12 @@ class AnalyticsOntology (ontology: OWLOntology)
         ontology.getEntitiesInSignature(sfProvıder.getEntity(qName).getIRI).iterator().next().asOWLNamedIndividual()
     }
 
+    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+    /** Retrieve the individual identified with the given qualified name.
+      *  @param individual OWLNamedIndividual
+      *  @param isDirect indicates whether only directly inferenced types
+      *                  should be returned or not
+      */
     def retrieveTypes(individual: OWLNamedIndividual, isDirect: Boolean = true) =
     {
         hreasoner.precomputeInferences()
