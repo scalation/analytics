@@ -20,7 +20,7 @@ object ModelClassifier
  */
 object ModelClassifierConsistencyTest extends App
 {
-    val ontology = AnalyticsOntology.loadRemote ()
+    val ontology = AnalyticsOntologyFactory.loadRemote ()
     
     val hreasoner = (new HermiTReasoner.ReasonerFactory()).createReasoner (ontology);
     val jreasoner = (new JFactFactory()).createReasoner (ontology)
@@ -33,7 +33,7 @@ object ModelClassifierConsistencyTest extends App
 
 object ModelClassifierInferenceTest extends App
 {
-    val ontology = AnalyticsOntology.loadLocal()
+    val ontology = AnalyticsOntologyFactory.loadLocal()
     val dataFactory: OWLDataFactory = ontology.getOWLOntologyManager.getOWLDataFactory
 
     // Short form provider using qname prefixes. e.g., owl:Thing, analytics:Model etc.
