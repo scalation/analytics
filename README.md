@@ -6,8 +6,10 @@ specifications to be declared then classified using ontological inferencing.
 
 ### Build Status
 
- * ```master ``` [![Build Status](https://travis-ci.org/scalation/analytics.svg?branch=master)](https://travis-ci.org/scalation/analytics)
- * ```develop``` [![Build Status](https://travis-ci.org/scalation/analytics.svg?branch=develop)](https://travis-ci.org/scalation/analytics) 
+| Branch | Status |
+| ------ | ------ |
+| ```master ``` | [![Build Status](https://travis-ci.org/scalation/analytics.svg?branch=master)](https://travis-ci.org/scalation/analytics) |
+| ```develop``` | [![Build Status](https://travis-ci.org/scalation/analytics.svg?branch=develop)](https://travis-ci.org/scalation/analytics) |
 
 ### Download
 
