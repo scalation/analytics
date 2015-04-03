@@ -9,6 +9,13 @@ specifications to be declared then classified using ontological inferencing.
  * Ontology IRI: ```https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl```
  * Latest stable release: [analytics.owl](https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl)
 
+### Build Status
+
+| Branch | Status |
+| ------ | ------ |
+| ```master ``` | [![Build Status](https://travis-ci.org/scalation/analytics.svg?branch=master)](https://travis-ci.org/scalation/analytics) |
+| ```develop``` | [![Build Status](https://travis-ci.org/scalation/analytics.svg?branch=develop)](https://travis-ci.org/scalation/analytics) |
+
 ### Want to Contribute?
 
 Feel free to fork our repository. Please make any pull requests against
