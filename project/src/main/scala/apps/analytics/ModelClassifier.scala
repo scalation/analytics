@@ -39,7 +39,7 @@ object ModelClassifierInferenceTest extends App
     val dataFactory: OWLDataFactory = ontology.getOWLOntologyManager.getOWLDataFactory
 
     // Short form provider using qname prefixes. e.g., owl:Thing, analytics:Model etc.
-    val sfProvıder = new BidirectionalShortFormProviderAdapter(ontology.getOWLOntologyManager, ontology.getImportsClosure(), new QNameShortFormProvider())
+    val sfProvider = new BidirectionalShortFormProviderAdapter(ontology.getOWLOntologyManager, ontology.getImportsClosure(), new QNameShortFormProvider())
 
     // Hermit reasoner used for retrieving the inferred axioms.
     val hreasoner = (new HermiTReasoner.ReasonerFactory()).createReasoner (ontology)
@@ -52,7 +52,7 @@ object ModelClassifierInferenceTest extends App
     // Manchester Syntax Class Expression queries could be issued.
 
     val parser: ManchesterOWLSyntaxEditorParser = new ManchesterOWLSyntaxEditorParser(dataFactory, classExpressionQuery)
-    val entityChecker: OWLEntityChecker = new ShortFormEntityChecker(sfProvıder)
+    val entityChecker: OWLEntityChecker = new ShortFormEntityChecker(sfProvider)
     parser.setDefaultOntology(ontology)
     parser.setOWLEntityChecker(entityChecker)
 
@@ -61,7 +61,7 @@ object ModelClassifierInferenceTest extends App
     // Retrieve all generic models which are instances of owl:Thing
     println("Direct instances of owl:Thing")
     for (individual <- instances.getFlattened){
-    println("\t" + sfProvıder.getShortForm(individual))
+    println("\t" + sfProvider.getShortForm(individual))
     }
     println()
 
@@ -70,22 +70,22 @@ object ModelClassifierInferenceTest extends App
     val model = "analytics:GenericModel"
 
     hreasoner.precomputeInferences()
-    val genericModel = ontology.getEntitiesInSignature(sfProvıder.getEntity(model).getIRI).iterator().next().asOWLNamedIndividual()
+    val genericModel = ontology.getEntitiesInSignature(sfProvider.getEntity(model).getIRI).iterator().next().asOWLNamedIndividual()
 
 
-    println("Direct Inferred types of:" + sfProvıder.getShortForm(genericModel))
+    println("Direct Inferred types of:" + sfProvider.getShortForm(genericModel))
     //Only retrieve direct inferred types.
     val directTypes = hreasoner.getTypes(genericModel, true) // only get direct inferred types
     for (modelType <- directTypes.getFlattened){
-        println("\t" + sfProvıder.getShortForm(modelType))
+        println("\t" + sfProvider.getShortForm(modelType))
     }
 
-    println("\nAll (direct + indirect) inferred types of:" + sfProvıder.getShortForm(genericModel))
+    println("\nAll (direct + indirect) inferred types of:" + sfProvider.getShortForm(genericModel))
 
     //Retrieve Both direct and indirect inferred types.
     val allTypes = hreasoner.getTypes(genericModel, false) // get all inferred types
     for (modelType <- allTypes.getFlattened){
-        println("\t" + sfProvıder.getShortForm(modelType))
+        println("\t" + sfProvider.getShortForm(modelType))
     }
 
 }
