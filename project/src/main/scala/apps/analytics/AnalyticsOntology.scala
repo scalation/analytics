@@ -17,7 +17,7 @@ class AnalyticsOntology (ontology: OWLOntology)
       * during search. Currently, it is using qname short form provider which 
       * allows forms such as owl:Thing, analytics:Model, etc.
       */
-    val sfProvıder = new BidirectionalShortFormProviderAdapter(manager, ontology.getImportsClosure(), new QNameShortFormProvider())
+    val sfProvider = new BidirectionalShortFormProviderAdapter(manager, ontology.getImportsClosure(), new QNameShortFormProvider())
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     /** The reasoner used for inference. Loads HermiT Reasoner by default.
@@ -29,7 +29,7 @@ class AnalyticsOntology (ontology: OWLOntology)
     /** Retrieve short form of an entity as a String.  
       *  @param entity the entity for which the short form is required.
       */
-    def getShortForm(entity: OWLEntity): String = sfProvıder.getShortForm(entity)
+    def getShortForm(entity: OWLEntity): String = sfProvider.getShortForm(entity)
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     /** Retrieve the individual identified with the given qualified name.
@@ -37,7 +37,7 @@ class AnalyticsOntology (ontology: OWLOntology)
       */
     def retrieveIndividual (qName : String) : OWLNamedIndividual =
     {
-        ontology.getEntitiesInSignature(sfProvıder.getEntity(qName).getIRI).iterator().next().asOWLNamedIndividual()
+        ontology.getEntitiesInSignature(sfProvider.getEntity(qName).getIRI).iterator().next().asOWLNamedIndividual()
     }
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -50,6 +50,7 @@ class AnalyticsOntology (ontology: OWLOntology)
     {
         hreasoner.precomputeInferences()
         hreasoner.getTypes(individual, isDirect).getFlattened
+
     }
 
 }
