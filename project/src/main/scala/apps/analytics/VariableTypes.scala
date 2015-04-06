@@ -5,11 +5,18 @@ package apps.analytics
  */
 object VariableTypes{
 
+    /** The sealed abstract class VariableType to provide enumeration of Variable Types
+      */
+
     sealed abstract class VariableType(
         val ontologyID    : String,
         val label         : String
     ){
+
+        // The qualified name in Analytics ontology for the variable type
         val qName = "analytics:" + ontologyID
+
+        // Return label by default
         override def toString = label
     }
 
