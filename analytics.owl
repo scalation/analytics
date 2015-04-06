@@ -335,6 +335,17 @@ iii) On each trial, the probability of success is p and the probability of failu
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&analytics;Exponential_Regression"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
+                        <owl:allValuesFrom rdf:resource="&analytics;Exponential_Distribution"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
                     <rdf:Description rdf:about="&analytics;GZLM"/>
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="&analytics;hasPredictorVariable"/>
@@ -358,17 +369,6 @@ iii) On each trial, the probability of success is p and the probability of failu
                         <owl:onProperty rdf:resource="&analytics;hasLinkFunction"/>
                         <owl:onClass rdf:resource="&analytics;Log_Function"/>
                         <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
-                    </owl:Restriction>
-                </owl:intersectionOf>
-            </owl:Class>
-        </owl:equivalentClass>
-        <owl:equivalentClass>
-            <owl:Class>
-                <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&analytics;Exponential_Regression"/>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
-                        <owl:allValuesFrom rdf:resource="&analytics;Exponential_Distribution"/>
                     </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
@@ -503,9 +503,7 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Identity_Function -->
 
     <owl:Class rdf:about="&analytics;Identity_Function">
-        <rdfs:label xml:lang="en">Identity Function</rdfs:label>
         <rdfs:subClassOf rdf:resource="&analytics;Function"/>
-        <terms:description xml:lang="en">The identity function, given a number x, returns x (the identity).</terms:description>
     </owl:Class>
     
 
@@ -549,10 +547,7 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Log_Function -->
 
     <owl:Class rdf:about="&analytics;Log_Function">
-        <rdfs:label xml:lang="en">Log Function</rdfs:label>
         <rdfs:subClassOf rdf:resource="&analytics;Function"/>
-        <terms:alternative xml:lang="en">Natural Log Function</terms:alternative>
-        <terms:description xml:lang="en">The natural logarithm function, given a number x, produces a result y such that x = exp(y).</terms:description>
     </owl:Class>
     
 
@@ -601,9 +596,7 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Logit_Function -->
 
     <owl:Class rdf:about="&analytics;Logit_Function">
-        <rdfs:label xml:lang="en">Logit Function</rdfs:label>
         <rdfs:subClassOf rdf:resource="&analytics;Function"/>
-        <terms:description xml:lang="en">The logit function is the inverse of the logistic transform.</terms:description>
     </owl:Class>
     
 
@@ -776,6 +769,17 @@ iii) On each trial, the probability of success is p and the probability of failu
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&analytics;Poisson_Regression"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
+                        <owl:allValuesFrom rdf:resource="&analytics;Binomial_Distribution"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
                     <rdf:Description rdf:about="&analytics;GZLM"/>
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="&analytics;hasResponseVariable"/>
@@ -798,17 +802,6 @@ iii) On each trial, the probability of success is p and the probability of failu
                             </owl:Class>
                         </owl:onClass>
                         <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
-                    </owl:Restriction>
-                </owl:intersectionOf>
-            </owl:Class>
-        </owl:equivalentClass>
-        <owl:equivalentClass>
-            <owl:Class>
-                <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&analytics;Poisson_Regression"/>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
-                        <owl:allValuesFrom rdf:resource="&analytics;Binomial_Distribution"/>
                     </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
@@ -1222,18 +1215,18 @@ iii) On each trial, the probability of success is p and the probability of failu
     
 
 
-    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Non_Negative_Integer_Variable_Type -->
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Non_Negative_Continuous_Variable_Type -->
 
-    <owl:NamedIndividual rdf:about="&analytics;Non_Negative_Integer_Variable_Type">
-        <rdf:type rdf:resource="&analytics;Non_Negative_Integer"/>
+    <owl:NamedIndividual rdf:about="&analytics;Non_Negative_Continuous_Variable_Type">
+        <rdf:type rdf:resource="&analytics;Non_Negative_Continuous"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Non_Negative_Variable_Type -->
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Non_Negative_Integer_Variable_Type -->
 
-    <owl:NamedIndividual rdf:about="&analytics;Non_Negative_Variable_Type">
-        <rdf:type rdf:resource="&analytics;Non_Negative_Continuous"/>
+    <owl:NamedIndividual rdf:about="&analytics;Non_Negative_Integer_Variable_Type">
+        <rdf:type rdf:resource="&analytics;Non_Negative_Integer"/>
     </owl:NamedIndividual>
     
 
@@ -1319,13 +1312,13 @@ iii) On each trial, the probability of success is p and the probability of failu
                 <owl:allValuesFrom>
                     <owl:Class>
                         <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;Non_Negative_Variable_Type"/>
+                            <rdf:Description rdf:about="&analytics;Non_Negative_Continuous_Variable_Type"/>
                         </owl:oneOf>
                     </owl:Class>
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <hasVariableType rdf:resource="&analytics;Non_Negative_Variable_Type"/>
+        <hasVariableType rdf:resource="&analytics;Non_Negative_Continuous_Variable_Type"/>
     </owl:NamedIndividual>
     
 
@@ -1382,13 +1375,13 @@ iii) On each trial, the probability of success is p and the probability of failu
                 <owl:allValuesFrom>
                     <owl:Class>
                         <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;Non_Negative_Variable_Type"/>
+                            <rdf:Description rdf:about="&analytics;Non_Negative_Continuous_Variable_Type"/>
                         </owl:oneOf>
                     </owl:Class>
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <hasVariableType rdf:resource="&analytics;Non_Negative_Variable_Type"/>
+        <hasVariableType rdf:resource="&analytics;Non_Negative_Continuous_Variable_Type"/>
     </owl:NamedIndividual>
     
 
@@ -1438,22 +1431,35 @@ iii) On each trial, the probability of success is p and the probability of failu
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
+    // Annotations
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description rdf:about="&analytics;Identity_Function">
+        <rdfs:label xml:lang="en">Identity Function</rdfs:label>
+        <terms:description xml:lang="en">The identity function, given a number x, returns x (the identity).</terms:description>
+    </rdf:Description>
+    <rdf:Description rdf:about="&analytics;Log_Function">
+        <rdfs:label xml:lang="en">Log Function</rdfs:label>
+        <terms:alternative xml:lang="en">Natural Log Function</terms:alternative>
+        <terms:description xml:lang="en">The natural logarithm function, given a number x, produces a result y such that x = exp(y).</terms:description>
+    </rdf:Description>
+    <rdf:Description rdf:about="&analytics;Logit_Function">
+        <rdfs:label xml:lang="en">Logit Function</rdfs:label>
+        <terms:description xml:lang="en">The logit function is the inverse of the logistic transform.</terms:description>
+    </rdf:Description>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
     // General axioms
     //
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
-    <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
-        <owl:members rdf:parseType="Collection">
-            <rdf:Description rdf:about="&analytics;Identity_Function"/>
-            <rdf:Description rdf:about="&analytics;Inverse_Function"/>
-            <rdf:Description rdf:about="&analytics;Log_Function"/>
-            <rdf:Description rdf:about="&analytics;Logit_Function"/>
-            <rdf:Description rdf:about="&analytics;Reciprocal_Function"/>
-            <rdf:Description rdf:about="&analytics;Square_Root_Function"/>
-        </owl:members>
-    </rdf:Description>
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
@@ -1478,9 +1484,20 @@ iii) On each trial, the probability of success is p and the probability of failu
             <rdf:Description rdf:about="&analytics;Ordinal_Variable_Type"/>
         </owl:distinctMembers>
     </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="&analytics;Identity_Function"/>
+            <rdf:Description rdf:about="&analytics;Inverse_Function"/>
+            <rdf:Description rdf:about="&analytics;Log_Function"/>
+            <rdf:Description rdf:about="&analytics;Logit_Function"/>
+            <rdf:Description rdf:about="&analytics;Reciprocal_Function"/>
+            <rdf:Description rdf:about="&analytics;Square_Root_Function"/>
+        </owl:members>
+    </rdf:Description>
 </rdf:RDF>
 
 
 
-<!-- Generated by the OWL API (version 3.5.0) http://owlapi.sourceforge.net -->
+<!-- Generated by the OWL API (version 3.5.1) http://owlapi.sourceforge.net -->
 
