@@ -6,8 +6,10 @@ package apps.analytics
 object VariableTypes{
 
     /** The sealed abstract class VariableType to provide enumeration of Variable Types
+      * @param ontologyID The ontology ID of this variable type. This needs to correspond
+      *                   to the ID in the Analytics ontology
+      * @param label    The descriptive label for this variable type.
       */
-
     sealed abstract class VariableType(
         val ontologyID    : String,
         val label         : String

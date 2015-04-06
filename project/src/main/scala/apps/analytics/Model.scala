@@ -30,6 +30,10 @@ class Model (){
     //val dataset : MatrixD = null
     //val responseColumn = null
 
+    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+    /** This method returns suitable model types from the ontology for the current
+      * state of this conceptual model
+      */
     def getModelTypes = {
         val ontology = new AnalyticsOntology(AnalyticsOntologyFactory.loadLocal())
         ontology.retrieveTypes(this)
