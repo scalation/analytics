@@ -205,8 +205,6 @@ object ModelClassifierCreationTest extends App
 
 object ModelClassifierCreationTest2 extends App
 {
-    val ontology = new AnalyticsOntology(AnalyticsOntologyFactory.loadRemote())
-
     val model = new Model
 
     val variableMPG = new Variable("MPG", true, VariableTypes.Non_Negative_Continuous)
