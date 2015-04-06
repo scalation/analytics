@@ -1,6 +1,5 @@
 package apps.analytics
 
-import java.io.FileOutputStream
 import java.util
 
 import apps.analytics.VariableTypes.VariableType
@@ -144,8 +143,6 @@ class AnalyticsOntology (ontology: OWLOntology)
         changes.add( linkFunctionAxiom )
 
         manager.applyChanges(manager.addAxioms(ontology, changes))
-
-        manager.saveOntology(ontology, new FileOutputStream("test.owl"))
 
         retrieveTypes(ontModel, isDirect)
 
