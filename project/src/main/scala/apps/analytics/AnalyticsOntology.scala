@@ -30,7 +30,6 @@ class AnalyticsOntology (ontology: OWLOntology)
       */
     val baseIRI = ontology.getOntologyID.getOntologyIRI
 
-
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     /** The short form provider to avoid using the full IRI of an entity 
       * during search. Currently, it is using qname short form provider which 
@@ -60,10 +59,10 @@ class AnalyticsOntology (ontology: OWLOntology)
     }
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-    /** Retrieve the individual identified with the given qualified name.
+    /** Retrieve the inferred model types for the given individual
       *  @param individual OWLNamedIndividual
-      *  @param isDirect indicates whether only directly inferenced types
-      *                  should be returned or not
+      *  @param isDirect indicates whether only directly inferred types
+      *                  should be returned
       */
     def retrieveTypes(individual: OWLNamedIndividual, isDirect: Boolean = true) : Set[OWLClass] =
     {
@@ -72,10 +71,20 @@ class AnalyticsOntology (ontology: OWLOntology)
 
     }
 
+    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+    /** Retrieve the inferred model types for the given conceptual dataset
+      *  @param model The conceptual model representing a dataset
+      */
     def retrieveTypes(model: Model): Set[OWLClass] ={
         retrieveTypes(model, true)
     }
 
+    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+    /** Retrieve the inferred model types for the given conceptual dataset/
+      *  @param model The conceptual model representing a dataset
+      *  @param isDirect indicates whether only directly inferred types
+      *                  should be returned
+      */
     def retrieveTypes(model: Model, isDirect: Boolean ) : Set[OWLClass] =
     {
         val changes = new util.HashSet[OWLAxiom]
@@ -143,6 +152,10 @@ class AnalyticsOntology (ontology: OWLOntology)
 
     }
 
+    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+    /** Return the ontology entity indicated by the given Variable Type
+      *  @param variableType The variable type enum
+    */
     def getVariableType(variableType: VariableType): OWLIndividual = {
 
         sfProvider.getEntity(variableType.qName).asOWLNamedIndividual()
