@@ -11,6 +11,8 @@ import org.semanticweb.owlapi.util.{BidirectionalShortFormProviderAdapter, QName
 import uk.ac.manchester.cs.jfact.JFactFactory
 
 import scala.collection.JavaConversions._
+import scalation.linalgebra.MatrixD
+import scalation.analytics.SimpleRegression
 
 object ModelClassifier
 {
@@ -217,4 +219,30 @@ object ModelClassifierCreationTest2 extends App
     for (modelType <- model.getModelTypes){
         println("\t" + modelType)
     }
+
+    val data = MatrixD("../../data/auto_mpg/mpg_hp_only.csv")
+    val response = data.col(0)
+    val predictor = MatrixD.form_cw (1.0, data.col(1))       // form matrix x from vector x1
+
+    val rg = new SimpleRegression (predictor, response)
+    rg.train()
+    println(rg.fit)
+
+}
+
+object ModelClassifierCreationTest3 extends App{
+    val model = new Model
+
+    val variableMPG = new Variable("MPG", true)
+    val variableHP = new Variable("HP", false)
+
+    model.variables += variableMPG
+    model.variables += variableHP
+
+    println("Suitable types for the current state of the model")
+    for (modelType <- model.getModelTypes){
+        println("\t" + modelType)
+    }
+
+
 }

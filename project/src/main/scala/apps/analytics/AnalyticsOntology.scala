@@ -67,7 +67,6 @@ class AnalyticsOntology (ontology: OWLOntology)
     {
         hreasoner.precomputeInferences()
         hreasoner.getTypes(individual, isDirect).getFlattened
-
     }
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -117,8 +116,11 @@ class AnalyticsOntology (ontology: OWLOntology)
             val typeAxiom = factory.getOWLClassAssertionAxiom(variableClass,ontVariable)
             changes.add(typeAxiom)
 
-            val variableTypeAxiom = factory.getOWLObjectPropertyAssertionAxiom(hasVariableType, ontVariable, getVariableType(variable.variableType))
-            changes.add(variableTypeAxiom)
+            if (variable.variableType != null)
+            {
+                val variableTypeAxiom = factory.getOWLObjectPropertyAssertionAxiom(hasVariableType, ontVariable, getVariableType(variable.variableType))
+                changes.add(variableTypeAxiom)
+            }
 
             if (variable.isResponse){
                 val responseVariableAxiom = factory.getOWLObjectPropertyAssertionAxiom(hasResponseVariable,ontModel, ontVariable)
@@ -140,7 +142,7 @@ class AnalyticsOntology (ontology: OWLOntology)
         changes.add(modelRestrictionAxiom)
 
         val linkFunctionAxiom = factory.getOWLObjectPropertyAssertionAxiom(hasLinkFunction, ontModel, identityLinkFunction)
-        changes.add( linkFunctionAxiom )
+        //changes.add( linkFunctionAxiom )
 
         manager.applyChanges(manager.addAxioms(ontology, changes))
 
