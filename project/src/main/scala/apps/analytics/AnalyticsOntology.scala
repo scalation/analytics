@@ -90,7 +90,8 @@ class AnalyticsOntology (ontology: OWLOntology)
         val variableClass = factory.getOWLClass(sfProvider.getEntity("analytics:Variable").getIRI)
         //val modelClass = factory.getOWLClass(sfProvider.getEntity("analytics:Model").getIRI)
         //val continuousVariableType = factory.getOWLNamedIndividual( sfProvider.getEntity("analytics:Non_Negative_Variable_Type").getIRI)
-        val identityLinkFunction = factory.getOWLNamedIndividual( sfProvider.getEntity("analytics:Identity_Function").getIRI)
+        val normalDistribution = factory.getOWLNamedIndividual(IRI.create(baseIRI + "#Normal_Distribution_Instance"))
+        //val identityLinkFunction = factory.getOWLNamedIndividual( sfProvider.getEntity("analytics:Identity_Function").getIRI)
 
         val hasVariable = factory.getOWLObjectProperty( IRI.create(baseIRI + "#hasVariable"))
         val hasResponseVariable = factory.getOWLObjectProperty( IRI.create(baseIRI + "#hasResponseVariable"))
@@ -98,7 +99,9 @@ class AnalyticsOntology (ontology: OWLOntology)
         val hasVariableType = factory.getOWLObjectProperty( IRI.create(baseIRI + "#hasVariableType"))
 
         val hasResidualDistribution = factory.getOWLObjectProperty( IRI.create(baseIRI + "#hasResidualDistribution"))
-        val hasLinkFunction = factory.getOWLObjectProperty( IRI.create(baseIRI + "#hasLinkFunction"))
+        //val hasLinkFunction = factory.getOWLObjectProperty( IRI.create(baseIRI + "#hasLinkFunction"))
+
+        val isDataIndependent = factory.getOWLDataProperty( IRI.create (baseIRI + "#isDataIndependent"))
 
         //Create a new individual for this model
         val ontModel = factory.getOWLNamedIndividual( IRI.create( baseIRI + "#" + model.id))
@@ -136,13 +139,25 @@ class AnalyticsOntology (ontology: OWLOntology)
         val variableDifferentIndividualsAxiom = factory.getOWLDifferentIndividualsAxiom(variables)
         changes.add(variableDifferentIndividualsAxiom)
 
-        val objectOneOf = factory.getOWLObjectOneOf(variables)
-        val allValuesFromExpression = factory.getOWLObjectAllValuesFrom(hasVariable, objectOneOf)
-        val modelRestrictionAxiom = factory.getOWLClassAssertionAxiom(allValuesFromExpression, ontModel)
-        changes.add(modelRestrictionAxiom)
+        val objectOneOfVariables = factory.getOWLObjectOneOf(variables)
+        val allValuesFromExpressionVariables = factory.getOWLObjectAllValuesFrom(hasVariable, objectOneOfVariables)
+        val variablesClosureAxiom = factory.getOWLClassAssertionAxiom(allValuesFromExpressionVariables, ontModel)
+        changes.add(variablesClosureAxiom)
 
-        val linkFunctionAxiom = factory.getOWLObjectPropertyAssertionAxiom(hasLinkFunction, ontModel, identityLinkFunction)
+        //val linkFunctionAxiom = factory.getOWLObjectPropertyAssertionAxiom(hasLinkFunction, ontModel, identityLinkFunction)
         //changes.add( linkFunctionAxiom )
+
+        val dataIndependenceAxiom = factory.getOWLDataPropertyAssertionAxiom(isDataIndependent, ontModel, model.isDataIndependent)
+        changes.add( dataIndependenceAxiom)
+
+        val residualDistributionAxiom = factory.getOWLObjectPropertyAssertionAxiom(hasResidualDistribution, ontModel, normalDistribution)
+        changes.add( residualDistributionAxiom )
+
+        val objectOneOfDistribution = factory.getOWLObjectOneOf(normalDistribution)
+        val allValuesFromExpressionDistribution = factory.getOWLObjectAllValuesFrom(hasResidualDistribution, objectOneOfDistribution)
+        val distributionClosureAxiom = factory.getOWLClassAssertionAxiom(allValuesFromExpressionDistribution, ontModel)
+        changes.add(distributionClosureAxiom)
+
 
         manager.applyChanges(manager.addAxioms(ontology, changes))
 
