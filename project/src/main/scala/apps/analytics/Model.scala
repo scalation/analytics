@@ -5,7 +5,7 @@ import scala.collection.mutable.ArrayBuffer
 /**
  * Created by mnural on 3/29/15.
  */
-class Model (val isDataIndependent : Boolean = true){
+class Model (val hasRepeatedObservations : Boolean = false){
 
     val id = "Model" + System.currentTimeMillis() //append current timestamp to create a unique ID for ontology
 

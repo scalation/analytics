@@ -233,8 +233,8 @@ object ModelClassifierCreationTest2 extends App
 object ModelClassifierCreationTest3 extends App{
     val model = new Model
 
-    val variableMPG = new Variable("MPG", true)
-    val variableHP = new Variable("HP", false)
+    val variableMPG = new Variable("MPG", true, VariableTypes.Non_Negative_Continuous)
+    val variableHP = new Variable("HP", false, VariableTypes.Continuous)
 
     model.variables += variableMPG
     model.variables += variableHP
