@@ -71,6 +71,12 @@
     
 
 
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#defaultModel -->
+
+    <owl:AnnotationProperty rdf:about="&analytics;defaultModel"/>
+    
+
+
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
@@ -96,7 +102,7 @@
     <owl:ObjectProperty rdf:about="&analytics;hasPredictorVariable">
         <rdfs:domain rdf:resource="&analytics;Model"/>
         <rdfs:range rdf:resource="&analytics;Variable"/>
-        <owl:propertyDisjointWith rdf:resource="&analytics;hasResponseVariable"/>
+        <owl:propertyDisjointWith rdf:resource="&analytics;hasTemporalVariable"/>
         <rdfs:subPropertyOf rdf:resource="&analytics;hasVariable"/>
     </owl:ObjectProperty>
     
@@ -114,6 +120,17 @@
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResponseVariable -->
 
     <owl:ObjectProperty rdf:about="&analytics;hasResponseVariable">
+        <rdfs:domain rdf:resource="&analytics;Model"/>
+        <rdfs:range rdf:resource="&analytics;Variable"/>
+        <owl:propertyDisjointWith rdf:resource="&analytics;hasTemporalVariable"/>
+        <rdfs:subPropertyOf rdf:resource="&analytics;hasVariable"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasTemporalVariable -->
+
+    <owl:ObjectProperty rdf:about="&analytics;hasTemporalVariable">
         <rdfs:domain rdf:resource="&analytics;Model"/>
         <rdfs:range rdf:resource="&analytics;Variable"/>
         <rdfs:subPropertyOf rdf:resource="&analytics;hasVariable"/>
@@ -151,9 +168,9 @@
     
 
 
-    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#isDataIndependent -->
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasRepeatedObservations -->
 
-    <owl:DatatypeProperty rdf:about="&analytics;isDataIndependent">
+    <owl:DatatypeProperty rdf:about="&analytics;hasRepeatedObservations">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
         <rdfs:range rdf:resource="&xsd;boolean"/>
         <rdfs:domain rdf:resource="&analytics;Model"/>
@@ -265,6 +282,30 @@ it only has categorical variables (factors)</rdfs:comment>
             </owl:Class>
         </owl:annotatedTarget>
     </owl:Axiom>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#AR -->
+
+    <owl:Class rdf:about="&analytics;AR">
+        <rdfs:subClassOf rdf:resource="&analytics;ARMA"/>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#ARIMA -->
+
+    <owl:Class rdf:about="&analytics;ARIMA">
+        <rdfs:subClassOf rdf:resource="&analytics;TimeDependentModel"/>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#ARMA -->
+
+    <owl:Class rdf:about="&analytics;ARMA">
+        <rdfs:subClassOf rdf:resource="&analytics;ARIMA"/>
+    </owl:Class>
     
 
 
@@ -485,15 +526,15 @@ the response variable is a Non-Negative Continuous variable.</rdfs:comment>
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&analytics;Model"/>
+                    <rdf:Description rdf:about="&analytics;TimeIndependentModel"/>
                     <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;isDataIndependent"/>
-                        <owl:hasValue rdf:datatype="&xsd;boolean">false</owl:hasValue>
+                        <owl:onProperty rdf:resource="&analytics;hasRepeatedObservations"/>
+                        <owl:hasValue rdf:datatype="&xsd;boolean">true</owl:hasValue>
                     </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
         </owl:equivalentClass>
-        <rdfs:subClassOf rdf:resource="&analytics;Model"/>
+        <rdfs:subClassOf rdf:resource="&analytics;TimeIndependentModel"/>
         <terms:alternative xml:lang="en">Generalized Estimating Equation</terms:alternative>
     </owl:Class>
     
@@ -508,10 +549,6 @@ the response variable is a Non-Negative Continuous variable.</rdfs:comment>
                 <owl:intersectionOf rdf:parseType="Collection">
                     <rdf:Description rdf:about="&analytics;GZLM"/>
                     <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
-                        <owl:allValuesFrom rdf:resource="&analytics;Normal_Distribution"/>
-                    </owl:Restriction>
-                    <owl:Restriction>
                         <owl:onProperty rdf:resource="&analytics;hasResponseVariable"/>
                         <owl:allValuesFrom>
                             <owl:Restriction>
@@ -523,11 +560,23 @@ the response variable is a Non-Negative Continuous variable.</rdfs:comment>
                 </owl:intersectionOf>
             </owl:Class>
         </owl:equivalentClass>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&analytics;GZLM"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
+                        <owl:allValuesFrom rdf:resource="&analytics;Normal_Distribution"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
         <rdfs:subClassOf rdf:resource="&analytics;GZLM"/>
         <rdfs:comment rdf:datatype="&xsd;string">GLM model makes two major assumptions
 1) The response variable is a Continuous variable.
 2) The residuals are Normally distributed.</rdfs:comment>
         <terms:alternative xml:lang="en">General Linear Model</terms:alternative>
+        <defaultModel rdf:resource="&analytics;Multiple_Linear_Regression"/>
     </owl:Class>
     <owl:Axiom>
         <rdfs:comment rdf:datatype="&xsd;string">This axiom states that a GZLM model may be considered as a GLM model if
@@ -540,10 +589,6 @@ the response variable is a Continuous variable</rdfs:comment>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
                     <rdf:Description rdf:about="&analytics;GZLM"/>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
-                        <owl:allValuesFrom rdf:resource="&analytics;Normal_Distribution"/>
-                    </owl:Restriction>
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="&analytics;hasResponseVariable"/>
                         <owl:allValuesFrom>
@@ -567,15 +612,15 @@ the response variable is a Continuous variable</rdfs:comment>
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&analytics;Model"/>
+                    <rdf:Description rdf:about="&analytics;TimeIndependentModel"/>
                     <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;isDataIndependent"/>
-                        <owl:hasValue rdf:datatype="&xsd;boolean">false</owl:hasValue>
+                        <owl:onProperty rdf:resource="&analytics;hasRepeatedObservations"/>
+                        <owl:hasValue rdf:datatype="&xsd;boolean">true</owl:hasValue>
                     </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
         </owl:equivalentClass>
-        <rdfs:subClassOf rdf:resource="&analytics;Model"/>
+        <rdfs:subClassOf rdf:resource="&analytics;TimeIndependentModel"/>
         <terms:alternative xml:lang="en">Generalized Linear Mixed Model</terms:alternative>
     </owl:Class>
     
@@ -588,16 +633,17 @@ the response variable is a Continuous variable</rdfs:comment>
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&analytics;Model"/>
+                    <rdf:Description rdf:about="&analytics;TimeIndependentModel"/>
                     <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;isDataIndependent"/>
-                        <owl:hasValue rdf:datatype="&xsd;boolean">true</owl:hasValue>
+                        <owl:onProperty rdf:resource="&analytics;hasRepeatedObservations"/>
+                        <owl:hasValue rdf:datatype="&xsd;boolean">false</owl:hasValue>
                     </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
         </owl:equivalentClass>
-        <rdfs:subClassOf rdf:resource="&analytics;Model"/>
+        <rdfs:subClassOf rdf:resource="&analytics;TimeIndependentModel"/>
         <terms:alternative xml:lang="en">Generalized Linear Model</terms:alternative>
+        <defaultModel rdf:resource="&analytics;Multinomial_Logistic_Regression"/>
     </owl:Class>
     
 
@@ -707,10 +753,6 @@ the response variable is a Continuous variable</rdfs:comment>
                 <owl:intersectionOf rdf:parseType="Collection">
                     <rdf:Description rdf:about="&analytics;GZLM"/>
                     <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
-                        <owl:allValuesFrom rdf:resource="&analytics;Bernoulli_Distribution"/>
-                    </owl:Restriction>
-                    <owl:Restriction>
                         <owl:onProperty rdf:resource="&analytics;hasResponseVariable"/>
                         <owl:allValuesFrom>
                             <owl:Restriction>
@@ -718,6 +760,17 @@ the response variable is a Continuous variable</rdfs:comment>
                                 <owl:allValuesFrom rdf:resource="&analytics;Binary"/>
                             </owl:Restriction>
                         </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&analytics;GZLM"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
+                        <owl:allValuesFrom rdf:resource="&analytics;Bernoulli_Distribution"/>
                     </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
@@ -735,10 +788,6 @@ the response variable is a binary variable.</rdfs:comment>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
                     <rdf:Description rdf:about="&analytics;GZLM"/>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
-                        <owl:allValuesFrom rdf:resource="&analytics;Bernoulli_Distribution"/>
-                    </owl:Restriction>
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="&analytics;hasResponseVariable"/>
                         <owl:allValuesFrom>
@@ -759,6 +808,14 @@ the response variable is a binary variable.</rdfs:comment>
 
     <owl:Class rdf:about="&analytics;Logit_Function">
         <rdfs:subClassOf rdf:resource="&analytics;Function"/>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#MA -->
+
+    <owl:Class rdf:about="&analytics;MA">
+        <rdfs:subClassOf rdf:resource="&analytics;ARMA"/>
     </owl:Class>
     
 
@@ -785,6 +842,14 @@ the response variable is a binary variable.</rdfs:comment>
 
     <owl:Class rdf:about="&analytics;Modified_Gram_Schmidt_Orthogonalization">
         <rdfs:subClassOf rdf:resource="&analytics;QR_Factorization"/>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Multinomial_Logistic_Regression -->
+
+    <owl:Class rdf:about="&analytics;Multinomial_Logistic_Regression">
+        <rdfs:subClassOf rdf:resource="&analytics;GZLM"/>
     </owl:Class>
     
 
@@ -842,7 +907,7 @@ at least some of its variables are Continuous variables</rdfs:comment>
 
     <owl:Class rdf:about="&analytics;Naive_Bayes">
         <rdfs:label xml:lang="en">Naive Bayes</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;Model"/>
+        <rdfs:subClassOf rdf:resource="&analytics;TimeIndependentModel"/>
         <terms:alternative xml:lang="en">Naïve Bayes</terms:alternative>
     </owl:Class>
     
@@ -932,7 +997,7 @@ at least some of its variables are Continuous variables</rdfs:comment>
 
     <owl:Class rdf:about="&analytics;Perceptron">
         <rdfs:label xml:lang="en">Perceptron</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;Model"/>
+        <rdfs:subClassOf rdf:resource="&analytics;TimeIndependentModel"/>
     </owl:Class>
     
 
@@ -1105,6 +1170,49 @@ it has only one predictor variable</rdfs:comment>
     
 
 
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#TimeDependentModel -->
+
+    <owl:Class rdf:about="&analytics;TimeDependentModel">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&analytics;Model"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&analytics;hasTemporalVariable"/>
+                        <owl:someValuesFrom rdf:resource="&analytics;Variable"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&analytics;Model"/>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#TimeIndependentModel -->
+
+    <owl:Class rdf:about="&analytics;TimeIndependentModel">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&analytics;Model"/>
+                    <owl:Class>
+                        <owl:complementOf>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&analytics;hasTemporalVariable"/>
+                                <owl:someValuesFrom rdf:resource="&analytics;Variable"/>
+                            </owl:Restriction>
+                        </owl:complementOf>
+                    </owl:Class>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&analytics;Model"/>
+        <defaultModel rdf:resource="&analytics;GZLM"/>
+    </owl:Class>
+    
+
+
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Transformed_Multiple_Linear_Regression -->
 
     <owl:Class rdf:about="&analytics;Transformed_Multiple_Linear_Regression">
@@ -1193,6 +1301,14 @@ it has only one predictor variable</rdfs:comment>
     
 
 
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Discrete_Variable_Type -->
+
+    <owl:NamedIndividual rdf:about="&analytics;Discrete_Variable_Type">
+        <rdf:type rdf:resource="&analytics;Discrete"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Exponential_Distribution_Instance -->
 
     <owl:NamedIndividual rdf:about="&analytics;Exponential_Distribution_Instance">
@@ -1231,7 +1347,7 @@ it has only one predictor variable</rdfs:comment>
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <isDataIndependent rdf:datatype="&xsd;boolean">true</isDataIndependent>
+        <hasRepeatedObservations rdf:datatype="&xsd;boolean">false</hasRepeatedObservations>
         <hasResidualDistribution rdf:resource="&analytics;Normal_Distribution_Instance"/>
         <hasPredictorVariable rdf:resource="&analytics;cylinders"/>
         <hasPredictorVariable rdf:resource="&analytics;horsepower"/>
@@ -1246,6 +1362,18 @@ it has only one predictor variable</rdfs:comment>
         <rdf:type rdf:resource="&owl;NamedIndividual"/>
         <rdf:type>
             <owl:Restriction>
+                <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="&analytics;Normal_Distribution_Instance"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
                 <owl:onProperty rdf:resource="&analytics;hasVariable"/>
                 <owl:allValuesFrom>
                     <owl:Class>
@@ -1257,19 +1385,7 @@ it has only one predictor variable</rdfs:comment>
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <rdf:type>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
-                <owl:allValuesFrom>
-                    <owl:Class>
-                        <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;Normal_Distribution_Instance"/>
-                        </owl:oneOf>
-                    </owl:Class>
-                </owl:allValuesFrom>
-            </owl:Restriction>
-        </rdf:type>
-        <isDataIndependent rdf:datatype="&xsd;boolean">true</isDataIndependent>
+        <hasRepeatedObservations rdf:datatype="&xsd;boolean">false</hasRepeatedObservations>
         <hasResidualDistribution rdf:resource="&analytics;Normal_Distribution_Instance"/>
         <hasPredictorVariable rdf:resource="&analytics;cylinders"/>
         <hasResponseVariable rdf:resource="&analytics;mpg"/>
@@ -1306,7 +1422,7 @@ it has only one predictor variable</rdfs:comment>
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <isDataIndependent rdf:datatype="&xsd;boolean">true</isDataIndependent>
+        <hasRepeatedObservations rdf:datatype="&xsd;boolean">false</hasRepeatedObservations>
         <hasResidualDistribution rdf:resource="&analytics;Exponential_Distribution_Instance"/>
         <hasPredictorVariable rdf:resource="&analytics;horsepower"/>
         <hasResponseVariable rdf:resource="&analytics;mpg"/>
@@ -1318,18 +1434,6 @@ it has only one predictor variable</rdfs:comment>
 
     <owl:Thing rdf:about="&analytics;GenericLogisticRegressionModel">
         <rdf:type rdf:resource="&owl;NamedIndividual"/>
-        <rdf:type>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
-                <owl:allValuesFrom>
-                    <owl:Class>
-                        <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;Bernoulli_Distribution_Instance"/>
-                        </owl:oneOf>
-                    </owl:Class>
-                </owl:allValuesFrom>
-            </owl:Restriction>
-        </rdf:type>
         <rdf:type>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="&analytics;hasVariable"/>
@@ -1344,7 +1448,19 @@ it has only one predictor variable</rdfs:comment>
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <isDataIndependent rdf:datatype="&xsd;boolean">true</isDataIndependent>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="&analytics;Bernoulli_Distribution_Instance"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdf:type>
+        <hasRepeatedObservations rdf:datatype="&xsd;boolean">false</hasRepeatedObservations>
         <hasResidualDistribution rdf:resource="&analytics;Bernoulli_Distribution_Instance"/>
         <hasPredictorVariable rdf:resource="&analytics;cylinders"/>
         <hasResponseVariable rdf:resource="&analytics;isDomestic"/>
@@ -1359,6 +1475,18 @@ it has only one predictor variable</rdfs:comment>
         <rdf:type rdf:resource="&owl;NamedIndividual"/>
         <rdf:type>
             <owl:Restriction>
+                <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="&analytics;Normal_Distribution_Instance"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
                 <owl:onProperty rdf:resource="&analytics;hasVariable"/>
                 <owl:allValuesFrom>
                     <owl:Class>
@@ -1371,19 +1499,7 @@ it has only one predictor variable</rdfs:comment>
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <rdf:type>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
-                <owl:allValuesFrom>
-                    <owl:Class>
-                        <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;Normal_Distribution_Instance"/>
-                        </owl:oneOf>
-                    </owl:Class>
-                </owl:allValuesFrom>
-            </owl:Restriction>
-        </rdf:type>
-        <isDataIndependent rdf:datatype="&xsd;boolean">true</isDataIndependent>
+        <hasRepeatedObservations rdf:datatype="&xsd;boolean">false</hasRepeatedObservations>
         <hasResidualDistribution rdf:resource="&analytics;Normal_Distribution_Instance"/>
         <hasPredictorVariable rdf:resource="&analytics;acceleration"/>
         <hasPredictorVariable rdf:resource="&analytics;horsepower"/>
@@ -1396,6 +1512,18 @@ it has only one predictor variable</rdfs:comment>
 
     <owl:Thing rdf:about="&analytics;GenericModel">
         <rdf:type rdf:resource="&owl;NamedIndividual"/>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="&analytics;Normal_Distribution_Instance"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdf:type>
         <rdf:type>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="&analytics;hasVariable"/>
@@ -1415,19 +1543,7 @@ it has only one predictor variable</rdfs:comment>
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <rdf:type>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
-                <owl:allValuesFrom>
-                    <owl:Class>
-                        <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;Normal_Distribution_Instance"/>
-                        </owl:oneOf>
-                    </owl:Class>
-                </owl:allValuesFrom>
-            </owl:Restriction>
-        </rdf:type>
-        <isDataIndependent rdf:datatype="&xsd;boolean">true</isDataIndependent>
+        <hasRepeatedObservations rdf:datatype="&xsd;boolean">false</hasRepeatedObservations>
         <hasResidualDistribution rdf:resource="&analytics;Normal_Distribution_Instance"/>
         <hasPredictorVariable rdf:resource="&analytics;acceleration"/>
         <hasPredictorVariable rdf:resource="&analytics;cylinders"/>
@@ -1447,18 +1563,6 @@ it has only one predictor variable</rdfs:comment>
         <rdf:type rdf:resource="&owl;NamedIndividual"/>
         <rdf:type>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
-                <owl:allValuesFrom>
-                    <owl:Class>
-                        <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;Normal_Distribution_Instance"/>
-                        </owl:oneOf>
-                    </owl:Class>
-                </owl:allValuesFrom>
-            </owl:Restriction>
-        </rdf:type>
-        <rdf:type>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="&analytics;hasVariable"/>
                 <owl:allValuesFrom>
                     <owl:Class>
@@ -1470,7 +1574,19 @@ it has only one predictor variable</rdfs:comment>
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <isDataIndependent rdf:datatype="&xsd;boolean">true</isDataIndependent>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="&analytics;Normal_Distribution_Instance"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdf:type>
+        <hasRepeatedObservations rdf:datatype="&xsd;boolean">false</hasRepeatedObservations>
         <hasResidualDistribution rdf:resource="&analytics;Normal_Distribution_Instance"/>
         <hasPredictorVariable rdf:resource="&analytics;horsepower"/>
         <hasResponseVariable rdf:resource="&analytics;mpg"/>
@@ -1773,17 +1889,6 @@ it has only one predictor variable</rdfs:comment>
         </owl:distinctMembers>
     </rdf:Description>
     <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
-        <owl:members rdf:parseType="Collection">
-            <rdf:Description rdf:about="&analytics;Identity_Function"/>
-            <rdf:Description rdf:about="&analytics;Inverse_Function"/>
-            <rdf:Description rdf:about="&analytics;Log_Function"/>
-            <rdf:Description rdf:about="&analytics;Logit_Function"/>
-            <rdf:Description rdf:about="&analytics;Reciprocal_Function"/>
-            <rdf:Description rdf:about="&analytics;Square_Root_Function"/>
-        </owl:members>
-    </rdf:Description>
-    <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
             <rdf:Description rdf:about="&analytics;acceleration"/>
@@ -1796,6 +1901,17 @@ it has only one predictor variable</rdfs:comment>
             <rdf:Description rdf:about="&analytics;origin"/>
             <rdf:Description rdf:about="&analytics;weight"/>
         </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="&analytics;Identity_Function"/>
+            <rdf:Description rdf:about="&analytics;Inverse_Function"/>
+            <rdf:Description rdf:about="&analytics;Log_Function"/>
+            <rdf:Description rdf:about="&analytics;Logit_Function"/>
+            <rdf:Description rdf:about="&analytics;Reciprocal_Function"/>
+            <rdf:Description rdf:about="&analytics;Square_Root_Function"/>
+        </owl:members>
     </rdf:Description>
 </rdf:RDF>
 
