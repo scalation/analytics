@@ -28,8 +28,8 @@ the ```develop``` branch.
 
 ### Contributors
 
- * Michael E. Cotterell
- * Mustafa Nural
+ * Michael E. Cotterell < mepcott@uga.edu >
+ * Mustafa Nural < nural@uga.edu >
 
 ### Notices
 

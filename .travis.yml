@@ -5,4 +5,5 @@ scala:
 jdk:
   - oraclejdk8
 
+before_script: ./script/deps.sh
 script: sbt ++$TRAVIS_SCALA_VERSION compile test
