@@ -1,4 +1,6 @@
-package apps.analytics
+package apps.analytics.model
+
+import apps.analytics.{AnalyticsOntology, AnalyticsOntologyFactory}
 
 import scala.collection.mutable.ArrayBuffer
 

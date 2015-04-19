@@ -1,4 +1,4 @@
-package apps.analytics
+package apps.analytics.model
 
 /**
  * Created by mnural on 4/3/15.

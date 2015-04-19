@@ -2,6 +2,7 @@ package apps.analytics
 
 import java.util
 
+import apps.analytics.model.{VariableTypes, Model, Variable}
 import org.coode.owlapi.manchesterowlsyntax.ManchesterOWLSyntaxEditorParser
 import org.semanticweb.HermiT.{Reasoner => HermiTReasoner}
 import org.semanticweb.owlapi.expression.{OWLEntityChecker, ShortFormEntityChecker}

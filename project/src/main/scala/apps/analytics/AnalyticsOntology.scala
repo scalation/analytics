@@ -2,7 +2,8 @@ package apps.analytics
 
 import java.util
 
-import apps.analytics.VariableTypes.VariableType
+import apps.analytics.model.{Model, VariableTypes}
+import VariableTypes.VariableType
 import org.semanticweb.HermiT.{Reasoner => HermiTReasoner}
 import org.semanticweb.owlapi.model._
 import org.semanticweb.owlapi.util.{BidirectionalShortFormProviderAdapter, QNameShortFormProvider}
