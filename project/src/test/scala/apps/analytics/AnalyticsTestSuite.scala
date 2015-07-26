@@ -1,5 +1,6 @@
 package apps.analytics
 
+import apps.analytics.dashboard.AnalyticsOntologyFactory
 import org.scalatest._
 import org.semanticweb.HermiT.{Reasoner => HermiTReasoner}
 import uk.ac.manchester.cs.jfact.JFactFactory
