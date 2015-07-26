@@ -1,19 +1,20 @@
-package apps.analytics
+package apps.analytics.dashboard
 
 import java.util
 
-import apps.analytics.model.{VariableTypes, Model, Variable}
+import apps.analytics.dashboard.model.{Model, Variable, VariableTypes}
 import org.coode.owlapi.manchesterowlsyntax.ManchesterOWLSyntaxEditorParser
 import org.semanticweb.HermiT.{Reasoner => HermiTReasoner}
+import org.semanticweb.owl.explanation.api.{Explanation, ExplanationGenerator, ExplanationGeneratorFactory, ExplanationManager}
 import org.semanticweb.owlapi.expression.{OWLEntityChecker, ShortFormEntityChecker}
-import org.semanticweb.owlapi.model.{IRI, OWLAxiom, OWLDataFactory}
+import org.semanticweb.owlapi.model._
 import org.semanticweb.owlapi.reasoner.structural.StructuralReasonerFactory
 import org.semanticweb.owlapi.util.{BidirectionalShortFormProviderAdapter, QNameShortFormProvider}
 import uk.ac.manchester.cs.jfact.JFactFactory
 
 import scala.collection.JavaConversions._
-import scalation.linalgebra.MatrixD
-import scalation.analytics.SimpleRegression
+import scalation.analytics.{MultipleRegression, ExpRegression, SimpleRegression}
+import scalation.linalgebra.{VectorD, MatrixD}
 
 object ModelClassifier
 {
@@ -95,7 +96,7 @@ object ModelClassifierInferenceTest extends App
 
 object ModelClassifierInferenceTest2 extends App
 {
-    val ontology = new AnalyticsOntology(AnalyticsOntologyFactory.loadRemote())
+    val ontology = AnalyticsOntology.ontology
     val model = ontology.retrieveIndividual("analytics:GenericModel")
 
     println("Direct Inferred types of:\t" + ontology.getShortForm(model))
@@ -246,4 +247,70 @@ object ModelClassifierCreationTest3 extends App{
     }
 
 
+}
+
+object ExponentialTest extends App{
+    val x = new MatrixD ((14, 2), 1.0,0.0,
+        1.0,5.0,
+        1.0,8.0,
+        1.0,11.0,
+        1.0,15.0,
+        1.0,18.0,
+        1.0,22.0,
+        1.0,25.0,
+        1.0,30.0,
+        1.0,34.0,
+        1.0,38.0,
+        1.0,42.0,
+        1.0,45.0,
+        1.0,50.0
+    )
+    val y = VectorD (179.5,168.7,158.1,149.2,141.7,134.6,125.4,123.5,116.3,113.2,109.1,105.7,102.2,100.5)
+
+
+    println ("x = " + x)
+    println ("y = " + y)
+
+    val erg = new ExpRegression (x, true, y)
+    val rg = new MultipleRegression(x,y)
+    rg.train()
+    erg.train ()
+    println ("fit = " + erg.fit)
+
+    println ("fit = " + rg.fit)
+
+    println(erg.predict(x).map( (e: Double) => math.exp(e)) )
+    println(y)
+    println()
+}
+
+object ExplanationTest extends App{
+    import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
+
+    val ont : OWLOntology = AnalyticsOntologyFactory.loadLocal(); // Reference to an OWLOntology
+
+    val rf : OWLReasonerFactory = new HermiTReasoner.ReasonerFactory; // Get hold of a reasoner factory
+
+    val sfProvider = new BidirectionalShortFormProviderAdapter(ont.getOWLOntologyManager, ont.getImportsClosure(), new QNameShortFormProvider())
+
+    // Create the explanation generator factory which uses reasoners provided by the specified
+    // reasoner factory
+    val genFac : ExplanationGeneratorFactory[OWLAxiom]= ExplanationManager.createExplanationGeneratorFactory(rf);
+
+    // Now create the actual explanation generator for our ontology
+    val gen : ExplanationGenerator[OWLAxiom] = genFac.createExplanationGenerator(ont);
+
+    val dataFactory = ont.getOWLOntologyManager.getOWLDataFactory
+    val child : OWLClassExpression = sfProvider.getEntity("analytics:GLM").asOWLClass()
+    val parent : OWLClassExpression = sfProvider.getEntity("analytics:ANCOVA").asOWLClass()
+    val instance = sfProvider.getEntity("analytics:GenericANCOVAModel").asOWLNamedIndividual()
+
+    // Ask for explanations for some entailment
+    //val entailment : OWLAxiom = dataFactory.getOWLSubClassOfAxiom(child, parent) ; // Get a reference to the axiom that represents the entailment that we want explanation for
+    val entailment : OWLAxiom = dataFactory.getOWLClassAssertionAxiom(parent, instance) ; // Get a reference to the axiom that represents the entailment that we want explanation for
+
+
+    // Get our explanations.  Ask for a maximum of 5.
+    val expl : util.Set[Explanation[OWLAxiom]] = gen.getExplanations(entailment, 5);
+    println(expl)
 }
