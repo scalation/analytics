@@ -11,7 +11,7 @@ import org.semanticweb.owlapi.util.{BidirectionalShortFormProviderAdapter, QName
 import scala.collection.JavaConversions._
 import scala.collection.mutable.Set
 
-private class AnalyticsOntology ()
+class AnalyticsOntology private()
 {
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
