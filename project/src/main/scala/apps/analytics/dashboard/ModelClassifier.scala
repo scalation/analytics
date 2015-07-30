@@ -13,7 +13,7 @@ import org.semanticweb.owlapi.util.{BidirectionalShortFormProviderAdapter, QName
 import uk.ac.manchester.cs.jfact.JFactFactory
 
 import scala.collection.JavaConversions._
-import scalation.analytics.{MultipleRegression, ExpRegression, SimpleRegression}
+import scalation.analytics.{Regression, ExpRegression, SimpleRegression}
 import scalation.linalgebra.{VectorD, MatrixD}
 
 object ModelClassifier
@@ -267,12 +267,12 @@ object ExponentialTest extends App{
     )
     val y = VectorD (179.5,168.7,158.1,149.2,141.7,134.6,125.4,123.5,116.3,113.2,109.1,105.7,102.2,100.5)
 
-
     println ("x = " + x)
     println ("y = " + y)
 
     val erg = new ExpRegression (x, true, y)
-    val rg = new MultipleRegression(x,y)
+    val rg = new Regression(x,y)
+
     rg.train()
     erg.train ()
     println ("fit = " + erg.fit)
