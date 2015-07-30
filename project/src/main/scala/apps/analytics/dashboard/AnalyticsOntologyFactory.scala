@@ -1,4 +1,4 @@
-package apps.analytics
+package apps.analytics.dashboard
 
 import java.io.File
 import java.net.URI
@@ -25,8 +25,16 @@ object AnalyticsOntologyFactory
      */
     private def load (iri: IRI): OWLOntology =
     {
+        //TO WORK WITH A LOCAL COPY OF THE ONTOLOGY CREATED IN THE TEMP FOLDER,UNCOMMENT THESE LINES
+//        val tempManager = OWLManager.createOWLOntologyManager()
+//        val tempOntology = tempManager.loadOntologyFromOntologyDocument(iri)
+//        val tempFile = File.createTempFile(iri.getRemainder.get() + "" +(System.currentTimeMillis()% 1000), null)
+//        tempFile.deleteOnExit()
+//        tempManager.saveOntology(tempOntology,new FileOutputStream(tempFile))
+
         val manager  = OWLManager.createOWLOntologyManager()
         manager.loadOntologyFromOntologyDocument(iri)
+        //manager.loadOntologyFromOntologyDocument(localIRI(tempFile))
     } // load
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

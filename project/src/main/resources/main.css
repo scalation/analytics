@@ -1,0 +1,36 @@
+.root{
+    -fx-background-image: url("background.jpg");
+}
+.label {
+    -fx-font-size: 15;
+}
+
+.table-view{
+    -fx-background-color: transparent;
+}
+
+.cell {
+    -fx-background-color: transparent;
+}
+
+#fileDetailsBox {
+    -fx-spacing: 10;
+    -fx-background-color: rgba(255, 250, 245, 0.15);
+    -fx-padding: 10 0 10 0;
+}
+
+#leftPane {
+    -fx-spacing: 15;
+    -fx-padding: 10 ;
+}
+
+#delimiterBox {
+    -fx-alignment: center-left ;
+    -fx-spacing: 5px;
+}
+
+.list-cell:hover, .list-cell:focused {
+    -fx-background-color: linear-gradient(#328BDB 0%, #207BCF 25%, #1973C9 75%, #0A65BF 100%);
+    -fx-text-fill: white;
+}
+

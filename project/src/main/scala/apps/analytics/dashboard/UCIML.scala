@@ -1,14 +1,10 @@
-package apps.analytics
-
-import scala.collection.JavaConversions._
-import scala.collection.immutable.List
-import scala.collection.mutable.ListBuffer
+package apps.analytics.dashboard
 
 import java.time.LocalDate
 
 import org.jsoup.Jsoup
-import org.jsoup.nodes.{Document, Element, TextNode}
-import org.jsoup.select.Elements
+
+import scala.collection.JavaConversions._
 
 class UCIMLMeta (val url: String) {
 

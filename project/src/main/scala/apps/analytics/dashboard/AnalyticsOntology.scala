@@ -1,8 +1,9 @@
-package apps.analytics
+package apps.analytics.dashboard
 
 import java.util
 
-import apps.analytics.VariableTypes.VariableType
+import apps.analytics.dashboard.model.Model
+import apps.analytics.dashboard.model.VariableTypes.VariableType
 import org.semanticweb.HermiT.{Reasoner => HermiTReasoner}
 import org.semanticweb.owlapi.model._
 import org.semanticweb.owlapi.util.{BidirectionalShortFormProviderAdapter, QNameShortFormProvider}
@@ -10,11 +11,16 @@ import org.semanticweb.owlapi.util.{BidirectionalShortFormProviderAdapter, QName
 import scala.collection.JavaConversions._
 import scala.collection.mutable.Set
 
-class AnalyticsOntology (ontology: OWLOntology)
+class AnalyticsOntology private()
 {
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-    /** The ontology manager  
+    /** The OWLOntology instance
+      */
+    val ontology = AnalyticsOntology.initOntology
+
+    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+    /** The Ontology Manager
      */
     val manager = ontology.getOWLOntologyManager
 
@@ -36,11 +42,13 @@ class AnalyticsOntology (ontology: OWLOntology)
       */
     val sfProvider = new BidirectionalShortFormProviderAdapter(manager, ontology.getImportsClosure(), new QNameShortFormProvider())
 
+
+    val reasonerFactory = new HermiTReasoner.ReasonerFactory()
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     /** The reasoner used for inference. Loads HermiT Reasoner by default.
       * This might be configurable in the future.
       */
-    val hreasoner = (new HermiTReasoner.ReasonerFactory()).createNonBufferingReasoner(ontology)
+    val hreasoner = reasonerFactory.createNonBufferingReasoner(ontology)
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     /** Retrieve short form of an entity as a String.  
@@ -67,7 +75,6 @@ class AnalyticsOntology (ontology: OWLOntology)
     {
         hreasoner.precomputeInferences()
         hreasoner.getTypes(individual, isDirect).getFlattened
-
     }
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -91,7 +98,8 @@ class AnalyticsOntology (ontology: OWLOntology)
         val variableClass = factory.getOWLClass(sfProvider.getEntity("analytics:Variable").getIRI)
         //val modelClass = factory.getOWLClass(sfProvider.getEntity("analytics:Model").getIRI)
         //val continuousVariableType = factory.getOWLNamedIndividual( sfProvider.getEntity("analytics:Non_Negative_Variable_Type").getIRI)
-        val identityLinkFunction = factory.getOWLNamedIndividual( sfProvider.getEntity("analytics:Identity_Function").getIRI)
+        val normalDistribution = factory.getOWLNamedIndividual(IRI.create(baseIRI + "#Normal_Distribution_Instance"))
+        //val identityLinkFunction = factory.getOWLNamedIndividual( sfProvider.getEntity("analytics:Identity_Function").getIRI)
 
         val hasVariable = factory.getOWLObjectProperty( IRI.create(baseIRI + "#hasVariable"))
         val hasResponseVariable = factory.getOWLObjectProperty( IRI.create(baseIRI + "#hasResponseVariable"))
@@ -99,26 +107,32 @@ class AnalyticsOntology (ontology: OWLOntology)
         val hasVariableType = factory.getOWLObjectProperty( IRI.create(baseIRI + "#hasVariableType"))
 
         val hasResidualDistribution = factory.getOWLObjectProperty( IRI.create(baseIRI + "#hasResidualDistribution"))
-        val hasLinkFunction = factory.getOWLObjectProperty( IRI.create(baseIRI + "#hasLinkFunction"))
+        //val hasLinkFunction = factory.getOWLObjectProperty( IRI.create(baseIRI + "#hasLinkFunction"))
+
+        val isDataIndependent = factory.getOWLDataProperty( IRI.create (baseIRI + "#hasRepeatedObservations"))
 
         //Create a new individual for this model
         val ontModel = factory.getOWLNamedIndividual( IRI.create( baseIRI + "#" + model.id))
 
-        //val classExpressionAxiom = factory.getOWLClassAssertionAxiom(modelClass, ontModel)
+        println("Model ID:" + model.id)
+        val classExpressionAxiom = factory.getOWLClassAssertionAxiom(factory.getOWLThing, ontModel)
         //val linkFunctionAxiom = factory.getOWLObjectPropertyAssertionAxiom(hasLinkFunction,ontModel,identityLinkFunction)
 
-        //changes.add( classExpressionAxiom )
+        changes.add( classExpressionAxiom )
 //        changes.add( linkFunctionAxiom )
 
         //Create mpg variable (response) and assert axioms
         val variables = Set[OWLIndividual]()
         for (variable <- model.variables){
             val ontVariable = factory.getOWLNamedIndividual( IRI.create( baseIRI + "#" + variable.id))
-            val typeAxiom = factory.getOWLClassAssertionAxiom(variableClass,ontVariable)
+            val typeAxiom = factory.getOWLClassAssertionAxiom(variableClass, ontVariable)
             changes.add(typeAxiom)
 
-            val variableTypeAxiom = factory.getOWLObjectPropertyAssertionAxiom(hasVariableType, ontVariable, getVariableType(variable.variableType))
-            changes.add(variableTypeAxiom)
+            if (variable.fxVariableType != null)
+            {
+                val variableTypeAxiom = factory.getOWLObjectPropertyAssertionAxiom(hasVariableType, ontVariable, getVariableType(variable.variableType))
+                changes.add(variableTypeAxiom)
+            }
 
             if (variable.isResponse){
                 val responseVariableAxiom = factory.getOWLObjectPropertyAssertionAxiom(hasResponseVariable,ontModel, ontVariable)
@@ -127,25 +141,38 @@ class AnalyticsOntology (ontology: OWLOntology)
                 val predictorVariableAxiom = factory.getOWLObjectPropertyAssertionAxiom(hasPredictorVariable, ontModel, ontVariable)
                 changes.add(predictorVariableAxiom)
             }
-
             variables += ontVariable
         }
 
         val variableDifferentIndividualsAxiom = factory.getOWLDifferentIndividualsAxiom(variables)
         changes.add(variableDifferentIndividualsAxiom)
 
-        val objectOneOf = factory.getOWLObjectOneOf(variables)
-        val allValuesFromExpression = factory.getOWLObjectAllValuesFrom(hasVariable, objectOneOf)
-        val modelRestrictionAxiom = factory.getOWLClassAssertionAxiom(allValuesFromExpression, ontModel)
-        changes.add(modelRestrictionAxiom)
+        val objectOneOfVariables = factory.getOWLObjectOneOf(variables)
+        val allValuesFromExpressionVariables = factory.getOWLObjectAllValuesFrom(hasVariable, objectOneOfVariables)
+        val variablesClosureAxiom = factory.getOWLClassAssertionAxiom(allValuesFromExpressionVariables, ontModel)
+        changes.add(variablesClosureAxiom)
 
-        val linkFunctionAxiom = factory.getOWLObjectPropertyAssertionAxiom(hasLinkFunction, ontModel, identityLinkFunction)
-        changes.add( linkFunctionAxiom )
+        //val linkFunctionAxiom = factory.getOWLObjectPropertyAssertionAxiom(hasLinkFunction, ontModel, identityLinkFunction)
+        //changes.add( linkFunctionAxiom )
+
+        val dataIndependenceAxiom = factory.getOWLDataPropertyAssertionAxiom(isDataIndependent, ontModel, model.hasRepeatedObservations)
+        changes.add( dataIndependenceAxiom)
+
+        //val residualDistributionAxiom = factory.getOWLObjectPropertyAssertionAxiom(hasResidualDistribution, ontModel, normalDistribution)
+        //changes.add( residualDistributionAxiom )
+
+        //val objectOneOfDistribution = factory.getOWLObjectOneOf(normalDistribution)
+        //val allValuesFromExpressionDistribution = factory.getOWLObjectAllValuesFrom(hasResidualDistribution, objectOneOfDistribution)
+
+        //val distributionClosureAxiom = factory.getOWLClassAssertionAxiom(allValuesFromExpressionDistribution, ontModel)
+        //changes.add(distributionClosureAxiom)
 
         manager.applyChanges(manager.addAxioms(ontology, changes))
 
-        retrieveTypes(ontModel, isDirect)
+        //manager.saveOntology(ontology)
+//        manager.saveOntology(ontology, new FileOutputStream("/home/mnural/research/analytics/test.owl"))
 
+        retrieveTypes(ontModel, isDirect)
 
     }
 
@@ -160,5 +187,18 @@ class AnalyticsOntology (ontology: OWLOntology)
     }
 }
 
+object AnalyticsOntology {
+    /**
+     * The singleton ontology instance
+    */
+    val ontology = new AnalyticsOntology
+
+    /**
+     * Retrieve the OWLOntology instance in the specified way from the factory
+    */
+    def initOntology : OWLOntology = { AnalyticsOntologyFactory.loadLocal() }
+
+
+}
 // AnalyticsOntology
 
