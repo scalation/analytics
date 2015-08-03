@@ -68,12 +68,21 @@ class Model (val hasRepeatedObservations : Boolean = false){
     }
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-    /** Retrieves possible explanations for the given suggested model.
+
+  def getAnnotation(f: OWLAxiom): String = {
+    //TODO Look why this returns empty all the time.
+    val annot = new StringBuilder()
+    val comments = f.getAnnotations.filter(annotation => annotation.getProperty.isComment)
+    comments.map(c => annot + c.getValue.toString)
+    annot.toString()
+  }
+
+  /** Retrieves possible explanations for the given suggested model.
       * @param suggestedModel The suggested model class
       * @return The set of possible explanations for this suggestion
       */
 
-    def getExplanation(suggestedModel: OWLClass) : Set[Explanation[OWLAxiom]] = {
+    def getExplanation(suggestedModel: OWLClass) : mutable.Set[String] = {
       val ontology = AnalyticsOntology.ontology
       val modelIndividual = ontology.sfProvider.getEntity("analytics:" + this.id).asOWLNamedIndividual()
       val entailment : OWLAxiom = ontology.factory.getOWLClassAssertionAxiom(suggestedModel, modelIndividual)
@@ -86,9 +95,12 @@ class Model (val hasRepeatedObservations : Boolean = false){
       val gen: ExplanationGenerator[OWLAxiom] = genFac.createExplanationGenerator(ontology.ontology);
 
       // Get our explanations.  Ask for a maximum of 1
-      val expl = gen.getExplanations(entailment, 1);
-      println(expl)
-      expl.asScala.toSet
+      val expl = gen.getExplanations(entailment, 1).asScala.toArray;
+      val expressions = expl(0).getAxioms.filter( axiom => axiom.isInstanceOf[OWLEquivalentClassesAxiom])
+      val explanations = expressions.map(f => getAnnotation(f)).filterNot(expl => expl.isEmpty)
+      println(expressions)
+
+      return explanations
     }
 
 }

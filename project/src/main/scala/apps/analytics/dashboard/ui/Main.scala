@@ -170,7 +170,10 @@ class Main extends Application {
                 val modelsAccordionPane = new Accordion()
                 for (suggestedModel <- suggestedModels){
                     val explanations = model.getExplanation(suggestedModel)
-                    val titledPane = new TitledPane(model.getLabel(suggestedModel), new TextArea(explanations.toString))
+                    val detailPane = new TextArea(explanations.toString())
+                    detailPane.setWrapText(true)
+
+                    val titledPane = new TitledPane(model.getLabel(suggestedModel), detailPane)
                     modelsAccordionPane.getPanes.add(titledPane)
 
                 }
