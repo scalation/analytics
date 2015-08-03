@@ -73,7 +73,7 @@ class Model (val hasRepeatedObservations : Boolean = false){
     //TODO Look why this returns empty all the time.
     val annot = new StringBuilder()
     val comments = f.getAnnotations.filter(annotation => annotation.getProperty.isComment)
-    comments.map(c => annot + c.getValue.toString)
+    comments.foreach(c => annot.append(c.getValue.asInstanceOf[OWLLiteral].getLiteral))
     annot.toString()
   }
 
@@ -97,10 +97,10 @@ class Model (val hasRepeatedObservations : Boolean = false){
       // Get our explanations.  Ask for a maximum of 1
       val expl = gen.getExplanations(entailment, 1).asScala.toArray;
       val expressions = expl(0).getAxioms.filter( axiom => axiom.isInstanceOf[OWLEquivalentClassesAxiom])
-      val explanations = expressions.map(f => getAnnotation(f)).filterNot(expl => expl.isEmpty)
+      val explanations = expressions.map(f => getAnnotation(f))
       println(expressions)
 
-      return explanations
+      return explanations.filterNot(expl => expl.isEmpty)
     }
 
 }

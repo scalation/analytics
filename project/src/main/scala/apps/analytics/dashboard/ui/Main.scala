@@ -12,6 +12,7 @@ import javafx.scene.control.TableColumn.CellEditEvent
 import javafx.scene.control._
 import javafx.scene.control.cell.{CheckBoxTableCell, PropertyValueFactory, TextFieldTableCell}
 import javafx.scene.layout._
+import javafx.scene.text.Text
 import javafx.stage.{FileChooser, Stage}
 import javafx.util.converter.DefaultStringConverter
 import javafx.util.{Callback, StringConverter}
@@ -170,10 +171,28 @@ class Main extends Application {
                 val modelsAccordionPane = new Accordion()
                 for (suggestedModel <- suggestedModels){
                     val explanations = model.getExplanation(suggestedModel)
-                    val detailPane = new TextArea(explanations.toString())
-                    detailPane.setWrapText(true)
+                    val listView = new ListView[String]();
+                    listView.setCellFactory(new Callback[ListView[String], ListCell[String]]() {
+                      override def call(list: ListView[String]): ListCell[String] = {
+                            return new ListCell[String]() {
+                                {
+                                val text = new Text();
+                                text.wrappingWidthProperty().bind(list.widthProperty().subtract(15));
+                                text.textProperty().bind(itemProperty());
 
-                    val titledPane = new TitledPane(model.getLabel(suggestedModel), detailPane)
+                                setPrefWidth(0);
+                                setGraphic(text);
+                            }
+                        };
+                      }
+                    });
+
+                    val items : ObservableList[String] = FXCollections.observableArrayList (explanations.asJavaCollection)
+                    listView.setItems(items);
+//                    val detailPane = new TextArea(explanations.toString())
+//                    detailPane.setWrapText(true)
+
+                    val titledPane = new TitledPane(model.getLabel(suggestedModel), listView)
                     modelsAccordionPane.getPanes.add(titledPane)
 
                 }
