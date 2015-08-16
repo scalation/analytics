@@ -12,8 +12,7 @@ import scala.collection.mutable.ArrayBuffer
 /**
  * Created by mnural on 3/29/15.
  */
-class Model (val hasRepeatedObservations : Boolean = false){
-
+class Model (var hasRepeatedObservations : Boolean = false){
   val id = "Model" + System.currentTimeMillis() //append current timestamp to create a unique ID for ontology
 
   //Conceptual Properties
@@ -102,5 +101,4 @@ class Model (val hasRepeatedObservations : Boolean = false){
 
     return explanations.filterNot(expl => expl.isEmpty)
   }
-
 }
