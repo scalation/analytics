@@ -28,6 +28,7 @@ class Main extends Application {
 
   def createLeftPane: GridPane = {
     val leftPane = new GridPane
+    leftPane.setId("leftPane")
     leftPane.setGridLinesVisible(true)
 
     val rowConstraint = new RowConstraints()
@@ -88,7 +89,7 @@ class Main extends Application {
 
 
     val scene = new Scene(mainGrid)
-    scene.getStylesheets.add("main.css")
+    scene.getStylesheets.add("file:resources/main.css")
     primaryStage.setTitle("ScalaTion Analytics")
     primaryStage.setScene(scene)
     primaryStage.setWidth(1280)

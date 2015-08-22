@@ -1,17 +1,16 @@
 package apps.analytics.dashboard.ui
 
 import java.io.File
-import javafx.collections.{ObservableList, FXCollections}
+import javafx.collections.{FXCollections, ObservableList}
 import javafx.event.ActionEvent
 import javafx.scene.control._
 import javafx.scene.layout.{HBox, VBox}
 import javafx.scene.text.Text
 import javafx.stage.FileChooser
 
-import scala.collection.JavaConverters._
-import apps.analytics.dashboard.model.{Model, Variable}
+import apps.analytics.dashboard.model.Model
 
-import scala.io.Source
+import scala.collection.JavaConverters._
 
 /**
  * Created by mnural on 8/11/15.
@@ -71,7 +70,13 @@ class InputController(model: Model, DEBUG : Boolean = false) extends VBox{
     val exampleButton = new Button("Load Example")
     exampleButton.setId("exampleButton")
     exampleButton.setOnAction(handleExampleButton(_))
+    val updateCSSButton = new Button("Reload CSS")
+    updateCSSButton.setOnAction((event: ActionEvent) => {
+      getScene.getStylesheets.clear();
+      getScene.getStylesheets.add("file:resources/main.css");
+    })
     getChildren.add(1, exampleButton)
+    getChildren.add(updateCSSButton)
   }
 
   def init() : Unit = {
@@ -96,30 +101,16 @@ class InputController(model: Model, DEBUG : Boolean = false) extends VBox{
   }
 
   def handleLoadButton(event: ActionEvent): Unit = {
-    val stream = Source.fromFile(file)
-    val headerLine = stream.getLines().next()
     val delimiter = delimComboBox.getSelectionModel.getSelectedItem() match {
       case "Tab" => "\t"
       case "Comma" => ","
       case _ => ","
     }
-    val headers = headerLine.split(delimiter)
-
-//    val headers = headerLine.split(delimField.getText())
-    //variables = FXCollections.observableArrayList[Variable]()
-    if (headersCheckBox.isSelected) {
-      headers.map(label => model.variables += new Variable(label))
-    } else {
-      var counter = 1
-      for (header <- headers) {
-        model.variables += new Variable("Variable" + counter)
-        counter += 1
-      }
-    }
 
     val tabs = getScene().lookup("#tabs").asInstanceOf[TabPane]
-    val inputTab = tabs.getTabs.get(0).asInstanceOf[DataTab]
-    inputTab.table.setItems(FXCollections.observableArrayList[Variable](model.variables.asJava))
+    val dataTab = tabs.getTabs.get(0).asInstanceOf[DataTab]
+    dataTab.init(file, delimiter, model)
+//    inputTab.table.setItems(FXCollections.observableArrayList[Variable](model.variables.asJava))
     if (!getChildren.contains(getModelsButton)) {
       getChildren.add(getModelsButton)
     }
