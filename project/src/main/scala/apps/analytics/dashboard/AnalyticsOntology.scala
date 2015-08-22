@@ -123,12 +123,13 @@ class AnalyticsOntology private()
 
     //Create mpg variable (response) and assert axioms
     val variables = Set[OWLIndividual]()
-    for (variable <- model.variables){
+    //for (variable <- model.variables){
+    model.variables.filterNot(_.ignore).foreach(variable => {
       val ontVariable = factory.getOWLNamedIndividual( IRI.create( baseIRI + "#" + variable.id))
       val typeAxiom = factory.getOWLClassAssertionAxiom(variableClass, ontVariable)
       changes.add(typeAxiom)
 
-      if (variable.fxVariableType != null)
+      if (variable.variableType != null)
       {
         val variableTypeAxiom = factory.getOWLObjectPropertyAssertionAxiom(hasVariableType, ontVariable, getVariableType(variable.variableType))
         changes.add(variableTypeAxiom)
@@ -142,7 +143,7 @@ class AnalyticsOntology private()
         changes.add(predictorVariableAxiom)
       }
       variables += ontVariable
-    }
+    })
 
     val variableDifferentIndividualsAxiom = factory.getOWLDifferentIndividualsAxiom(variables)
     changes.add(variableDifferentIndividualsAxiom)

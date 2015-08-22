@@ -6,8 +6,6 @@ import javafx.scene.control._
 import javafx.scene.layout._
 import javafx.stage.Stage
 
-import apps.analytics.dashboard.model.Model
-
 //import FXEvent2HandlerImplicits._
 
 //object FXEvent2HandlerImplicits{
@@ -48,7 +46,7 @@ class Main extends Application {
     val mainGrid = new GridPane()
     mainGrid.setGridLinesVisible(true)
 
-    val inputController = new InputController(new Model(), DEBUG)
+    val inputController = new InputController(DEBUG)
 
     //var variables: ObservableList[Variable] = FXCollections.observableArrayList[Variable]
 

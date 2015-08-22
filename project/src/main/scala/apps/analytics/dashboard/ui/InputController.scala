@@ -8,8 +8,6 @@ import javafx.scene.layout.{HBox, VBox}
 import javafx.scene.text.Text
 import javafx.stage.FileChooser
 
-import apps.analytics.dashboard.model.Model
-
 import scala.collection.JavaConverters._
 
 /**
@@ -17,7 +15,7 @@ import scala.collection.JavaConverters._
  */
 //TODO Reset model if a new file is loaded.
 
-class InputController(model: Model, DEBUG : Boolean = false) extends VBox{
+class InputController(DEBUG : Boolean = false) extends VBox{
 
   var file : File = null
 
@@ -109,7 +107,7 @@ class InputController(model: Model, DEBUG : Boolean = false) extends VBox{
 
     val tabs = getScene().lookup("#tabs").asInstanceOf[TabPane]
     val dataTab = tabs.getTabs.get(0).asInstanceOf[DataTab]
-    dataTab.init(file, delimiter, model)
+    dataTab.init(file, delimiter)
 //    inputTab.table.setItems(FXCollections.observableArrayList[Variable](model.variables.asJava))
     if (!getChildren.contains(getModelsButton)) {
       getChildren.add(getModelsButton)
@@ -117,8 +115,11 @@ class InputController(model: Model, DEBUG : Boolean = false) extends VBox{
   }
 
   def handleGetModels(event: ActionEvent) : Unit = {
-    println(model.variables)
-    //val model = new Model(false)
+    //println(model.variables)
+    val tabs = getScene.lookup("#tabs").asInstanceOf[TabPane]
+    val dataTab = tabs.getTabs.get(0).asInstanceOf[DataTab]
+
+    val model = dataTab.getRuntimeModel
     //variables.asScala.map(variable => model.variables += variable)
     val suggestedModels = model.getModelTypes
     val modelsAccordionPane = new Accordion()
@@ -126,17 +127,15 @@ class InputController(model: Model, DEBUG : Boolean = false) extends VBox{
       val explanations = model.getExplanation(suggestedModel)
       val listView = new ListView[String]();
       listView.setCellFactory((list: ListView[String]) => {
-        return new ListCell[String]() {
-          {
-            val text = new Text();
-            text.wrappingWidthProperty().bind(list.widthProperty().subtract(15));
-            text.textProperty().bind(itemProperty());
+        new ListCell[String]() {
+          val text = new Text()
+          text.wrappingWidthProperty().bind(list.widthProperty().subtract(15))
+          text.textProperty().bind(itemProperty())
 
-            setPrefWidth(0);
-            setGraphic(text);
-          }
-        };
-      });
+          setPrefWidth(0)
+          setGraphic(text)
+        }
+      })
 
       val items : ObservableList[String] = FXCollections.observableArrayList (explanations.asJavaCollection)
       listView.setItems(items);
@@ -147,7 +146,6 @@ class InputController(model: Model, DEBUG : Boolean = false) extends VBox{
     }
     println(suggestedModels)
 //    val modelSelectionTab = getScene.lookup("#modelSelectionTab").asInstanceOf[Tab]
-    val tabs = getScene().lookup("#tabs").asInstanceOf[TabPane]
     val modelSelectionTab = tabs.getTabs.get(1)
     modelSelectionTab.setDisable(false)
     modelSelectionTab.setContent(modelsAccordionPane)

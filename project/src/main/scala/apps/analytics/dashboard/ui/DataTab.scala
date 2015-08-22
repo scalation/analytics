@@ -6,17 +6,18 @@ import javafx.beans.property.{ObjectProperty, SimpleObjectProperty}
 import javafx.beans.value.{ChangeListener, ObservableValue}
 import javafx.collections.{FXCollections, ObservableList}
 import javafx.event.Event
-import javafx.scene.control.TableColumn.CellEditEvent
 import javafx.scene.control._
 import javafx.scene.control.cell.{CheckBoxTableCell, PropertyValueFactory, TextFieldTableCell}
 import javafx.util.converter.DefaultStringConverter
 import javafx.util.{Callback, StringConverter}
 
+import apps.analytics.dashboard.model.{Model, VariableTypes}
 import apps.analytics.dashboard.model.VariableTypes.VariableType
-import apps.analytics.dashboard.model.{Model, Variable, VariableTypes}
+import apps.analytics.dashboard.ui.model.FXVariable
 
 import scala.collection.JavaConverters._
 import scala.collection.mutable
+import scala.collection.mutable.ArrayBuffer
 import scala.io.Source
 
 /**
@@ -26,48 +27,58 @@ class DataTab(title : String = "Dataset") extends Tab {
 
   setText(title)
 
-  var table : TableView[Variable] = null //new TableView[Variable]();
+  var table : TableView[FXVariable] = null //new TableView[Variable]();
+
+  var variables = ArrayBuffer[FXVariable]()
 
   //setContent(table)
 
-  val labelColumn = new TableColumn[Variable,String]("Variable");
-  labelColumn.setCellValueFactory(new PropertyValueFactory[Variable, String]("fxLabel"))
-  labelColumn.setCellFactory(new Callback[TableColumn[Variable,String],TableCell[Variable,String]]() {
-    def call(p : TableColumn[Variable, String]) = {
-      new TextFieldTableCell[Variable,String](new DefaultStringConverter())
+  val labelColumn = new TableColumn[FXVariable,String]("Variable");
+  labelColumn.setCellValueFactory(new PropertyValueFactory[FXVariable, String]("fxLabel"))
+  labelColumn.setCellFactory(new Callback[TableColumn[FXVariable,String],TableCell[FXVariable,String]]() {
+    def call(p : TableColumn[FXVariable, String]) = {
+      new TextFieldTableCell[FXVariable,String](new DefaultStringConverter())
     }
   })
 
-  labelColumn.setOnEditCommit((event: CellEditEvent[Variable, String]) => {
-    event.getTableView.getItems.get(event.getTablePosition.getRow).setFxLabel(event.getNewValue)
-  })
+//  labelColumn.setOnEditCommit((event: CellEditEvent[FXVariable, String]) => {
+//    event.getTableView.getItems.get(event.getTablePosition.getRow).setFxLabel(event.getNewValue)
+//  })
   labelColumn.setPrefWidth(180);
 
-  val isResponseColumn = new TableColumn[Variable, Boolean]("Response?");
-  isResponseColumn.setCellValueFactory(new PropertyValueFactory[Variable, Boolean]("fxResponse"))
+  val isResponseColumn = new TableColumn[FXVariable, Boolean]("Response?");
+  isResponseColumn.setCellValueFactory(new PropertyValueFactory[FXVariable, Boolean]("fxResponse"))
   isResponseColumn.setPrefWidth(130)
   isResponseColumn.setCellFactory(CheckBoxTableCell.forTableColumn(isResponseColumn))
 
-  val variableTypeColumn = new TableColumn[Variable,VariableType]("Type");
-  variableTypeColumn.setCellValueFactory(new PropertyValueFactory[Variable,VariableType]("fxVariableType"))
+  val ignoreColumn = new TableColumn[FXVariable, Boolean]("Ignore?")
+  ignoreColumn.setCellValueFactory(new PropertyValueFactory[FXVariable, Boolean]("fxIgnore"))
+  ignoreColumn.setPrefWidth(130)
+  ignoreColumn.setCellFactory(CheckBoxTableCell.forTableColumn(ignoreColumn))
+
+
+
+  val variableTypeColumn = new TableColumn[FXVariable,VariableType]("Type");
+  variableTypeColumn.setCellValueFactory(new PropertyValueFactory[FXVariable,VariableType]("fxVariableType"))
   variableTypeColumn.setPrefWidth(240);
-  variableTypeColumn.setOnEditCommit((event: CellEditEvent[Variable, VariableType]) => {
-    event.getTableView.getItems.get(event.getTablePosition.getRow).setFxVariableType(event.getNewValue)
-  })
-  variableTypeColumn.setCellFactory(new Callback[TableColumn[Variable, VariableType], TableCell[Variable, VariableType]](){
-    def call(p : TableColumn[Variable, VariableType]) = {
+//  variableTypeColumn.setOnEditCommit((event: CellEditEvent[Variable, VariableType]) => {
+//    event.getTableView.getItems.get(event.getTablePosition.getRow).setFxVariableType(event.getNewValue)
+//  })
+
+  variableTypeColumn.setCellFactory(new Callback[TableColumn[FXVariable, VariableType], TableCell[FXVariable, VariableType]](){
+    def call(p : TableColumn[FXVariable, VariableType]) = {
       new ComboBoxCell()
     }
   })
 
-  def init(file: File, delimiter: String, model : Model, hasHeaders : Boolean = true) : Unit = {
+  def init(file: File, delimiter: String, hasHeaders : Boolean = true) : Unit = {
     val stream = Source.fromURI(file.toURI)
     val headers= stream.getLines().next().split(delimiter)
     //
     ////    val headers = headerLine.split(delimField.getText())
         //variables = FXCollections.observableArrayList[Variable]()
     if (hasHeaders) {
-      headers.foreach(label => model.variables += new Variable(label))
+      headers.foreach(label => variables += new FXVariable(label))
       val valueList = new Array[Set[String]](headers.length).map(m => mutable.SortedSet[String]())
 
       stream.getLines().foreach(
@@ -77,22 +88,22 @@ class DataTab(title : String = "Dataset") extends Tab {
         }
       )
 
-      valueList.indices.foreach(i => model.variables(i).setFxVariableType(inferVariableType(valueList(i))))
+      valueList.indices.foreach(i => variables(i).fxVariableType.set(inferVariableType(valueList(i))))
 
     } else {
       var counter = 1
       for (header <- headers) {
-        model.variables += new Variable("Variable" + counter)
+        variables += new FXVariable("Variable" + counter)
         counter += 1
       }
     }
     stream.close()
 
 
-    table = new TableView[Variable]()
-    table.getColumns().addAll(labelColumn, isResponseColumn, variableTypeColumn)
+    table = new TableView[FXVariable]()
+    table.getColumns().addAll(labelColumn, isResponseColumn, ignoreColumn, variableTypeColumn)
     table.setEditable(true)
-    table.setItems(FXCollections.observableArrayList[Variable](model.variables.asJava))
+    table.setItems(FXCollections.observableArrayList[FXVariable](variables.asJava))
     setContent(table)
 
   }
@@ -134,11 +145,17 @@ class DataTab(title : String = "Dataset") extends Tab {
     }
   }
 
+  def getRuntimeModel : Model = {
+    val model = new Model()
+    variables.foreach( fxVariable => model.variables += fxVariable.toVariable)
+    model
+  }
+
 }
 
 
 
-class ComboBoxCell extends TableCell[Variable, VariableType]{
+class ComboBoxCell extends TableCell[FXVariable, VariableType]{
 
   val items : ObservableList[VariableType] = FXCollections.observableArrayList(
     VariableTypes.values.asJavaCollection
