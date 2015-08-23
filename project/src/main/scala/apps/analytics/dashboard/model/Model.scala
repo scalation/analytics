@@ -10,6 +10,8 @@ import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
 /**
+ * Model provides a conceptual representation of a dataset
+ * @author Mustafa Nural
  * Created by mnural on 3/29/15.
  */
 class Model (var hasRepeatedObservations : Boolean = false){
@@ -68,10 +70,14 @@ class Model (var hasRepeatedObservations : Boolean = false){
 
   //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-  def getAnnotation(f: OWLAxiom): String = {
-    //TODO Look why this returns empty all the time.
+  /**
+   * Retrieves all annotations of type "rdf:comment" for the given axiom
+   * @param owlAxiom The axiom to get the annotations for
+   * @return A concatenated String containing annotations for this axiom
+   */
+  def getAnnotation(owlAxiom: OWLAxiom): String = {
     val annot = new StringBuilder()
-    val comments = f.getAnnotations.filter(annotation => annotation.getProperty.isComment)
+    val comments = owlAxiom.getAnnotations.filter(annotation => annotation.getProperty.isComment)
     comments.foreach(c => annot.append(c.getValue.asInstanceOf[OWLLiteral].getLiteral))
     annot.toString()
   }
@@ -99,6 +105,6 @@ class Model (var hasRepeatedObservations : Boolean = false){
     val explanations = expressions.map(f => getAnnotation(f))
     println(expressions)
 
-    return explanations.filterNot(expl => expl.isEmpty)
+    explanations.filterNot(expl => expl.isEmpty)
   }
 }

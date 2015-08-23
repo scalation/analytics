@@ -23,8 +23,6 @@ object Main {
 
 class Main extends Application {
 
-
-
   def createLeftPane: GridPane = {
     val leftPane = new GridPane
     leftPane.setId("leftPane")
