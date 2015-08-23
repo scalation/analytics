@@ -106,8 +106,8 @@ class InputController(DEBUG : Boolean = false) extends VBox{
     }
 
     val tabs = getScene().lookup("#tabs").asInstanceOf[TabPane]
-    val dataTab = tabs.getTabs.get(0).asInstanceOf[DataTab]
-    dataTab.init(file, delimiter)
+    val datasetTab = tabs.getTabs.get(0).asInstanceOf[DatasetTab]
+    datasetTab.init(file, delimiter)
 //    inputTab.table.setItems(FXCollections.observableArrayList[Variable](model.variables.asJava))
     if (!getChildren.contains(getModelsButton)) {
       getChildren.add(getModelsButton)
@@ -117,9 +117,9 @@ class InputController(DEBUG : Boolean = false) extends VBox{
   def handleGetModels(event: ActionEvent) : Unit = {
     //println(model.variables)
     val tabs = getScene.lookup("#tabs").asInstanceOf[TabPane]
-    val dataTab = tabs.getTabs.get(0).asInstanceOf[DataTab]
+    val datasetTab = tabs.getTabs.get(0).asInstanceOf[DatasetTab]
 
-    val model = dataTab.getRuntimeModel
+    val model = datasetTab.getRuntimeModel
     //variables.asScala.map(variable => model.variables += variable)
     val suggestedModels = model.getModelTypes
     val modelsAccordionPane = new Accordion()

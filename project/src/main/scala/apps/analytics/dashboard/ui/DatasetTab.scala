@@ -23,7 +23,7 @@ import scala.io.Source
 /**
  * Created by mnural on 8/16/15.
  */
-class DataTab(title : String = "Dataset") extends Tab {
+class DatasetTab(title : String = "Dataset") extends Tab {
 
   setText(title)
 
