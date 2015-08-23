@@ -22,7 +22,8 @@ object Main {
 }
 
 class Main extends Application {
-  val DEBUG = true
+
+
 
   def createLeftPane: GridPane = {
     val leftPane = new GridPane
@@ -43,6 +44,14 @@ class Main extends Application {
   }
 
   override def start(primaryStage: Stage) {
+    val DEBUG = getParameters match {
+      case null => false
+      case x => x.getUnnamed.size() match{
+        case 0 => false
+        case y => x.getUnnamed.get(0).toBoolean
+      }
+    }
+
     val mainGrid = new GridPane()
     mainGrid.setGridLinesVisible(true)
 
