@@ -11,8 +11,8 @@ import javafx.scene.control.cell.{CheckBoxTableCell, PropertyValueFactory, TextF
 import javafx.util.converter.DefaultStringConverter
 import javafx.util.{Callback, StringConverter}
 
-import apps.analytics.dashboard.model.{Model, VariableTypes}
 import apps.analytics.dashboard.model.VariableTypes.VariableType
+import apps.analytics.dashboard.model.{Model, VariableTypes}
 import apps.analytics.dashboard.ui.model.FXVariable
 
 import scala.collection.JavaConverters._
@@ -41,9 +41,6 @@ class DataTab(title : String = "Dataset") extends Tab {
     }
   })
 
-//  labelColumn.setOnEditCommit((event: CellEditEvent[FXVariable, String]) => {
-//    event.getTableView.getItems.get(event.getTablePosition.getRow).setFxLabel(event.getNewValue)
-//  })
   labelColumn.setPrefWidth(180);
 
   val isResponseColumn = new TableColumn[FXVariable, Boolean]("Response?");
@@ -56,15 +53,9 @@ class DataTab(title : String = "Dataset") extends Tab {
   ignoreColumn.setPrefWidth(130)
   ignoreColumn.setCellFactory(CheckBoxTableCell.forTableColumn(ignoreColumn))
 
-
-
   val variableTypeColumn = new TableColumn[FXVariable,VariableType]("Type");
   variableTypeColumn.setCellValueFactory(new PropertyValueFactory[FXVariable,VariableType]("fxVariableType"))
   variableTypeColumn.setPrefWidth(240);
-//  variableTypeColumn.setOnEditCommit((event: CellEditEvent[Variable, VariableType]) => {
-//    event.getTableView.getItems.get(event.getTablePosition.getRow).setFxVariableType(event.getNewValue)
-//  })
-
   variableTypeColumn.setCellFactory(new Callback[TableColumn[FXVariable, VariableType], TableCell[FXVariable, VariableType]](){
     def call(p : TableColumn[FXVariable, VariableType]) = {
       new ComboBoxCell()
@@ -74,9 +65,7 @@ class DataTab(title : String = "Dataset") extends Tab {
   def init(file: File, delimiter: String, hasHeaders : Boolean = true) : Unit = {
     val stream = Source.fromURI(file.toURI)
     val headers= stream.getLines().next().split(delimiter)
-    //
-    ////    val headers = headerLine.split(delimField.getText())
-        //variables = FXCollections.observableArrayList[Variable]()
+
     if (hasHeaders) {
       headers.foreach(label => variables += new FXVariable(label))
       val valueList = new Array[Set[String]](headers.length).map(m => mutable.SortedSet[String]())
@@ -106,6 +95,16 @@ class DataTab(title : String = "Dataset") extends Tab {
     table.setItems(FXCollections.observableArrayList[FXVariable](variables.asJava))
     setContent(table)
 
+    variables.foreach(f => f.fxResponse.addListener((observable, oldValue, newValue :java.lang.Boolean)=> {
+      if (newValue.equals(true)) {
+        toggleResponse(f)
+      }
+    }))
+
+  }
+
+  def toggleResponse(f: FXVariable) = {
+    variables.filterNot( _ equals f ).foreach(_.fxResponse.set(false))
   }
 
   def inferVariableType(valueList : mutable.Set[String]): VariableType = {
@@ -139,7 +138,6 @@ class DataTab(title : String = "Dataset") extends Tab {
             return VariableTypes.Continuous
           }
         }
-
         return VariableTypes.Continuous //Default variable type
       }
     }
@@ -152,7 +150,6 @@ class DataTab(title : String = "Dataset") extends Tab {
   }
 
 }
-
 
 
 class ComboBoxCell extends TableCell[FXVariable, VariableType]{
@@ -176,7 +173,7 @@ class ComboBoxCell extends TableCell[FXVariable, VariableType]{
         new TablePosition(getTableView(), getIndex(), getTableColumn()),
         TableColumn.editCommitEvent(),
         newValue
-      );
+      )
       Event.fireEvent(getTableColumn(), editEvent);
     }
   })

@@ -2,9 +2,8 @@ package apps.analytics.dashboard.ui.model
 
 import javafx.beans.property._
 
-import apps.analytics.dashboard.model.Variable
-import apps.analytics.dashboard.model.VariableTypes
 import apps.analytics.dashboard.model.VariableTypes.VariableType
+import apps.analytics.dashboard.model.{Variable, VariableTypes}
 
 /**
  * Created by mnural on 8/22/15.
@@ -15,6 +14,8 @@ class FXVariable(label : String = "", isResponse : Boolean = false, variableType
   val fxResponse = new SimpleBooleanProperty(isResponse)
   val fxIgnore = new SimpleBooleanProperty(ignore)
   val fxVariableType = new SimpleObjectProperty[VariableType](variableType)
+
+
 
   def fxResponseProperty: BooleanProperty = {
     fxResponse
