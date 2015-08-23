@@ -213,8 +213,7 @@
         <terms:alternative xml:lang="en">Analysis of Covariance</terms:alternative>
     </owl:Class>
     <owl:Axiom>
-        <rdfs:comment rdf:datatype="&xsd;string">A model may be considered as an ANCOVA model if in addition to conforming to GLM requirements
-it has some categorical variables (factors)</rdfs:comment>
+        <rdfs:comment rdf:datatype="&xsd;string">A model may be considered as an ANCOVA model if in addition to conforming to GLM requirements it has some categorical variables (factors).</rdfs:comment>
         <owl:annotatedProperty rdf:resource="&owl;equivalentClass"/>
         <owl:annotatedSource rdf:resource="&analytics;ANCOVA"/>
         <owl:annotatedTarget>
@@ -261,8 +260,7 @@ it has some categorical variables (factors)</rdfs:comment>
         <terms:alternative xml:lang="en">Analysis of Variance</terms:alternative>
     </owl:Class>
     <owl:Axiom>
-        <rdfs:comment rdf:datatype="&xsd;string">An ANCOVA model may be considered as an ANOVA model if
-it only has categorical variables (factors)</rdfs:comment>
+        <rdfs:comment rdf:datatype="&xsd;string">An ANCOVA model may be considered as an ANOVA model if it only has categorical variables (factors).</rdfs:comment>
         <owl:annotatedProperty rdf:resource="&owl;equivalentClass"/>
         <owl:annotatedSource rdf:resource="&analytics;ANOVA"/>
         <owl:annotatedTarget>
@@ -470,10 +468,7 @@ iii) On each trial, the probability of success is p and the probability of failu
         <rdfs:subClassOf rdf:resource="&analytics;GZLM"/>
     </owl:Class>
     <owl:Axiom>
-        <rdfs:comment rdf:datatype="&xsd;string">This axiom states that a GZLM model may be considered as an Exponential Regression Model if
-the residual distribution of the model is Exponential Distribution 
-and
-the response variable is a Non-Negative Continuous variable.</rdfs:comment>
+        <rdfs:comment rdf:datatype="&xsd;string">This axiom states that a GZLM model may be considered as an Exponential Regression Model if the residual distribution of the model is Exponential Distribution and the response variable is a Non-Negative Continuous variable.</rdfs:comment>
         <owl:annotatedProperty rdf:resource="&owl;equivalentClass"/>
         <owl:annotatedSource rdf:resource="&analytics;Exponential_Regression"/>
         <owl:annotatedTarget>
@@ -549,13 +544,8 @@ the response variable is a Non-Negative Continuous variable.</rdfs:comment>
                 <owl:intersectionOf rdf:parseType="Collection">
                     <rdf:Description rdf:about="&analytics;GZLM"/>
                     <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasResponseVariable"/>
-                        <owl:allValuesFrom>
-                            <owl:Restriction>
-                                <owl:onProperty rdf:resource="&analytics;hasVariableType"/>
-                                <owl:allValuesFrom rdf:resource="&analytics;Continuous"/>
-                            </owl:Restriction>
-                        </owl:allValuesFrom>
+                        <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
+                        <owl:allValuesFrom rdf:resource="&analytics;Normal_Distribution"/>
                     </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
@@ -565,8 +555,13 @@ the response variable is a Non-Negative Continuous variable.</rdfs:comment>
                 <owl:intersectionOf rdf:parseType="Collection">
                     <rdf:Description rdf:about="&analytics;GZLM"/>
                     <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
-                        <owl:allValuesFrom rdf:resource="&analytics;Normal_Distribution"/>
+                        <owl:onProperty rdf:resource="&analytics;hasResponseVariable"/>
+                        <owl:allValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&analytics;hasVariableType"/>
+                                <owl:allValuesFrom rdf:resource="&analytics;Continuous"/>
+                            </owl:Restriction>
+                        </owl:allValuesFrom>
                     </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
@@ -579,10 +574,7 @@ the response variable is a Non-Negative Continuous variable.</rdfs:comment>
         <defaultModel rdf:resource="&analytics;Multiple_Linear_Regression"/>
     </owl:Class>
     <owl:Axiom>
-        <rdfs:comment rdf:datatype="&xsd;string">This axiom states that a GZLM model may be considered as a GLM model if
-its residuals are Normally Distributed
-and
-the response variable is a Continuous variable</rdfs:comment>
+        <rdfs:comment rdf:datatype="&xsd;string">This axiom states that a GZLM model may be considered as a GLM model if its residuals are Normally Distributed and the response variable is a Continuous variable.</rdfs:comment>
         <owl:annotatedProperty rdf:resource="&owl;equivalentClass"/>
         <owl:annotatedSource rdf:resource="&analytics;GLM"/>
         <owl:annotatedTarget>
@@ -778,10 +770,7 @@ the response variable is a Continuous variable</rdfs:comment>
         <rdfs:subClassOf rdf:resource="&analytics;GZLM"/>
     </owl:Class>
     <owl:Axiom>
-        <rdfs:comment rdf:datatype="&xsd;string">This axiom states that a GZLM model may be considered as a Logistic Regression Model if
-the residual distribution of the model is Bernoulli Distribution 
-and
-the response variable is a binary variable.</rdfs:comment>
+        <rdfs:comment rdf:datatype="&xsd;string">This axiom states that a GZLM model may be considered as a Logistic Regression Model if the residual distribution of the model is Bernoulli Distribution and the response variable is a binary variable.</rdfs:comment>
         <owl:annotatedProperty rdf:resource="&owl;equivalentClass"/>
         <owl:annotatedSource rdf:resource="&analytics;Logistic_Regression"/>
         <owl:annotatedTarget>
@@ -879,8 +868,7 @@ the response variable is a binary variable.</rdfs:comment>
         <terms:alternative xml:lang="en">Multiple Regression</terms:alternative>
     </owl:Class>
     <owl:Axiom>
-        <rdfs:comment rdf:datatype="&xsd;string">A model may be considered a Multiple Linear Regression if in addition to conforming to GLM requirements
-at least some of its variables are Continuous variables</rdfs:comment>
+        <rdfs:comment rdf:datatype="&xsd;string">A model may be considered a Multiple Linear Regression if in addition to conforming to GLM requirements at least some of its variables are Continuous variables.</rdfs:comment>
         <owl:annotatedProperty rdf:resource="&owl;equivalentClass"/>
         <owl:annotatedSource rdf:resource="&analytics;Multiple_Linear_Regression"/>
         <owl:annotatedTarget>
@@ -1038,10 +1026,7 @@ at least some of its variables are Continuous variables</rdfs:comment>
         <rdfs:subClassOf rdf:resource="&analytics;GZLM"/>
     </owl:Class>
     <owl:Axiom>
-        <rdfs:comment rdf:datatype="&xsd;string">This axiom states that a GZLM model may be considered as a Poisson Regression model if 
-the residual distribution of the model is Binomial Distribution
-and 
-the response variable is a Non-Negative Integer.</rdfs:comment>
+        <rdfs:comment rdf:datatype="&xsd;string">This axiom states that a GZLM model may be considered as a Poisson Regression model if the residual distribution of the model is Binomial Distribution and the response variable is a Non-Negative Integer.</rdfs:comment>
         <owl:annotatedProperty rdf:resource="&owl;equivalentClass"/>
         <owl:annotatedSource rdf:resource="&analytics;Poisson_Regression"/>
         <owl:annotatedTarget>
@@ -1132,8 +1117,7 @@ the response variable is a Non-Negative Integer.</rdfs:comment>
         <terms:alternative xml:lang="en">SLR</terms:alternative>
     </owl:Class>
     <owl:Axiom>
-        <rdfs:comment rdf:datatype="&xsd;string">A MLR model may be considered a Simple Linear Regression model if 
-it has only one predictor variable</rdfs:comment>
+        <rdfs:comment rdf:datatype="&xsd;string">A MLR model may be considered a Simple Linear Regression model if it has only one predictor variable.</rdfs:comment>
         <owl:annotatedProperty rdf:resource="&owl;equivalentClass"/>
         <owl:annotatedSource rdf:resource="&analytics;Simple_Linear_Regression"/>
         <owl:annotatedTarget>
@@ -1323,18 +1307,6 @@ it has only one predictor variable</rdfs:comment>
         <rdf:type rdf:resource="&owl;NamedIndividual"/>
         <rdf:type>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
-                <owl:allValuesFrom>
-                    <owl:Class>
-                        <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;Normal_Distribution_Instance"/>
-                        </owl:oneOf>
-                    </owl:Class>
-                </owl:allValuesFrom>
-            </owl:Restriction>
-        </rdf:type>
-        <rdf:type>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="&analytics;hasVariable"/>
                 <owl:allValuesFrom>
                     <owl:Class>
@@ -1342,6 +1314,18 @@ it has only one predictor variable</rdfs:comment>
                             <rdf:Description rdf:about="&analytics;horsepower"/>
                             <rdf:Description rdf:about="&analytics;mpg"/>
                             <rdf:Description rdf:about="&analytics;cylinders"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="&analytics;Normal_Distribution_Instance"/>
                         </owl:oneOf>
                     </owl:Class>
                 </owl:allValuesFrom>
@@ -1436,13 +1420,11 @@ it has only one predictor variable</rdfs:comment>
         <rdf:type rdf:resource="&owl;NamedIndividual"/>
         <rdf:type>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&analytics;hasVariable"/>
+                <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
                 <owl:allValuesFrom>
                     <owl:Class>
                         <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;mpg"/>
-                            <rdf:Description rdf:about="&analytics;isDomestic"/>
-                            <rdf:Description rdf:about="&analytics;cylinders"/>
+                            <rdf:Description rdf:about="&analytics;Bernoulli_Distribution_Instance"/>
                         </owl:oneOf>
                     </owl:Class>
                 </owl:allValuesFrom>
@@ -1450,11 +1432,13 @@ it has only one predictor variable</rdfs:comment>
         </rdf:type>
         <rdf:type>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
+                <owl:onProperty rdf:resource="&analytics;hasVariable"/>
                 <owl:allValuesFrom>
                     <owl:Class>
                         <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;Bernoulli_Distribution_Instance"/>
+                            <rdf:Description rdf:about="&analytics;mpg"/>
+                            <rdf:Description rdf:about="&analytics;isDomestic"/>
+                            <rdf:Description rdf:about="&analytics;cylinders"/>
                         </owl:oneOf>
                     </owl:Class>
                 </owl:allValuesFrom>
@@ -1514,18 +1498,6 @@ it has only one predictor variable</rdfs:comment>
         <rdf:type rdf:resource="&owl;NamedIndividual"/>
         <rdf:type>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
-                <owl:allValuesFrom>
-                    <owl:Class>
-                        <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;Normal_Distribution_Instance"/>
-                        </owl:oneOf>
-                    </owl:Class>
-                </owl:allValuesFrom>
-            </owl:Restriction>
-        </rdf:type>
-        <rdf:type>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="&analytics;hasVariable"/>
                 <owl:allValuesFrom>
                     <owl:Class>
@@ -1538,6 +1510,18 @@ it has only one predictor variable</rdfs:comment>
                             <rdf:Description rdf:about="&analytics;weight"/>
                             <rdf:Description rdf:about="&analytics;model_year"/>
                             <rdf:Description rdf:about="&analytics;cylinders"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="&analytics;Normal_Distribution_Instance"/>
                         </owl:oneOf>
                     </owl:Class>
                 </owl:allValuesFrom>
@@ -1879,6 +1863,17 @@ it has only one predictor variable</rdfs:comment>
      -->
 
     <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="&analytics;Identity_Function"/>
+            <rdf:Description rdf:about="&analytics;Inverse_Function"/>
+            <rdf:Description rdf:about="&analytics;Log_Function"/>
+            <rdf:Description rdf:about="&analytics;Logit_Function"/>
+            <rdf:Description rdf:about="&analytics;Reciprocal_Function"/>
+            <rdf:Description rdf:about="&analytics;Square_Root_Function"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
             <rdf:Description rdf:about="&analytics;Binary_Variable_Type"/>
@@ -1901,17 +1896,6 @@ it has only one predictor variable</rdfs:comment>
             <rdf:Description rdf:about="&analytics;origin"/>
             <rdf:Description rdf:about="&analytics;weight"/>
         </owl:distinctMembers>
-    </rdf:Description>
-    <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
-        <owl:members rdf:parseType="Collection">
-            <rdf:Description rdf:about="&analytics;Identity_Function"/>
-            <rdf:Description rdf:about="&analytics;Inverse_Function"/>
-            <rdf:Description rdf:about="&analytics;Log_Function"/>
-            <rdf:Description rdf:about="&analytics;Logit_Function"/>
-            <rdf:Description rdf:about="&analytics;Reciprocal_Function"/>
-            <rdf:Description rdf:about="&analytics;Square_Root_Function"/>
-        </owl:members>
     </rdf:Description>
 </rdf:RDF>
 

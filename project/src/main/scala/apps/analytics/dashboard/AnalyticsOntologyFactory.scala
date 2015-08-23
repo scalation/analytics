@@ -9,71 +9,71 @@ import org.semanticweb.owlapi.model.{IRI, OWLOntology}
 object AnalyticsOntologyFactory
 {
 
-    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-    /** The default IRI for the ScalaTion Analytics Ontology 
-     */
-    val remoteIRI = IRI.create("https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl")
+  //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+  /** The default IRI for the ScalaTion Analytics Ontology
+    */
+  val remoteIRI = IRI.create("https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl")
 
-    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-    /** A local IRI for the ScalaTion Analytics Ontology based on a `File` path.
-     */
-    def localIRI (file: File) = IRI.create(file.toURI())
+  //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+  /** A local IRI for the ScalaTion Analytics Ontology based on a `File` path.
+    */
+  def localIRI (file: File) = IRI.create(file.toURI())
 
-    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-    /** Load an ontology from a given IRI 
-     *  @param iri  the IRI of the ontology
-     */
-    private def load (iri: IRI): OWLOntology =
-    {
-        //TO WORK WITH A LOCAL COPY OF THE ONTOLOGY CREATED IN THE TEMP FOLDER,UNCOMMENT THESE LINES
-//        val tempManager = OWLManager.createOWLOntologyManager()
-//        val tempOntology = tempManager.loadOntologyFromOntologyDocument(iri)
-//        val tempFile = File.createTempFile(iri.getRemainder.get() + "" +(System.currentTimeMillis()% 1000), null)
-//        tempFile.deleteOnExit()
-//        tempManager.saveOntology(tempOntology,new FileOutputStream(tempFile))
+  //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+  /** Load an ontology from a given IRI
+    *  @param iri  the IRI of the ontology
+    */
+  private def load (iri: IRI): OWLOntology =
+  {
+    //TO WORK WITH A LOCAL COPY OF THE ONTOLOGY CREATED IN THE TEMP FOLDER,UNCOMMENT THESE LINES
+    //        val tempManager = OWLManager.createOWLOntologyManager()
+    //        val tempOntology = tempManager.loadOntologyFromOntologyDocument(iri)
+    //        val tempFile = File.createTempFile(iri.getRemainder.get() + "" +(System.currentTimeMillis()% 1000), null)
+    //        tempFile.deleteOnExit()
+    //        tempManager.saveOntology(tempOntology,new FileOutputStream(tempFile))
 
-        val manager  = OWLManager.createOWLOntologyManager()
-        manager.loadOntologyFromOntologyDocument(iri)
-        //manager.loadOntologyFromOntologyDocument(localIRI(tempFile))
-    } // load
+    val manager  = OWLManager.createOWLOntologyManager()
+    manager.loadOntologyFromOntologyDocument(iri)
+    //manager.loadOntologyFromOntologyDocument(localIRI(tempFile))
+  } // load
 
-    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-    /** Load the ScalaTion Analytics Ontology locally from the default file
-     *  path. 
-     */
-    def loadLocal (): OWLOntology =
-    {
-        load(AnalyticsOntologyFactory.localIRI(new File("../analytics.owl")))
-    } // loadLocal
+  //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+  /** Load the ScalaTion Analytics Ontology locally from the default file
+    *  path.
+    */
+  def loadLocal (): OWLOntology =
+  {
+    load(AnalyticsOntologyFactory.localIRI(new File("../analytics.owl")))
+  } // loadLocal
 
-    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-    /** Load the ScalaTion Analytics Ontology locally from the specified file
-     *  path. 
-     *   @param file  the file containing the ontology
-     */
-    def loadLocal (file: File): OWLOntology =
-    {
-        load(AnalyticsOntologyFactory.localIRI(file))
-    } // loadLocal
+  //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+  /** Load the ScalaTion Analytics Ontology locally from the specified file
+    *  path.
+    *   @param file  the file containing the ontology
+    */
+  def loadLocal (file: File): OWLOntology =
+  {
+    load(AnalyticsOntologyFactory.localIRI(file))
+  } // loadLocal
 
-    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-    /** Load the ScalaTion Analytics Ontology locally from the default remote
-     *  location.
-     */
-    def loadRemote (): OWLOntology =
-    {
-        load(AnalyticsOntologyFactory.remoteIRI)
-    } // loadRemote
+  //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+  /** Load the ScalaTion Analytics Ontology locally from the default remote
+    *  location.
+    */
+  def loadRemote (): OWLOntology =
+  {
+    load(AnalyticsOntologyFactory.remoteIRI)
+  } // loadRemote
 
-    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-    /** Load the ScalaTion Analytics Ontology locally from the specified remote
-     *  location.
-     *   @param uri  the URI of the remote ontology
-     */
-    def loadRemote (uri: URI): OWLOntology =
-    {
-        load(IRI.create(uri))
-    } // loadRemote
+  //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+  /** Load the ScalaTion Analytics Ontology locally from the specified remote
+    *  location.
+    *   @param uri  the URI of the remote ontology
+    */
+  def loadRemote (uri: URI): OWLOntology =
+  {
+    load(IRI.create(uri))
+  } // loadRemote
 
 } // AnalyticsOntology
 
