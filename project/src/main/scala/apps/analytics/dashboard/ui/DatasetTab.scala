@@ -196,7 +196,7 @@ class ComboBoxCell extends TableCell[FXVariable, VariableType]{
     }
   })
 
-  comboBox.getSelectionModel.select(getItem)
+  //comboBox.getSelectionModel.select(getItem)
 
   override def updateItem(item: VariableType, empty: scala.Boolean) {
     super.updateItem(item, empty)
@@ -204,18 +204,17 @@ class ComboBoxCell extends TableCell[FXVariable, VariableType]{
       this.setText(null)
       this.setGraphic(null)
     } else {
-      if (this.isEditing()) {
-        if (comboBox != null) {
-          comboBox.getSelectionModel().select(this.getItem())
-        }
-        this.setText(null)
-        this.setGraphic(comboBox)
-
-      } else {
+//      if (this.isEditing()) {
+//        if (comboBox != null) {
+//          comboBox.getSelectionModel().select(this.getItem())
+//        }
+//        this.setText(null)
+//        this.setGraphic(comboBox)
+//      } else {
         this.setText(null)
         comboBox.getSelectionModel().select(this.getItem())
         this.setGraphic(comboBox)
-      }
+//      }
     }
   }
 
@@ -223,7 +222,7 @@ class ComboBoxCell extends TableCell[FXVariable, VariableType]{
     if (!isEditable || !getTableView.isEditable || !getTableColumn.isEditable) {
       return
     }
-    comboBox.getSelectionModel.select(getItem)
+    //comboBox.getSelectionModel.select(getItem)
     super.startEdit
   }
 
@@ -231,7 +230,7 @@ class ComboBoxCell extends TableCell[FXVariable, VariableType]{
     if (!isEditable || !getTableView.isEditable || !getTableColumn.isEditable) {
       return
     }
-    comboBox.getSelectionModel.select(getItem)
+    //comboBox.getSelectionModel.select(getItem)
     super.cancelEdit()
   }
 
