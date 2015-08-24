@@ -11,10 +11,11 @@ import javafx.stage.FileChooser
 import scala.collection.JavaConverters._
 
 /**
+ * Controller class for leftPane (input related actions)
+ * @author Mustafa Nural
  * Created by mnural on 8/11/15.
  */
 //TODO Reset model if a new file is loaded.
-
 class InputController(DEBUG : Boolean = false) extends VBox{
 
   var file : File = null
@@ -64,7 +65,7 @@ class InputController(DEBUG : Boolean = false) extends VBox{
   getChildren.addAll(fileButton, label)
 
 
-  if (DEBUG){
+  if (DEBUG){ // Add reload CSS and load example buttons if DEBUG mode
     val exampleButton = new Button("Load Example")
     exampleButton.setId("exampleButton")
     exampleButton.setOnAction(handleExampleButton(_))
@@ -81,6 +82,10 @@ class InputController(DEBUG : Boolean = false) extends VBox{
     label.setWrapText(true)
   }
 
+  /**
+   * Event handler for load example button
+   * @param event
+   */
   def handleExampleButton(event: ActionEvent): Unit = {
     file = new File("/home/mnural/research/data/auto_mpg/no_missing.csv")
     label.setText(file.getName)
@@ -89,6 +94,10 @@ class InputController(DEBUG : Boolean = false) extends VBox{
     getChildren.remove(this.getScene.lookup("#exampleButton"))
   }
 
+  /**
+   * Event handler for file selection
+   * @param actionEvent
+   */
   def handleFileSelection(actionEvent: ActionEvent): Unit ={
         file = fileBrowser.showOpenDialog(this.getScene.getWindow)
         if (file != null) {
@@ -98,6 +107,10 @@ class InputController(DEBUG : Boolean = false) extends VBox{
         }
   }
 
+  /**
+   * Event handler for loading selected file
+   * @param event
+   */
   def handleLoadButton(event: ActionEvent): Unit = {
     val delimiter = delimComboBox.getSelectionModel.getSelectedItem() match {
       case "Tab" => "\t"
@@ -106,20 +119,24 @@ class InputController(DEBUG : Boolean = false) extends VBox{
     }
 
     val tabs = getScene().lookup("#tabs").asInstanceOf[TabPane]
-    val dataTab = tabs.getTabs.get(0).asInstanceOf[DataTab]
-    dataTab.init(file, delimiter)
-//    inputTab.table.setItems(FXCollections.observableArrayList[Variable](model.variables.asJava))
+    val datasetTab = tabs.getTabs.get(0).asInstanceOf[DatasetTab]
+    datasetTab.init(file, delimiter)
     if (!getChildren.contains(getModelsButton)) {
       getChildren.add(getModelsButton)
     }
   }
 
+  /**
+   * Event handler for get models button.
+   * A new tab will be created with the suggested models retrieved from the ontology.
+   * @param event
+   */
   def handleGetModels(event: ActionEvent) : Unit = {
     //println(model.variables)
     val tabs = getScene.lookup("#tabs").asInstanceOf[TabPane]
-    val dataTab = tabs.getTabs.get(0).asInstanceOf[DataTab]
+    val datasetTab = tabs.getTabs.get(0).asInstanceOf[DatasetTab]
 
-    val model = dataTab.getRuntimeModel
+    val model = datasetTab.getRuntimeModel
     //variables.asScala.map(variable => model.variables += variable)
     val suggestedModels = model.getModelTypes
     val modelsAccordionPane = new Accordion()
@@ -145,7 +162,6 @@ class InputController(DEBUG : Boolean = false) extends VBox{
 
     }
     println(suggestedModels)
-//    val modelSelectionTab = getScene.lookup("#modelSelectionTab").asInstanceOf[Tab]
     val modelSelectionTab = tabs.getTabs.get(1)
     modelSelectionTab.setDisable(false)
     modelSelectionTab.setContent(modelsAccordionPane)

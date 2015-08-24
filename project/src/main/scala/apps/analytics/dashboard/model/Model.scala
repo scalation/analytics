@@ -10,6 +10,8 @@ import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
 /**
+ * Model provides a conceptual representation of a dataset
+ * @author Mustafa Nural
  * Created by mnural on 3/29/15.
  */
 class Model (var hasRepeatedObservations : Boolean = false){
@@ -17,8 +19,8 @@ class Model (var hasRepeatedObservations : Boolean = false){
 
   //Conceptual Properties
 
-  //List of model types inferred by the reasoner
-  private var modelTypes : mutable.Set[OWLClass] = null
+  //reference to the AnalyticsOntology object to reasoning support
+  val ontology = AnalyticsOntology.ontology
 
   //Variables
   val variables = ArrayBuffer[Variable]()
@@ -42,9 +44,7 @@ class Model (var hasRepeatedObservations : Boolean = false){
     * @return suggested models from the analytics ontology for this object
     */
   def getModelTypes = {
-    val ontology = AnalyticsOntology.ontology
-    modelTypes = ontology.retrieveTypes(this)
-    modelTypes
+    ontology.retrieveTypes(this)
   }
 
   //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -54,7 +54,6 @@ class Model (var hasRepeatedObservations : Boolean = false){
     */
 
   def getLabel(ontologyModel: OWLClass): String = {
-    val ontology = AnalyticsOntology.ontology
     for (annotation : OWLAnnotation <- ontologyModel.getAnnotations(ontology.ontology, ontology.factory.getRDFSLabel)) {
       if (annotation.getValue .isInstanceOf[OWLLiteral]) {
         val value: OWLLiteral = annotation.getValue().asInstanceOf[OWLLiteral];
@@ -68,10 +67,14 @@ class Model (var hasRepeatedObservations : Boolean = false){
 
   //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-  def getAnnotation(f: OWLAxiom): String = {
-    //TODO Look why this returns empty all the time.
+  /**
+   * Retrieves all annotations of type "rdf:comment" for the given axiom
+   * @param owlAxiom The axiom to get the annotations for
+   * @return A concatenated String containing annotations for this axiom
+   */
+  def getAnnotation(owlAxiom: OWLAxiom): String = {
     val annot = new StringBuilder()
-    val comments = f.getAnnotations.filter(annotation => annotation.getProperty.isComment)
+    val comments = owlAxiom.getAnnotations.filter(annotation => annotation.getProperty.isComment)
     comments.foreach(c => annot.append(c.getValue.asInstanceOf[OWLLiteral].getLiteral))
     annot.toString()
   }
@@ -82,7 +85,6 @@ class Model (var hasRepeatedObservations : Boolean = false){
     */
 
   def getExplanation(suggestedModel: OWLClass) : mutable.Set[String] = {
-    val ontology = AnalyticsOntology.ontology
     val modelIndividual = ontology.sfProvider.getEntity("analytics:" + this.id).asOWLNamedIndividual()
     val entailment : OWLAxiom = ontology.factory.getOWLClassAssertionAxiom(suggestedModel, modelIndividual)
 
@@ -99,6 +101,6 @@ class Model (var hasRepeatedObservations : Boolean = false){
     val explanations = expressions.map(f => getAnnotation(f))
     println(expressions)
 
-    return explanations.filterNot(expl => expl.isEmpty)
+    explanations.filterNot(expl => expl.isEmpty)
   }
 }

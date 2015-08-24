@@ -31,9 +31,12 @@
     -fx-spacing: 5px;
 }
 
-.list-cell:hover, .list-cell:focused {
-/*.list-cell:hover{*/
+/*.list-cell:hover, .list-cell:focused {*/
+.table-view .list-cell:hover{
     -fx-background-color: linear-gradient(#328BDB 0%, #207BCF 25%, #1973C9 75%, #0A65BF 100%);
     -fx-text-fill: white;
 }
-
+.table-view .list-cell:focused{
+    /*-fx-background-color: linear-gradient(#328BDB 0%, #207BCF 25%, #1973C9 75%, #0A65BF 100%);*/
+    -fx-text-fill: black;
+}

@@ -23,8 +23,6 @@ object Main {
 
 class Main extends Application {
 
-
-
   def createLeftPane: GridPane = {
     val leftPane = new GridPane
     leftPane.setId("leftPane")
@@ -83,7 +81,7 @@ class Main extends Application {
     tabbedPane.setId("tabs")
     tabbedPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE)
 
-    val inputTab = new DataTab()
+    val inputTab = new DatasetTab()
     inputTab.setId("dataTab")
 
     val modelSelectionTab = new Tab("Model Selection");
