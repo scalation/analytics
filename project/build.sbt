@@ -9,6 +9,8 @@ scalaVersion := "2.11.6"
 
 scalacOptions += "-Xexperimental"
 
+fork in run := true
+
 libraryDependencies ++= Seq(
     "scalation" % "scalation_2.11" % "1.1",
     "org.scalatest" % "scalatest_2.11" % "2.2.1" % "test",
