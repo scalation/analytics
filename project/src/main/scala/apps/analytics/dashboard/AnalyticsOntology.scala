@@ -192,7 +192,7 @@ object AnalyticsOntology {
   /**
    * The singleton ontology instance
    */
-  val ontology = new AnalyticsOntology
+  val ontology : AnalyticsOntology = { new AnalyticsOntology}
 
   /**
    * Retrieve the OWLOntology instance in the specified way from the factory

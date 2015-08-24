@@ -19,8 +19,8 @@ class Model (var hasRepeatedObservations : Boolean = false){
 
   //Conceptual Properties
 
-  //List of model types inferred by the reasoner
-  private var modelTypes : mutable.Set[OWLClass] = null
+  //reference to the AnalyticsOntology object to reasoning support
+  val ontology = AnalyticsOntology.ontology
 
   //Variables
   val variables = ArrayBuffer[Variable]()
@@ -44,9 +44,7 @@ class Model (var hasRepeatedObservations : Boolean = false){
     * @return suggested models from the analytics ontology for this object
     */
   def getModelTypes = {
-    val ontology = AnalyticsOntology.ontology
-    modelTypes = ontology.retrieveTypes(this)
-    modelTypes
+    ontology.retrieveTypes(this)
   }
 
   //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -56,7 +54,6 @@ class Model (var hasRepeatedObservations : Boolean = false){
     */
 
   def getLabel(ontologyModel: OWLClass): String = {
-    val ontology = AnalyticsOntology.ontology
     for (annotation : OWLAnnotation <- ontologyModel.getAnnotations(ontology.ontology, ontology.factory.getRDFSLabel)) {
       if (annotation.getValue .isInstanceOf[OWLLiteral]) {
         val value: OWLLiteral = annotation.getValue().asInstanceOf[OWLLiteral];
@@ -88,7 +85,6 @@ class Model (var hasRepeatedObservations : Boolean = false){
     */
 
   def getExplanation(suggestedModel: OWLClass) : mutable.Set[String] = {
-    val ontology = AnalyticsOntology.ontology
     val modelIndividual = ontology.sfProvider.getEntity("analytics:" + this.id).asOWLNamedIndividual()
     val entailment : OWLAxiom = ontology.factory.getOWLClassAssertionAxiom(suggestedModel, modelIndividual)
 
