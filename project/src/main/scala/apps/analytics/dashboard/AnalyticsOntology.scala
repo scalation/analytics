@@ -75,7 +75,10 @@ class AnalyticsOntology private()
   {
     hreasoner.precomputeInferences()
 
+    //Get all suitable types from the reasoner
     val allTypes = hreasoner.getTypes(individual, isDirect).getFlattened
+
+    //Filter out any suggestion if any of it's subclasses are also among suggestions.
     allTypes.filterNot(suggestedClass => hreasoner.getSubClasses(suggestedClass, false).getFlattened.exists((subClass) => allTypes.contains(subClass)))
   }
 
