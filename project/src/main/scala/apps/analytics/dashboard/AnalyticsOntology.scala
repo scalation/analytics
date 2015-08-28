@@ -74,7 +74,9 @@ class AnalyticsOntology private()
   def retrieveTypes(individual: OWLNamedIndividual, isDirect: Boolean = true) : Set[OWLClass] =
   {
     hreasoner.precomputeInferences()
-    hreasoner.getTypes(individual, isDirect).getFlattened
+
+    val allTypes = hreasoner.getTypes(individual, isDirect).getFlattened
+    allTypes.filterNot(suggestedClass => hreasoner.getSubClasses(suggestedClass, false).getFlattened.exists((subClass) => allTypes.contains(subClass)))
   }
 
   //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
