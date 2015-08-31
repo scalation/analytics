@@ -157,7 +157,15 @@ class InputController(DEBUG : Boolean = false) extends VBox{
       val items : ObservableList[String] = FXCollections.observableArrayList (explanations.asJavaCollection)
       listView.setItems(items);
 
-      val titledPane = new TitledPane(model.getLabel(suggestedModel), listView)
+      val justificationVBox = new VBox()
+      justificationVBox.setId("justificationVBox")
+      val justificationLabel = new Label("Justification For This Suggestion")
+
+
+      val runButton = new Button("Run This Model For My Dataset")
+
+      justificationVBox.getChildren.addAll(justificationLabel, listView, runButton)
+      val titledPane = new TitledPane(model.getLabel(suggestedModel), justificationVBox)
       modelsAccordionPane.getPanes.add(titledPane)
 
     }

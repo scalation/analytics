@@ -40,3 +40,15 @@
     /*-fx-background-color: linear-gradient(#328BDB 0%, #207BCF 25%, #1973C9 75%, #0A65BF 100%);*/
     -fx-text-fill: black;
 }
+
+#justificationVBox{
+    -fx-spacing: 10;
+    -fx-background-color: rgba(255, 250, 245, 0.15);
+    -fx-alignment: top-center;
+    /*-fx-padding: 10 0 10 0;*/
+}
+
+#justificationVBox .label {
+    -fx-font-weight: bold;
+        /*-fx-background-color: linear-gradient(#328BDB 0%, #207BCF 25%, #1973C9 75%, #0A65BF 100%);*/
+}
