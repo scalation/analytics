@@ -67,28 +67,27 @@ class DatasetTab(title : String = "Dataset") extends Tab {
    */
   def init(file: File, delimiter: String, hasHeaders : Boolean = true) : Unit = {
     val stream = Source.fromURI(file.toURI)
-    val headers= stream.getLines().next().split(delimiter)
+    val firstLine = stream.getLines().next().split(delimiter)
+    val valueList = new Array[Set[String]](firstLine.length).map(m => mutable.SortedSet[String]())
 
-    if (hasHeaders) {
-      headers.foreach(label => variables += new FXVariable(label))
-      val valueList = new Array[Set[String]](headers.length).map(m => mutable.SortedSet[String]())
-
-      stream.getLines().foreach(
-        line => {
-          val values = line.split(delimiter)
-          values.indices.foreach(i => valueList(i) += values(i))
-        }
-      )
-
-      valueList.indices.foreach(i => variables(i).fxVariableType.set(inferVariableType(valueList(i))))
-
-    } else { //TODO HANDLE CASE WHEN HEADERS ARE NOT PRESENT
-      var counter = 1
-      for (header <- headers) {
-        variables += new FXVariable("Variable" + counter)
-        counter += 1
-      }
+    if(hasHeaders) {
+      firstLine.foreach(label => variables += new FXVariable(label))
+    } else {
+      firstLine.indices.foreach(i => {
+        variables += new FXVariable("Variable" + i)
+        valueList(i) += firstLine(i)
+      })
     }
+
+    stream.getLines().foreach(
+      line => {
+        val values = line.split(delimiter)
+        values.indices.foreach(i => valueList(i) += values(i))
+      }
+    )
+
+    valueList.indices.foreach(i => variables(i).fxVariableType.set(inferVariableType(valueList(i))))
+
     stream.close()
 
     table = new TableView[FXVariable]()
