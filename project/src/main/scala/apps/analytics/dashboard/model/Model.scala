@@ -103,4 +103,13 @@ class Model (var hasRepeatedObservations : Boolean = false){
 
     explanations.filterNot(expl => expl.isEmpty)
   }
+
+  override def toString = {
+    var summary = new StringBuilder()
+    summary ++=  "Has repeated observations? : " + {if(hasRepeatedObservations) "Yes" else "No"} + "\n"
+    summary ++= "\n"
+    variables.filterNot(_.ignore).foreach(summary ++= "\t" + _.toString + "\n")
+
+    summary.toString
+  }
 }

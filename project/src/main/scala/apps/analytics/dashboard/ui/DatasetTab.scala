@@ -158,10 +158,19 @@ class DatasetTab(title : String = "Dataset") extends Tab {
    * state of the user interface.
    * @return runtime model to be used for obtaining model type suggestions
    */
-  def getRuntimeModel : Model = {
+  def getConceptualModel : Model = {
     val model = new Model()
     variables.foreach( fxVariable => model.variables += fxVariable.toVariable)
     model
+  }
+
+  /**
+   * This method would set user interface to the given conceptual model.
+   * This would especially be handy to revert back to a previous setting during analysis
+   * @param conceptualModel
+   */
+  def update (conceptualModel : Model) = {
+    //TODO IMPLEMENT
   }
 
 }

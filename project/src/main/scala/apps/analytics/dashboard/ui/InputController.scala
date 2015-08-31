@@ -136,13 +136,27 @@ class InputController(DEBUG : Boolean = false) extends VBox{
     val tabs = getScene.lookup("#tabs").asInstanceOf[TabPane]
     val datasetTab = tabs.getTabs.get(0).asInstanceOf[DatasetTab]
 
-    val model = datasetTab.getRuntimeModel
+    val model = datasetTab.getConceptualModel
     //variables.asScala.map(variable => model.variables += variable)
+
+    val suggestionsVBox = new VBox()
+    suggestionsVBox.setId("suggestionsVBox")
+
+    val modelSummaryLabel = new Label("Suggestions for:")
+    modelSummaryLabel.setId("modelSummaryLabel")
+
+    val modelSummary = new TextArea()
+    modelSummary.setBackground(suggestionsVBox.getBackground)
+    modelSummary.setId("modelSummary")
+    modelSummary.setText(model.toString)
+    modelSummary.setEditable(false)
+    modelSummary.setWrapText(true)
+
     val suggestedModels = model.getModelTypes
     val modelsAccordionPane = new Accordion()
     for (suggestedModel <- suggestedModels){
       val explanations = model.getExplanation(suggestedModel)
-      val listView = new ListView[String]();
+      val listView = new ListView[String]()
       listView.setCellFactory((list: ListView[String]) => {
         new ListCell[String]() {
           val text = new Text()
@@ -169,10 +183,13 @@ class InputController(DEBUG : Boolean = false) extends VBox{
       modelsAccordionPane.getPanes.add(titledPane)
 
     }
+
+    suggestionsVBox.getChildren.addAll(modelSummaryLabel, modelSummary, modelsAccordionPane)
+
     println(suggestedModels)
     val modelSelectionTab = tabs.getTabs.get(1)
     modelSelectionTab.setDisable(false)
-    modelSelectionTab.setContent(modelsAccordionPane)
+    modelSelectionTab.setContent(suggestionsVBox)
     modelSelectionTab.getTabPane.getSelectionModel.select(modelSelectionTab)
   }
 }
