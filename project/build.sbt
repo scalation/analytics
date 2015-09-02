@@ -12,7 +12,7 @@ scalacOptions += "-Xexperimental"
 fork in run := true
 
 libraryDependencies ++= Seq(
-    "scalation" % "scalation_2.11" % "1.1",
+    "scalation" % "scalation_2.11" % "1.2",
     "org.scalatest" % "scalatest_2.11" % "2.2.1" % "test",
     "net.sourceforge.owlapi" % "owlapi-distribution" % "3.5.1",
     "net.sourceforge.owlapi" % "owlexplanation" % "1.1.0",
