@@ -87,7 +87,7 @@ class InputController(DEBUG : Boolean = false) extends VBox{
    * @param event
    */
   def handleExampleButton(event: ActionEvent): Unit = {
-    file = new File("/home/mnural/research/data/auto_mpg/no_missing.csv")
+    file = new File("../examples/auto_mpg.csv")
     label.setText(file.getName)
     fileButton.setText("Choose a Different File")
     loadButton.fire()
@@ -136,13 +136,27 @@ class InputController(DEBUG : Boolean = false) extends VBox{
     val tabs = getScene.lookup("#tabs").asInstanceOf[TabPane]
     val datasetTab = tabs.getTabs.get(0).asInstanceOf[DatasetTab]
 
-    val model = datasetTab.getRuntimeModel
+    val model = datasetTab.getConceptualModel
     //variables.asScala.map(variable => model.variables += variable)
+
+    val suggestionsVBox = new VBox()
+    suggestionsVBox.setId("suggestionsVBox")
+
+    val modelSummaryLabel = new Label("Suggestions for:")
+    modelSummaryLabel.setId("modelSummaryLabel")
+
+    val modelSummary = new TextArea()
+    modelSummary.setBackground(suggestionsVBox.getBackground)
+    modelSummary.setId("modelSummary")
+    modelSummary.setText(model.toString)
+    modelSummary.setEditable(false)
+    modelSummary.setWrapText(true)
+
     val suggestedModels = model.getModelTypes
     val modelsAccordionPane = new Accordion()
     for (suggestedModel <- suggestedModels){
       val explanations = model.getExplanation(suggestedModel)
-      val listView = new ListView[String]();
+      val listView = new ListView[String]()
       listView.setCellFactory((list: ListView[String]) => {
         new ListCell[String]() {
           val text = new Text()
@@ -157,14 +171,25 @@ class InputController(DEBUG : Boolean = false) extends VBox{
       val items : ObservableList[String] = FXCollections.observableArrayList (explanations.asJavaCollection)
       listView.setItems(items);
 
-      val titledPane = new TitledPane(model.getLabel(suggestedModel), listView)
+      val justificationVBox = new VBox()
+      justificationVBox.setId("justificationVBox")
+      val justificationLabel = new Label("Justification For This Suggestion")
+
+
+      val runButton = new Button("Run This Model For My Dataset")
+
+      justificationVBox.getChildren.addAll(justificationLabel, listView, runButton)
+      val titledPane = new TitledPane(model.getLabel(suggestedModel), justificationVBox)
       modelsAccordionPane.getPanes.add(titledPane)
 
     }
+
+    suggestionsVBox.getChildren.addAll(modelSummaryLabel, modelSummary, modelsAccordionPane)
+
     println(suggestedModels)
     val modelSelectionTab = tabs.getTabs.get(1)
     modelSelectionTab.setDisable(false)
-    modelSelectionTab.setContent(modelsAccordionPane)
+    modelSelectionTab.setContent(suggestionsVBox)
     modelSelectionTab.getTabPane.getSelectionModel.select(modelSelectionTab)
   }
 }
