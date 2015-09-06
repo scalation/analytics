@@ -87,7 +87,7 @@ class InputController(DEBUG : Boolean = false) extends VBox{
    * @param event
    */
   def handleExampleButton(event: ActionEvent): Unit = {
-    file = new File("/home/mnural/research/data/auto_mpg/no_missing.csv")
+    file = new File("../examples/auto_mpg.csv")
     label.setText(file.getName)
     fileButton.setText("Choose a Different File")
     loadButton.fire()
