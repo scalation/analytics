@@ -71,4 +71,20 @@ object ModelTypes {
     LogisticRegression, MultinomialLogisticRegression, NegativeBinomialRegression, OrdinalLogisticRegression,
     PoissonRegression, NaiveBayes, Perceptron
   )
+
+  def getById(ontologyId : String): ModelType = {
+    val matches = values.filter(modelType => modelType.ontologyID.equals(ontologyId))
+    if (matches.nonEmpty)
+      matches.head
+    else
+      null
+  }
+
+  def getByLabel(label: String): ModelType = {
+    val matches = values.filter(modelType => modelType.label.equals(label))
+    if (matches.nonEmpty)
+      matches.head
+    else
+      null
+  }
 }
