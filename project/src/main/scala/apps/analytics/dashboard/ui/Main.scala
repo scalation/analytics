@@ -79,7 +79,7 @@ class Main extends Application {
 
     val tabbedPane = new TabPane();
     tabbedPane.setId("tabs")
-    tabbedPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE)
+    tabbedPane.setTabClosingPolicy(TabPane.TabClosingPolicy.SELECTED_TAB)
 
     val inputTab = new DatasetTab()
     inputTab.setId("dataTab")
