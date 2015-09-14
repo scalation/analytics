@@ -16,6 +16,11 @@
     -fx-background-color: rgba(255, 255, 255, 0.3);
 }
 
+.padded-vbox {
+    -fx-spacing: 15;
+    -fx-padding: 10 ;
+}
+
 #fileDetailsBox {
     -fx-spacing: 10;
     -fx-background-color: rgba(255, 250, 245, 0.15);
