@@ -1,7 +1,7 @@
 package apps.analytics.dashboard.ui
 
 import javafx.event.ActionEvent
-import javafx.scene.control.{Button, Tab}
+import javafx.scene.control.{Label, Button, Tab}
 import javafx.scene.layout.VBox
 
 import apps.analytics.dashboard.model.ModelTypes.ModelType
@@ -26,9 +26,10 @@ class RuntimeTab(modelType: ModelType, conceptualModel : Model) extends Tab {
   setContent(contents)
 
   def handleRunButton(event: ActionEvent) = {
-
-    modelRuntime.predictor.train()
-    //TODO GET STATS AND DISPLAY RESULTS
+    val predictor = modelRuntime.predictor
+    predictor.train()
+    val fit = new Label(predictor.fit.toString())
+    contents.getChildren.add(fit)
   }
 }
 

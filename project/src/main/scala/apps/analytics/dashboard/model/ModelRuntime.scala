@@ -4,7 +4,10 @@ import java.net.{URI, URL}
 
 import apps.analytics.dashboard.model.ModelTypes.ModelType
 
-import scalation.analytics.Predictor
+import scala.io.Source
+import scalation.analytics.{Regression, Predictor}
+import scalation.linalgebra.{VectorI, MatrixD}
+import scalation.relalgebra.{Relation, RelationTest3}
 
 /**
  * Created by mnural on 8/30/15.
@@ -20,4 +23,15 @@ class ModelRuntime(modelType: ModelType, dataset : Model) {
 object ModelRuntime{
   // TODO IMPLEMENT THIS
   def get(modelType: ModelType, params : Map[String, Tuple2[Any, String]], dataset : Model) : Predictor = { null }
+
+//  def get(modelType: ModelType, params : Map[String, Tuple2[Any, String]], dataset : Model) : Predictor = {
+//    val testDataset = RelationTest3.productSales
+//
+//    val (predictors, response) = productSales.toMatriDD(0 to 10, 11)
+//    modelType match {
+//      case _ =>
+//        new Regression(predictors.asInstanceOf[MatrixD], response)
+//    }
+//  }
+
 }
