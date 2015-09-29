@@ -20,6 +20,8 @@ import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 import scala.io.Source
 
+import scalation.math.near_eq
+
 /**
  * Controller class for dataset.
  * @author Mustafa Nural
@@ -121,37 +123,53 @@ class DatasetTab(title : String = "Dataset") extends Tab {
     valueSet.size match {
       case 1 =>
         //TODO HANDLE THIS CASE
+        //Create "Constant" Variable Type?
         println("CONSTANT")
         return VariableTypes.Discrete
       case 2 =>
         return VariableTypes.Binary
-      case it if 3 until 10 contains it =>
+      case it if 3 until 7 contains it =>
         return VariableTypes.Categorical
       case _ => {
         try{
           val doubleList = valueSet.map(_.toDouble)
-          if(doubleList.count(d => d.toInt == d) == doubleList.size){
-            if(doubleList.count(_ >= 0) == doubleList.size){
-              return VariableTypes.Non_Negative_Integer
-            }else{
-              return VariableTypes.Integer
+
+          // check for ordinal
+          val sortedDouble = (collection.immutable.SortedSet[Double]() ++ doubleList).toBuffer
+          if (sortedDouble.size >= 2){
+            for (i <- 1 until sortedDouble.size){
+              sortedDouble(i-1) = sortedDouble(i) - sortedDouble(i-1)
             }
+          } // if
+          sortedDouble.remove(sortedDouble.size-1)
+
+          if ((sortedDouble.toSet).size == 1){
+            return VariableTypes.Ordinal
           } else {
-            if(doubleList.count(_ >= 0) == doubleList.size){
-              return VariableTypes.Non_Negative_Continuous
-            }
-          }
+            //how to use =~ instead of near_eq?
+            if (doubleList.count(d => near_eq(d.toInt, d)) == doubleList.size) {
+              if (doubleList.count(_ >= 0) == doubleList.size) return VariableTypes.Non_Negative_Integer
+              else return VariableTypes.Integer
+            } else {
+              if (doubleList.count(_ >= 0) == doubleList.size) return VariableTypes.Non_Negative_Continuous
+              //added "Continuous" by following the pattern above
+              else return VariableTypes.Continuous
+            } // if
+          } // if
         } catch  { // The variable can't be cast to number.
           case e : NumberFormatException => { //Can not be cast to a number.
             //TODO HOW TO HANDLE THIS? Create an ID type? Or pass null and mark the corresponding variable as ignore?
             //return null
-            return VariableTypes.Continuous
+            //VariableTypes.Continuous
+            return VariableTypes.Categorical
           }
-        }
-        return VariableTypes.Continuous //Default variable type
+        } // try
+        // The most general Variable Type? Able to take on values that are both numeric and categorical
+        return VariableTypes.Discrete //Default variable type
       }
     }
   }
+
 
   /**
    * This method provides a newly created Model object representing the current
