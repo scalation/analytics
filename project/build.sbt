@@ -12,7 +12,7 @@ scalacOptions += "-Xexperimental"
 libraryDependencies ++= Seq(
 //    "scalation" % "scalation_2.11" % "1.1",
     "scalation" % "scalation_2.12.0-M2" % "1.2",
-    "org.scalatest" % "scalatest_2.11" % "2.2.1" % "test",
+    "org.scalatest" % "scalatest_2.12.0-M2" % "2.2.5-M2" % "test",
     "net.sourceforge.owlapi" % "owlapi-distribution" % "3.5.1",
     "net.sourceforge.owlapi" % "owlexplanation" % "1.1.0",
     "com.hermit-reasoner" % "org.semanticweb.hermit" % "1.3.8.4",
