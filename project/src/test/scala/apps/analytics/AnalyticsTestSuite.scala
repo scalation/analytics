@@ -1,10 +1,12 @@
 package apps.analytics
 
 import apps.analytics.dashboard.AnalyticsOntologyFactory
+import apps.analytics.dashboard.model.{VariableTypes, ModelTypes}
 import org.scalatest._
 import org.semanticweb.HermiT.{Reasoner => HermiTReasoner}
+import org.semanticweb.owlapi.model.IRI
 import uk.ac.manchester.cs.jfact.JFactFactory
-
+import scala.collection.JavaConversions._
 import scala.language.reflectiveCalls
 
 /**
@@ -39,5 +41,47 @@ class AnalyticsTestSuite extends FunSuite with GivenWhenThen
     Then ("the ontology should be consistent")
     assert (fixture.jreasoner.isConsistent ())
   } // test
+
+  test("The model class in the ontology should have a corresponding enum in ModelTypes ")
+  {
+    Given("The Analytics Ontology")
+    When("iterating over all subclasses of 'Model'")
+    Then("A corresponding case object should exist in the ModelTypes")
+    val factory = fixture.factory
+    val baseIRI = fixture.ontology.getOntologyID.getOntologyIRI
+    val modelClass = factory.getOWLClass(IRI.create(baseIRI + "#Model"))
+    val modelTypes = ModelTypes.values.map(_.ontologyID)
+
+    val subClasses = fixture.hreasoner.getSubClasses(modelClass, false).getFlattened.filterNot(_.isBottomEntity)
+
+    val missingClasses = subClasses.filterNot(
+      subClass => modelTypes.contains(subClass.asOWLClass().getIRI.getRemainder.get())
+    )
+
+//    println("Missing Classes" + missingClasses)
+    assert(missingClasses.isEmpty)
+
+  }
+
+  test("The each variable type class in the ontology should have a corresponding enum in VariableTypes")
+  {
+    Given("The Analytics Ontology")
+    When("iterating over all instances of 'VariableType'")
+    Then("A corresponding case object should exist in the VariableTypes")
+    val factory = fixture.factory
+    val baseIRI = fixture.ontology.getOntologyID.getOntologyIRI
+    val variableTypeClass = factory.getOWLClass(IRI.create(baseIRI + "#Variable_Type"))
+    val variableTypes = VariableTypes.values.map(_.ontologyID)
+
+    val individuals = fixture.hreasoner.getInstances(variableTypeClass, false).getFlattened
+
+    val missingIndividuals = individuals.filterNot(
+      individual => variableTypes.contains(individual.getIRI.getRemainder.get())
+    )
+
+//    println("Missing Individuals" + missingIndividuals)
+    assert(missingIndividuals.isEmpty)
+
+  }
 
 } // AnalyticsTestSuite

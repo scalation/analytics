@@ -8,6 +8,8 @@ import javafx.scene.layout.{HBox, VBox}
 import javafx.scene.text.Text
 import javafx.stage.FileChooser
 
+import apps.analytics.dashboard.model.ModelTypes
+
 import scala.collection.JavaConverters._
 
 /**
@@ -126,7 +128,7 @@ class InputController(DEBUG : Boolean = false) extends VBox{
     }
   }
 
-  /**
+    /**
    * Event handler for get models button.
    * A new tab will be created with the suggested models retrieved from the ontology.
    * @param event
@@ -154,6 +156,8 @@ class InputController(DEBUG : Boolean = false) extends VBox{
 
     val suggestedModels = model.getModelTypes
     val modelsAccordionPane = new Accordion()
+    modelsAccordionPane.setId("modelsAccordionPane")
+
     for (suggestedModel <- suggestedModels){
       val explanations = model.getExplanation(suggestedModel)
       val listView = new ListView[String]()
@@ -176,10 +180,12 @@ class InputController(DEBUG : Boolean = false) extends VBox{
       val justificationLabel = new Label("Justification For This Suggestion")
 
 
-      val runButton = new Button("Run This Model For My Dataset")
+      val runButton = new Button("Use This Model For My Dataset")
+      runButton.setOnAction(datasetTab.handleRunModel(_))
 
       justificationVBox.getChildren.addAll(justificationLabel, listView, runButton)
-      val titledPane = new TitledPane(model.getLabel(suggestedModel), justificationVBox)
+      val modelType = ModelTypes.getById(suggestedModel.getIRI.getRemainder.get())
+      val titledPane = new TitledPane(modelType.label, justificationVBox)
       modelsAccordionPane.getPanes.add(titledPane)
 
     }
@@ -192,4 +198,6 @@ class InputController(DEBUG : Boolean = false) extends VBox{
     modelSelectionTab.setContent(suggestionsVBox)
     modelSelectionTab.getTabPane.getSelectionModel.select(modelSelectionTab)
   }
+
+
 }

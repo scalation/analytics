@@ -468,7 +468,7 @@ iii) On each trial, the probability of success is p and the probability of failu
         <rdfs:subClassOf rdf:resource="&analytics;GZLM"/>
     </owl:Class>
     <owl:Axiom>
-        <rdfs:comment rdf:datatype="&xsd;string">This axiom states that a GZLM model may be considered as an Exponential Regression Model if the residual distribution of the model is Exponential Distribution and the response variable is a Non-Negative Continuous variable.</rdfs:comment>
+        <rdfs:comment rdf:datatype="&xsd;string">A GZLM model may be considered as an Exponential Regression Model if the residual distribution of the model is Exponential Distribution and the response variable is a Non-Negative Continuous variable.</rdfs:comment>
         <owl:annotatedProperty rdf:resource="&owl;equivalentClass"/>
         <owl:annotatedSource rdf:resource="&analytics;Exponential_Regression"/>
         <owl:annotatedTarget>
@@ -574,7 +574,7 @@ iii) On each trial, the probability of success is p and the probability of failu
         <defaultModel rdf:resource="&analytics;Multiple_Linear_Regression"/>
     </owl:Class>
     <owl:Axiom>
-        <rdfs:comment rdf:datatype="&xsd;string">This axiom states that a GZLM model may be considered as a GLM model if its residuals are Normally Distributed and the response variable is a Continuous variable.</rdfs:comment>
+        <rdfs:comment rdf:datatype="&xsd;string">A GZLM model may be considered as a GLM model if its residuals are Normally Distributed and the response variable is a Continuous variable.</rdfs:comment>
         <owl:annotatedProperty rdf:resource="&owl;equivalentClass"/>
         <owl:annotatedSource rdf:resource="&analytics;GLM"/>
         <owl:annotatedTarget>
@@ -637,6 +637,22 @@ iii) On each trial, the probability of success is p and the probability of failu
         <terms:alternative xml:lang="en">Generalized Linear Model</terms:alternative>
         <defaultModel rdf:resource="&analytics;Multinomial_Logistic_Regression"/>
     </owl:Class>
+    <owl:Axiom>
+        <rdfs:comment rdf:datatype="&xsd;string">A Time Independent Model may be considered a GZLM Model if there are no repeated observations (i.e., single instance contributes to multiple data points).</rdfs:comment>
+        <owl:annotatedProperty rdf:resource="&owl;equivalentClass"/>
+        <owl:annotatedSource rdf:resource="&analytics;GZLM"/>
+        <owl:annotatedTarget>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&analytics;TimeIndependentModel"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&analytics;hasRepeatedObservations"/>
+                        <owl:hasValue rdf:datatype="&xsd;boolean">false</owl:hasValue>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:annotatedTarget>
+    </owl:Axiom>
     
 
 
@@ -770,7 +786,7 @@ iii) On each trial, the probability of success is p and the probability of failu
         <rdfs:subClassOf rdf:resource="&analytics;GZLM"/>
     </owl:Class>
     <owl:Axiom>
-        <rdfs:comment rdf:datatype="&xsd;string">This axiom states that a GZLM model may be considered as a Logistic Regression Model if the residual distribution of the model is Bernoulli Distribution and the response variable is a binary variable.</rdfs:comment>
+        <rdfs:comment rdf:datatype="&xsd;string">A GZLM model may be considered as a Logistic Regression Model if the residual distribution of the model is Bernoulli Distribution and the response variable is a binary variable.</rdfs:comment>
         <owl:annotatedProperty rdf:resource="&owl;equivalentClass"/>
         <owl:annotatedSource rdf:resource="&analytics;Logistic_Regression"/>
         <owl:annotatedTarget>
@@ -868,7 +884,7 @@ iii) On each trial, the probability of success is p and the probability of failu
         <terms:alternative xml:lang="en">Multiple Regression</terms:alternative>
     </owl:Class>
     <owl:Axiom>
-        <rdfs:comment rdf:datatype="&xsd;string">A model may be considered a Multiple Linear Regression if in addition to conforming to GLM requirements at least some of its variables are Continuous variables.</rdfs:comment>
+        <rdfs:comment rdf:datatype="&xsd;string">A GLM model may be considered a Multiple Linear Regression if at least some of its variables are Continuous variables.</rdfs:comment>
         <owl:annotatedProperty rdf:resource="&owl;equivalentClass"/>
         <owl:annotatedSource rdf:resource="&analytics;Multiple_Linear_Regression"/>
         <owl:annotatedTarget>
@@ -1026,7 +1042,7 @@ iii) On each trial, the probability of success is p and the probability of failu
         <rdfs:subClassOf rdf:resource="&analytics;GZLM"/>
     </owl:Class>
     <owl:Axiom>
-        <rdfs:comment rdf:datatype="&xsd;string">This axiom states that a GZLM model may be considered as a Poisson Regression model if the residual distribution of the model is Binomial Distribution and the response variable is a Non-Negative Integer.</rdfs:comment>
+        <rdfs:comment rdf:datatype="&xsd;string">A GZLM model may be considered as a Poisson Regression model if the residual distribution of the model is Binomial Distribution and the response variable is a Non-Negative Integer.</rdfs:comment>
         <owl:annotatedProperty rdf:resource="&owl;equivalentClass"/>
         <owl:annotatedSource rdf:resource="&analytics;Poisson_Regression"/>
         <owl:annotatedTarget>
@@ -1194,6 +1210,26 @@ iii) On each trial, the probability of success is p and the probability of failu
         <rdfs:subClassOf rdf:resource="&analytics;Model"/>
         <defaultModel rdf:resource="&analytics;GZLM"/>
     </owl:Class>
+    <owl:Axiom>
+        <rdfs:comment rdf:datatype="&xsd;string">A model may be considered a time independent model if the model does not contain a temporal variable (i.e., does not have a &quot;time&quot; component).</rdfs:comment>
+        <owl:annotatedProperty rdf:resource="&owl;equivalentClass"/>
+        <owl:annotatedSource rdf:resource="&analytics;TimeIndependentModel"/>
+        <owl:annotatedTarget>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&analytics;Model"/>
+                    <owl:Class>
+                        <owl:complementOf>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&analytics;hasTemporalVariable"/>
+                                <owl:someValuesFrom rdf:resource="&analytics;Variable"/>
+                            </owl:Restriction>
+                        </owl:complementOf>
+                    </owl:Class>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:annotatedTarget>
+    </owl:Axiom>
     
 
 
@@ -1307,13 +1343,11 @@ iii) On each trial, the probability of success is p and the probability of failu
         <rdf:type rdf:resource="&owl;NamedIndividual"/>
         <rdf:type>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&analytics;hasVariable"/>
+                <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
                 <owl:allValuesFrom>
                     <owl:Class>
                         <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;horsepower"/>
-                            <rdf:Description rdf:about="&analytics;mpg"/>
-                            <rdf:Description rdf:about="&analytics;cylinders"/>
+                            <rdf:Description rdf:about="&analytics;Normal_Distribution_Instance"/>
                         </owl:oneOf>
                     </owl:Class>
                 </owl:allValuesFrom>
@@ -1321,11 +1355,13 @@ iii) On each trial, the probability of success is p and the probability of failu
         </rdf:type>
         <rdf:type>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
+                <owl:onProperty rdf:resource="&analytics;hasVariable"/>
                 <owl:allValuesFrom>
                     <owl:Class>
                         <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;Normal_Distribution_Instance"/>
+                            <rdf:Description rdf:about="&analytics;horsepower"/>
+                            <rdf:Description rdf:about="&analytics;mpg"/>
+                            <rdf:Description rdf:about="&analytics;cylinders"/>
                         </owl:oneOf>
                     </owl:Class>
                 </owl:allValuesFrom>
@@ -1420,18 +1456,6 @@ iii) On each trial, the probability of success is p and the probability of failu
         <rdf:type rdf:resource="&owl;NamedIndividual"/>
         <rdf:type>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
-                <owl:allValuesFrom>
-                    <owl:Class>
-                        <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;Bernoulli_Distribution_Instance"/>
-                        </owl:oneOf>
-                    </owl:Class>
-                </owl:allValuesFrom>
-            </owl:Restriction>
-        </rdf:type>
-        <rdf:type>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="&analytics;hasVariable"/>
                 <owl:allValuesFrom>
                     <owl:Class>
@@ -1439,6 +1463,18 @@ iii) On each trial, the probability of success is p and the probability of failu
                             <rdf:Description rdf:about="&analytics;mpg"/>
                             <rdf:Description rdf:about="&analytics;isDomestic"/>
                             <rdf:Description rdf:about="&analytics;cylinders"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="&analytics;Bernoulli_Distribution_Instance"/>
                         </owl:oneOf>
                     </owl:Class>
                 </owl:allValuesFrom>
@@ -1459,18 +1495,6 @@ iii) On each trial, the probability of success is p and the probability of failu
         <rdf:type rdf:resource="&owl;NamedIndividual"/>
         <rdf:type>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
-                <owl:allValuesFrom>
-                    <owl:Class>
-                        <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;Normal_Distribution_Instance"/>
-                        </owl:oneOf>
-                    </owl:Class>
-                </owl:allValuesFrom>
-            </owl:Restriction>
-        </rdf:type>
-        <rdf:type>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="&analytics;hasVariable"/>
                 <owl:allValuesFrom>
                     <owl:Class>
@@ -1478,6 +1502,18 @@ iii) On each trial, the probability of success is p and the probability of failu
                             <rdf:Description rdf:about="&analytics;horsepower"/>
                             <rdf:Description rdf:about="&analytics;acceleration"/>
                             <rdf:Description rdf:about="&analytics;mpg"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="&analytics;Normal_Distribution_Instance"/>
                         </owl:oneOf>
                     </owl:Class>
                 </owl:allValuesFrom>
@@ -1863,17 +1899,6 @@ iii) On each trial, the probability of success is p and the probability of failu
      -->
 
     <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
-        <owl:members rdf:parseType="Collection">
-            <rdf:Description rdf:about="&analytics;Identity_Function"/>
-            <rdf:Description rdf:about="&analytics;Inverse_Function"/>
-            <rdf:Description rdf:about="&analytics;Log_Function"/>
-            <rdf:Description rdf:about="&analytics;Logit_Function"/>
-            <rdf:Description rdf:about="&analytics;Reciprocal_Function"/>
-            <rdf:Description rdf:about="&analytics;Square_Root_Function"/>
-        </owl:members>
-    </rdf:Description>
-    <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
             <rdf:Description rdf:about="&analytics;Binary_Variable_Type"/>
@@ -1896,6 +1921,17 @@ iii) On each trial, the probability of success is p and the probability of failu
             <rdf:Description rdf:about="&analytics;origin"/>
             <rdf:Description rdf:about="&analytics;weight"/>
         </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="&analytics;Identity_Function"/>
+            <rdf:Description rdf:about="&analytics;Inverse_Function"/>
+            <rdf:Description rdf:about="&analytics;Log_Function"/>
+            <rdf:Description rdf:about="&analytics;Logit_Function"/>
+            <rdf:Description rdf:about="&analytics;Reciprocal_Function"/>
+            <rdf:Description rdf:about="&analytics;Square_Root_Function"/>
+        </owl:members>
     </rdf:Description>
 </rdf:RDF>
 

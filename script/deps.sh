@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-SCALATION_URL="http://cobweb.cs.uga.edu/~jam/scalation_1.2.tar.gz"
+SCALATION_URL="http://cobweb.cs.uga.edu/~jam/scalation_1.1.1.tar.gz"
 PWD="$(pwd)"
 
 # setup directory

@@ -2,17 +2,18 @@ package apps.analytics.dashboard.ui
 
 import java.io.File
 import java.lang.Boolean
+import java.net.URI
 import javafx.beans.property.{ObjectProperty, SimpleObjectProperty}
-import javafx.beans.value.{ChangeListener, ObservableValue}
 import javafx.collections.{FXCollections, ObservableList}
-import javafx.event.Event
+import javafx.event.{ActionEvent, Event}
 import javafx.scene.control._
 import javafx.scene.control.cell.{CheckBoxTableCell, PropertyValueFactory, TextFieldTableCell}
-import javafx.util.converter.DefaultStringConverter
 import javafx.util.StringConverter
+import javafx.util.converter.DefaultStringConverter
 
+import apps.analytics.dashboard.model.ModelTypes.ModelType
 import apps.analytics.dashboard.model.VariableTypes.VariableType
-import apps.analytics.dashboard.model.{Model, VariableTypes}
+import apps.analytics.dashboard.model.{Model, ModelTypes, VariableTypes}
 import apps.analytics.dashboard.ui.model.FXVariable
 
 import scala.collection.JavaConverters._
@@ -20,20 +21,22 @@ import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 import scala.io.Source
 
-import scalation.math.near_eq
-
 /**
  * Controller class for dataset.
  * @author Mustafa Nural
  * Created by mnural on 8/16/15.
  */
 class DatasetTab(title : String = "Dataset") extends Tab {
-
+  setClosable(false)
   setText(title) // Title of the Tab
 
   var table : TableView[FXVariable] = null // reference to the table
 
   var variables = ArrayBuffer[FXVariable]() // reference to the list holding variables
+
+  var file : URI = null
+
+  var delimiter : String = null
 
   /**
    * Initialize and Configure dataset table columns
@@ -68,6 +71,8 @@ class DatasetTab(title : String = "Dataset") extends Tab {
    * @param hasHeaders true if first line contains headers, false otherwise.
    */
   def init(file: File, delimiter: String, hasHeaders : Boolean = true) : Unit = {
+    this.file = file.toURI
+    this.delimiter = delimiter
     val stream = Source.fromURI(file.toURI)
     val firstLine = stream.getLines().next().split(delimiter)
     val valueList = new Array[Set[String]](firstLine.length).map(m => mutable.SortedSet[String]())
@@ -123,53 +128,37 @@ class DatasetTab(title : String = "Dataset") extends Tab {
     valueSet.size match {
       case 1 =>
         //TODO HANDLE THIS CASE
-        //Create "Constant" Variable Type?
         println("CONSTANT")
         return VariableTypes.Discrete
       case 2 =>
         return VariableTypes.Binary
-      case it if 3 until 7 contains it =>
+      case it if 3 until 10 contains it =>
         return VariableTypes.Categorical
       case _ => {
         try{
           val doubleList = valueSet.map(_.toDouble)
-
-          // check for ordinal
-          val sortedDouble = (collection.immutable.SortedSet[Double]() ++ doubleList).toBuffer
-          if (sortedDouble.size >= 2){
-            for (i <- 1 until sortedDouble.size){
-              sortedDouble(i-1) = sortedDouble(i) - sortedDouble(i-1)
+          if(doubleList.count(d => d.toInt == d) == doubleList.size){
+            if(doubleList.count(_ >= 0) == doubleList.size){
+              return VariableTypes.Non_Negative_Integer
+            }else{
+              return VariableTypes.Integer
             }
-          } // if
-          sortedDouble.remove(sortedDouble.size-1)
-
-          if ((sortedDouble.toSet).size == 1){
-            return VariableTypes.Ordinal
           } else {
-            //how to use =~ instead of near_eq?
-            if (doubleList.count(d => near_eq(d.toInt, d)) == doubleList.size) {
-              if (doubleList.count(_ >= 0) == doubleList.size) return VariableTypes.Non_Negative_Integer
-              else return VariableTypes.Integer
-            } else {
-              if (doubleList.count(_ >= 0) == doubleList.size) return VariableTypes.Non_Negative_Continuous
-              //added "Continuous" by following the pattern above
-              else return VariableTypes.Continuous
-            } // if
-          } // if
+            if(doubleList.count(_ >= 0) == doubleList.size){
+              return VariableTypes.Non_Negative_Continuous
+            }
+          }
         } catch  { // The variable can't be cast to number.
           case e : NumberFormatException => { //Can not be cast to a number.
             //TODO HOW TO HANDLE THIS? Create an ID type? Or pass null and mark the corresponding variable as ignore?
             //return null
-            //VariableTypes.Continuous
-            return VariableTypes.Categorical
+            return VariableTypes.Continuous
           }
-        } // try
-        // The most general Variable Type? Able to take on values that are both numeric and categorical
-        return VariableTypes.Discrete //Default variable type
+        }
+        return VariableTypes.Continuous //Default variable type
       }
     }
   }
-
 
   /**
    * This method provides a newly created Model object representing the current
@@ -177,7 +166,7 @@ class DatasetTab(title : String = "Dataset") extends Tab {
    * @return runtime model to be used for obtaining model type suggestions
    */
   def getConceptualModel : Model = {
-    val model = new Model()
+    val model = new Model(file, delimiter)
     variables.foreach( fxVariable => model.variables += fxVariable.toVariable)
     model
   }
@@ -191,6 +180,15 @@ class DatasetTab(title : String = "Dataset") extends Tab {
     //TODO IMPLEMENT
   }
 
+
+  def handleRunModel(event: ActionEvent) = {
+    val modelsAccordionPane = getTabPane.getScene.lookup("#modelsAccordionPane").asInstanceOf[Accordion]
+    val currentPane : TitledPane = modelsAccordionPane.getExpandedPane
+    val modelType : ModelType = ModelTypes.getByLabel(currentPane.getText)
+    val runtimeTab = new RuntimeTab(modelType, getConceptualModel)
+    getTabPane.getTabs.add(runtimeTab)
+    getTabPane.getSelectionModel.select(runtimeTab)
+  }
 }
 
 /**
@@ -210,17 +208,28 @@ class ComboBoxCell extends TableCell[FXVariable, VariableType]{
   setGraphic(comboBox)
   comboBox.setMaxWidth(Double.MaxValue)
 
-  comboBox.getSelectionModel.selectedItemProperty.addListener(new ChangeListener[VariableType] {
-    override def changed(observable: ObservableValue[_ <: VariableType], oldValue: VariableType, newValue: VariableType): Unit = {
+  comboBox.getSelectionModel.selectedItemProperty.addListener(
+    (observable , oldValue: VariableType, newValue: VariableType) => {
       val editEvent = new TableColumn.CellEditEvent(
-        getTableView(),
-        new TablePosition(getTableView(), getIndex(), getTableColumn()),
+        getTableView,
+        new TablePosition(getTableView, getIndex, getTableColumn),
         TableColumn.editCommitEvent(),
         newValue
       )
       Event.fireEvent(getTableColumn(), editEvent)
     }
-  })
+  )
+//  comboBox.getSelectionModel.selectedItemProperty.addListener(new ChangeListener[VariableType] {
+//    override def changed(observable: ObservableValue[_ <: VariableType], oldValue: VariableType, newValue: VariableType): Unit = {
+//      val editEvent = new TableColumn.CellEditEvent(
+//        getTableView(),
+//        new TablePosition(getTableView(), getIndex(), getTableColumn()),
+//        TableColumn.editCommitEvent(),
+//        newValue
+//      )
+//      Event.fireEvent(getTableColumn(), editEvent)
+//    }
+//  })
 
 
   override def updateItem(item: VariableType, empty: scala.Boolean) {
