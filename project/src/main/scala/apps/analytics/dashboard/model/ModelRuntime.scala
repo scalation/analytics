@@ -24,7 +24,7 @@ object ModelRuntime{
   // TODO IMPLEMENT THIS
   def get(modelType: ModelType, params : Map[String, Tuple2[Any, String]], dataset : Model) : Predictor = {
 //    val testDataset = RelationTest3.productSales
-    val dataset = Relation("https://raw.githubusercontent.com/scalation/analytics/zhaochongliu/examples/3D%20Road/3D_spatial_network.csv", "3D",0,",")
+    val dataset = Relation("https://raw.githubusercontent.com/scalation/analytics/zhaochongliu/examples/3D%20Road/3D_spatial_network.csv", "3D",0,null,",")
 
     val (predictors, response) = dataset.toMatriDD(1 to 2, 3)
     modelType match {

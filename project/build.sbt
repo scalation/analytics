@@ -10,7 +10,6 @@ scalaVersion := "2.12.0-M2"
 scalacOptions += "-Xexperimental"
 
 libraryDependencies ++= Seq(
-//    "scalation" % "scalation_2.11" % "1.1",
     "scalation" % "scalation_2.12.0-M2" % "1.2",
     "org.scalatest" % "scalatest_2.12.0-M2" % "2.2.5-M2" % "test",
     "net.sourceforge.owlapi" % "owlapi-distribution" % "3.5.1",
