@@ -1,5 +1,7 @@
 package apps.analytics.dashboard.model
 
+import java.net.URI
+
 import apps.analytics.dashboard.AnalyticsOntology
 import org.semanticweb.owl.explanation.api._
 import org.semanticweb.owlapi.model._
@@ -14,7 +16,16 @@ import scala.collection.mutable.ArrayBuffer
  * @author Mustafa Nural
  * Created by mnural on 3/29/15.
  */
-class Model (var hasRepeatedObservations : Boolean = false){
+class Model (val file : URI = null, val delimiter : String = ",", var hasRepeatedObservations : Boolean = false){
+
+  /**
+   * Alternative constructor in case no dataset is specified
+   * @param hasRepeatedObservations
+   */
+  def this(hasRepeatedObservations : Boolean) = {
+    this(null, ",", hasRepeatedObservations)
+  }
+
   val id = "Model" + System.currentTimeMillis() //append current timestamp to create a unique ID for ontology
 
   //Conceptual Properties
@@ -38,6 +49,7 @@ class Model (var hasRepeatedObservations : Boolean = false){
   //val dataset : MatrixD = null
   //val responseColumn = null
 
+
   //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   /** This method returns suitable model types from the ontology for the current
     * state of this conceptual model
@@ -46,6 +58,7 @@ class Model (var hasRepeatedObservations : Boolean = false){
   def getModelTypes = {
     ontology.retrieveTypes(this)
   }
+
 
   //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   /** Gets user friendly label for the given OWLClass
@@ -102,5 +115,14 @@ class Model (var hasRepeatedObservations : Boolean = false){
     println(expressions)
 
     explanations.filterNot(expl => expl.isEmpty)
+  }
+
+  override def toString = {
+    var summary = new StringBuilder()
+    summary ++=  "Has repeated observations? : " + {if(hasRepeatedObservations) "Yes" else "No"} + "\n"
+    summary ++= "\n"
+    variables.filterNot(_.ignore).foreach(summary ++= "\t" + _.toString + "\n")
+
+    summary.toString
   }
 }

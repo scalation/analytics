@@ -2,17 +2,18 @@ package apps.analytics.dashboard.ui
 
 import java.io.File
 import java.lang.Boolean
+import java.net.URI
 import javafx.beans.property.{ObjectProperty, SimpleObjectProperty}
-import javafx.beans.value.{ChangeListener, ObservableValue}
 import javafx.collections.{FXCollections, ObservableList}
-import javafx.event.Event
+import javafx.event.{ActionEvent, Event}
 import javafx.scene.control._
 import javafx.scene.control.cell.{CheckBoxTableCell, PropertyValueFactory, TextFieldTableCell}
-import javafx.util.converter.DefaultStringConverter
 import javafx.util.StringConverter
+import javafx.util.converter.DefaultStringConverter
 
+import apps.analytics.dashboard.model.ModelTypes.ModelType
 import apps.analytics.dashboard.model.VariableTypes.VariableType
-import apps.analytics.dashboard.model.{Model, VariableTypes}
+import apps.analytics.dashboard.model.{Model, ModelTypes, VariableTypes}
 import apps.analytics.dashboard.ui.model.FXVariable
 
 import scala.collection.JavaConverters._
@@ -28,12 +29,16 @@ import scalation.math.near_eq
  * Created by mnural on 8/16/15.
  */
 class DatasetTab(title : String = "Dataset") extends Tab {
-
+  setClosable(false)
   setText(title) // Title of the Tab
 
   var table : TableView[FXVariable] = null // reference to the table
 
   var variables = ArrayBuffer[FXVariable]() // reference to the list holding variables
+
+  var file : URI = null
+
+  var delimiter : String = null
 
   /**
    * Initialize and Configure dataset table columns
@@ -68,29 +73,30 @@ class DatasetTab(title : String = "Dataset") extends Tab {
    * @param hasHeaders true if first line contains headers, false otherwise.
    */
   def init(file: File, delimiter: String, hasHeaders : Boolean = true) : Unit = {
+    this.file = file.toURI
+    this.delimiter = delimiter
     val stream = Source.fromURI(file.toURI)
-    val headers= stream.getLines().next().split(delimiter)
+    val firstLine = stream.getLines().next().split(delimiter)
+    val valueList = new Array[Set[String]](firstLine.length).map(m => mutable.SortedSet[String]())
 
-    if (hasHeaders) {
-      headers.foreach(label => variables += new FXVariable(label))
-      val valueList = new Array[Set[String]](headers.length).map(m => mutable.SortedSet[String]())
-
-      stream.getLines().foreach(
-        line => {
-          val values = line.split(delimiter)
-          values.indices.foreach(i => valueList(i) += values(i))
-        }
-      )
-
-      valueList.indices.foreach(i => variables(i).fxVariableType.set(inferVariableType(valueList(i))))
-
-    } else { //TODO HANDLE CASE WHEN HEADERS ARE NOT PRESENT
-      var counter = 1
-      for (header <- headers) {
-        variables += new FXVariable("Variable" + counter)
-        counter += 1
-      }
+    if(hasHeaders) {
+      firstLine.foreach(label => variables += new FXVariable(label))
+    } else {
+      firstLine.indices.foreach(i => {
+        variables += new FXVariable("Variable" + i)
+        valueList(i) += firstLine(i)
+      })
     }
+
+    stream.getLines().foreach(
+      line => {
+        val values = line.split(delimiter)
+        values.indices.foreach(i => valueList(i) += values(i))
+      }
+    )
+
+    valueList.indices.foreach(i => variables(i).fxVariableType.set(inferVariableType(valueList(i))))
+
     stream.close()
 
     table = new TableView[FXVariable]()
@@ -171,18 +177,35 @@ class DatasetTab(title : String = "Dataset") extends Tab {
     }
   }
 
-
   /**
    * This method provides a newly created Model object representing the current
    * state of the user interface.
    * @return runtime model to be used for obtaining model type suggestions
    */
-  def getRuntimeModel : Model = {
-    val model = new Model()
+  def getConceptualModel : Model = {
+    val model = new Model(file, delimiter)
     variables.foreach( fxVariable => model.variables += fxVariable.toVariable)
     model
   }
 
+  /**
+   * This method would set user interface to the given conceptual model.
+   * This would especially be handy to revert back to a previous setting during analysis
+   * @param conceptualModel
+   */
+  def update (conceptualModel : Model) = {
+    //TODO IMPLEMENT
+  }
+
+
+  def handleRunModel(event: ActionEvent) = {
+    val modelsAccordionPane = getTabPane.getScene.lookup("#modelsAccordionPane").asInstanceOf[Accordion]
+    val currentPane : TitledPane = modelsAccordionPane.getExpandedPane
+    val modelType : ModelType = ModelTypes.getByLabel(currentPane.getText)
+    val runtimeTab = new RuntimeTab(modelType, getConceptualModel)
+    getTabPane.getTabs.add(runtimeTab)
+    getTabPane.getSelectionModel.select(runtimeTab)
+  }
 }
 
 /**
@@ -202,17 +225,28 @@ class ComboBoxCell extends TableCell[FXVariable, VariableType]{
   setGraphic(comboBox)
   comboBox.setMaxWidth(Double.MaxValue)
 
-  comboBox.getSelectionModel.selectedItemProperty.addListener(new ChangeListener[VariableType] {
-    override def changed(observable: ObservableValue[_ <: VariableType], oldValue: VariableType, newValue: VariableType): Unit = {
+  comboBox.getSelectionModel.selectedItemProperty.addListener(
+    (observable , oldValue: VariableType, newValue: VariableType) => {
       val editEvent = new TableColumn.CellEditEvent(
-        getTableView(),
-        new TablePosition(getTableView(), getIndex(), getTableColumn()),
+        getTableView,
+        new TablePosition(getTableView, getIndex, getTableColumn),
         TableColumn.editCommitEvent(),
         newValue
       )
       Event.fireEvent(getTableColumn(), editEvent)
     }
-  })
+  )
+//  comboBox.getSelectionModel.selectedItemProperty.addListener(new ChangeListener[VariableType] {
+//    override def changed(observable: ObservableValue[_ <: VariableType], oldValue: VariableType, newValue: VariableType): Unit = {
+//      val editEvent = new TableColumn.CellEditEvent(
+//        getTableView(),
+//        new TablePosition(getTableView(), getIndex(), getTableColumn()),
+//        TableColumn.editCommitEvent(),
+//        newValue
+//      )
+//      Event.fireEvent(getTableColumn(), editEvent)
+//    }
+//  })
 
 
   override def updateItem(item: VariableType, empty: scala.Boolean) {

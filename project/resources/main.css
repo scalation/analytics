@@ -1,5 +1,6 @@
 .root{
     -fx-background-image: url("background.jpg");
+    -fx-background-color: rgba(255, 255, 255, 0.15);
 }
 .label {
     -fx-font-size: 15;
@@ -13,6 +14,11 @@
 .cell {
     /*-fx-background-color: transparent;*/
     -fx-background-color: rgba(255, 255, 255, 0.3);
+}
+
+.padded-vbox {
+    -fx-spacing: 15;
+    -fx-padding: 10 ;
 }
 
 #fileDetailsBox {
@@ -39,4 +45,31 @@
 .table-view .list-cell:focused{
     /*-fx-background-color: linear-gradient(#328BDB 0%, #207BCF 25%, #1973C9 75%, #0A65BF 100%);*/
     -fx-text-fill: black;
+}
+
+.text-area .scroll-pane,  .text-area .scroll-pane .viewport, .text-area .scroll-pane .content{
+    -fx-background-color: transparent;
+}
+
+#suggestionsVBox .label, #suggestionsVBox #modelSummary{
+    /*-fx-background-color: rgba(255, 255, 255, 0.15);*/
+    -fx-padding: 10 10 10 10;
+    -fx-text-wrap: true;
+}
+
+/*#suggestionsVBox #modelSummary{*/
+    /*-fx-margin: 0 20 ;*/
+    /*-fx-text-wrap: true;*/
+/*}*/
+
+#justificationVBox{
+    -fx-spacing: 10;
+    -fx-background-color: rgba(255, 250, 245, 0.15);
+    -fx-alignment: top-center;
+    /*-fx-padding: 10 0 10 0;*/
+}
+
+#justificationVBox .label {
+    -fx-font-weight: bold;
+        /*-fx-background-color: linear-gradient(#328BDB 0%, #207BCF 25%, #1973C9 75%, #0A65BF 100%);*/
 }

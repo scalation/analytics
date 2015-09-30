@@ -12,6 +12,10 @@ class Variable(var label : String = "", var isResponse : Boolean = false, var va
   //Use a counter to create a unique ID for ontology
   val id = "Variable" + Variable.counter ; Variable.counter += 1
 
+
+  override def toString() = {
+    label + ": " + {if(isResponse) "response" else "predictor"} + ", " + variableType
+  }
 }
 
 /**

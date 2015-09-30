@@ -14,7 +14,15 @@ API.
 
 Most requirements are handled by dependency declarations in ```build.sbt``` that
 resolve to content hosted by [Maven Central](http://search.maven.org). There is
-one dependency that is required that is not hosted there, ScalaTion.
+one dependency that is required that is not hosted there, ScalaTion. There are
+two different ways to get the correct version of ScalaTion:
+
+#### Get ScalaTion using a Script
+
+ * Run the [```deps.sh```](../script/deps.sh) script that is provided with this
+   project.
+
+#### Get ScalaTion Manually
 
  * Download the latest version of ScalaTion
    [here](http://cobweb.cs.uga.edu/~jam/scalation_1.1.1.tar.gz).
