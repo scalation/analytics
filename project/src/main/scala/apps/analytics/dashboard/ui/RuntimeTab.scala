@@ -29,7 +29,9 @@ class RuntimeTab(modelType: ModelType, conceptualModel : Model) extends Tab {
     val predictor = modelRuntime.predictor
     predictor.train()
     val fit = new Label(predictor.fit.toString())
-    contents.getChildren.add(fit)
+    val coefficients = new Label(predictor.coefficient.toString())
+    contents.getChildren.addAll(fit, coefficients)
+
   }
 }
 
