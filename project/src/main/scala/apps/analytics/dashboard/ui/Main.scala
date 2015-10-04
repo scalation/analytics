@@ -75,7 +75,7 @@ class Main extends Application {
     mainGrid.add(leftPane, 0, 0)
 
     leftPane.add(inputController, 0, 0)
-    leftPane.add(new VBox(), 0, 1)
+    leftPane.add(new ModelExplorer(), 0, 1)
 
     val tabbedPane = new TabPane();
     tabbedPane.setId("tabs")
