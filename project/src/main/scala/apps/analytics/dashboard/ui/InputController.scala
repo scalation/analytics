@@ -190,7 +190,9 @@ class InputController(DEBUG : Boolean = false) extends VBox{
 
     }
 
+    modelsAccordionPane.setExpandedPane(modelsAccordionPane.getPanes.get(0))
     suggestionsVBox.getChildren.addAll(modelSummaryLabel, modelSummary, modelsAccordionPane)
+
 
     println(suggestedModels)
     val modelSelectionTab = tabs.getTabs.get(1)
