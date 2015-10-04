@@ -1,0 +1,26 @@
+ 
+Data Set Information:
+
+This dataset was constructed by adding elevation information to a 2D road network in North Jutland, 
+Denmark (covering a region of 185 x 135 km^2). Elevation values where extracted from a publicly available 
+massive Laser Scan Point Cloud for Denmark (available at : [Web Link] (Bottom-most dataset)). This 3D road 
+network was eventually used for benchmarking various fuel and CO2 estimation algorithms. This dataset can be 
+used by any applications that require to know very accurate elevation information of a road network to 
+perform more accurate routing for eco-routing, cyclist routes etc. For the data mining and machine learning 
+community, this dataset can be used as 'ground-truth' validation in spatial mining techniques and satellite 
+image processing. It has no class labels, but can be used in unsupervised learning and regression to guess 
+some missing elevation information for some points on the road. The work was supported by the Reduction 
+project that is funded by the European Comission as FP7-ICT-2011-7 STREP project number 288254.
+
+Attribute Information:
+
+
+
+1. OSM_ID: OpenStreetMap ID for each road segment or edge in the graph.
+2. LONGITUDE: Web Mercaptor (Google format) longitude
+3. LATITUDE: Web Mercaptor (Google format) latitude
+4. ALTITUDE: Height in meters.
+
+Note: OSM_ID is the ID assigned by OpenStreetMaps ([Web Link]) to the road segments. Each (long,lat,altitude) 
+point on a road segment (with unique OSM ID) is sorted in the same order as they appear on the road. So a 
+3D-polyline can be drawn by joining points of each row for each OSM_ID road segment.
