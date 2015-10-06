@@ -81,7 +81,6 @@ object ModelRuntime {
         return new Perceptron(predictors, response)
       case _ =>
         new Regression(one (predictors.dim1) +^: predictors, response)
-    }
-
-  }
-}
+    } // match
+  } // get
+} // object ModelRuntime

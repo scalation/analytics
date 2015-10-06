@@ -59,7 +59,6 @@ class Model (val file : URI = null, val delimiter : String = ",", var hasRepeate
     ontology.retrieveTypes(this)
   }
 
-
   //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   /** Gets user friendly label for the given OWLClass
     * @param ontologyModel The model class
@@ -79,7 +78,6 @@ class Model (val file : URI = null, val delimiter : String = ",", var hasRepeate
   }
 
   //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
   /**
    * Retrieves all annotations of type "rdf:comment" for the given axiom
    * @param owlAxiom The axiom to get the annotations for
