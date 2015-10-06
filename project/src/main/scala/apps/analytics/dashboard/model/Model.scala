@@ -96,7 +96,6 @@ class Model (val file : URI = null, val delimiter : String = ",", var hasRepeate
     * @param suggestedModel The suggested model class
     * @return The set of possible explanations for this suggestion
     */
-
   def getExplanation(suggestedModel: OWLClass) : mutable.Set[String] = {
     val modelIndividual = ontology.sfProvider.getEntity("analytics:" + this.id).asOWLNamedIndividual()
     val entailment : OWLAxiom = ontology.factory.getOWLClassAssertionAxiom(suggestedModel, modelIndividual)
