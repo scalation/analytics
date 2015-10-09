@@ -58,7 +58,7 @@ class InputController(DEBUG : Boolean = false) extends VBox{
   fileDetailsBox.setId("fileDetailsBox")
   fileDetailsBox.getChildren.addAll(delimBox, headersHBox, loadButton)
 
-  val getModelsButton = new Button("Get Models")
+  val getModelsButton = new Button("Suggest Models")
 
   getModelsButton.setOnAction(handleGetModels(_))
   fileButton.setOnAction(handleFileSelection(_))
