@@ -1,9 +1,13 @@
 .root{
-    -fx-background-image: url("background.jpg");
+    -fx-background-image: url("background.png");
     -fx-background-color: rgba(255, 255, 255, 0.15);
 }
 .label {
     -fx-font-size: 15;
+}
+
+.label.title{
+    -fx-font-weight: bold;
 }
 
 .table-view{
@@ -73,3 +77,9 @@
     -fx-font-weight: bold;
         /*-fx-background-color: linear-gradient(#328BDB 0%, #207BCF 25%, #1973C9 75%, #0A65BF 100%);*/
 }
+
+/*#swingNode {*/
+    /*-fx-background-color: rgba(255, 250, 245, 0.15);*/
+    /*-fx-min-width: 640;*/
+    /*-fx-min-height: 480;*/
+/*}*/
