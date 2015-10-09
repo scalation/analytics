@@ -89,7 +89,7 @@ class InputController(DEBUG : Boolean = false) extends VBox{
    * @param event
    */
   def handleExampleButton(event: ActionEvent): Unit = {
-    file = new File("../examples/auto_mpg.csv")
+    file = new File("../examples/3d_road/3D_spatial_network.csv")
     label.setText(file.getName)
     fileButton.setText("Choose a Different File")
     loadButton.fire()
@@ -101,12 +101,15 @@ class InputController(DEBUG : Boolean = false) extends VBox{
    * @param actionEvent
    */
   def handleFileSelection(actionEvent: ActionEvent): Unit ={
-        file = fileBrowser.showOpenDialog(this.getScene.getWindow)
-        if (file != null) {
-          label.setText(file.getName)
-          fileButton.setText("Choose a Different File")
-          getChildren.add(fileDetailsBox)
-        }
+    file = fileBrowser.showOpenDialog(this.getScene.getWindow)
+    if (file != null) {
+      label.setText(file.getName)
+      fileButton.setText("Choose a Different File")
+      if(!getChildren.contains(fileDetailsBox)){
+        getChildren.add(2, fileDetailsBox)
+      }
+    }
+    loadButton.setText("Load File")
   }
 
   /**
@@ -122,10 +125,12 @@ class InputController(DEBUG : Boolean = false) extends VBox{
 
     val tabs = getScene().lookup("#tabs").asInstanceOf[TabPane]
     val datasetTab = tabs.getTabs.get(0).asInstanceOf[DatasetTab]
-    datasetTab.init(file, delimiter)
+    datasetTab.init(file, delimiter, headersCheckBox.isSelected)
+    tabs.getSelectionModel.select(datasetTab)
     if (!getChildren.contains(getModelsButton)) {
       getChildren.add(getModelsButton)
     }
+    loadButton.setText("Reload File")
   }
 
     /**
