@@ -5,9 +5,12 @@ import java.lang.Boolean
 import java.net.URI
 import javafx.beans.property.{ObjectProperty, SimpleObjectProperty}
 import javafx.collections.{FXCollections, ObservableList}
+import javafx.concurrent.Task
 import javafx.event.{ActionEvent, Event}
+import javafx.geometry.Pos
 import javafx.scene.control._
 import javafx.scene.control.cell.{CheckBoxTableCell, PropertyValueFactory, TextFieldTableCell}
+import javafx.scene.layout.VBox
 import javafx.util.StringConverter
 import javafx.util.converter.DefaultStringConverter
 
@@ -73,44 +76,77 @@ class DatasetTab(title : String = "Dataset") extends Tab {
    * @param hasHeaders true if first line contains headers, false otherwise.
    */
   def init(file: File, delimiter: String, hasHeaders : Boolean = true) : Unit = {
+    variables = ArrayBuffer()
     this.file = file.toURI
     this.delimiter = delimiter
     val stream = Source.fromURI(file.toURI)
-    val firstLine = stream.getLines().next().split(delimiter)
-    val valueList = new Array[Set[String]](firstLine.length).map(m => mutable.SortedSet[String]())
 
-    if(hasHeaders) {
-      firstLine.foreach(label => variables += new FXVariable(label))
-    } else {
-      firstLine.indices.foreach(i => {
-        variables += new FXVariable("Variable" + i)
-        valueList(i) += firstLine(i)
-      })
+    val task: Task[Void] = new Task[Void]() {
+      @throws(classOf[InterruptedException])
+      def call : Void = {
+        updateMessage("Loading Dataset")
+        val firstLine = stream.getLines().next().split(delimiter)
+        val valueList = new Array[Set[String]](firstLine.length).map(m => mutable.SortedSet[String]())
+
+        if(hasHeaders) {
+          firstLine.foreach(label => variables += new FXVariable(label))
+        } else {
+          firstLine.indices.foreach(i => {
+            variables += new FXVariable("Variable" + i)
+            valueList(i) += firstLine(i)
+          })
+        }
+
+        stream.getLines().foreach(
+          line => {
+            val values = line.split(delimiter)
+            values.indices.foreach(i => valueList(i) += values(i))
+          }
+        )
+        updateMessage("Trying to Infer Variable Types")
+        valueList.indices.foreach(i => variables(i).fxVariableType.set(inferVariableType(valueList(i))))
+
+        updateMessage("Dataset is loaded successfully")
+        null
+      }
     }
 
-    stream.getLines().foreach(
-      line => {
-        val values = line.split(delimiter)
-        values.indices.foreach(i => valueList(i) += values(i))
-      }
-    )
+    val progressBox = new VBox()
+    progressBox.setAlignment(Pos.TOP_CENTER)
+    val progressMessage = new Label()
+    val progress: ProgressIndicator = new ProgressIndicator(-1)
+    progressMessage.textProperty.bind(task.messageProperty)
+    progressBox.getChildren.addAll(progress,progressMessage)
 
-    valueList.indices.foreach(i => variables(i).fxVariableType.set(inferVariableType(valueList(i))))
+    task.setOnScheduled(e => {
+      setContent(progressBox)
+    })
 
-    stream.close()
+    task.setOnSucceeded(e => {
+      stream.close()
 
-    table = new TableView[FXVariable]()
-    table.getColumns().addAll(labelColumn, isResponseColumn, ignoreColumn, variableTypeColumn)
-    table.setEditable(true)
-    table.setItems(FXCollections.observableArrayList[FXVariable](variables.asJava))
-    setContent(table)
+      table = new TableView[FXVariable]()
+      table.getColumns().addAll(labelColumn, isResponseColumn, ignoreColumn, variableTypeColumn)
+      table.setEditable(true)
+      table.setItems(FXCollections.observableArrayList[FXVariable](variables.asJava))
+      setContent(table)
 
-    variables.foreach(f => f.fxResponse.addListener((observable, oldValue, newValue :java.lang.Boolean) => {
-      if (newValue.equals(true)) {
-        toggleResponse(f)
-      }
-    }))
+      variables.foreach(f => f.fxResponse.addListener((observable, oldValue, newValue :java.lang.Boolean) => {
+        if (newValue.equals(true)) {
+          toggleResponse(f)
+        }
+      }))
+    })
 
+    task.setOnCancelled(e =>{
+      setContent(null)
+    })
+
+
+
+    val thread: Thread = new Thread(task)
+    thread.setDaemon(true)
+    thread.start
   }
 
   /**
