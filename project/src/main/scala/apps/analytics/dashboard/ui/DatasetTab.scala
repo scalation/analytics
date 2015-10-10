@@ -104,7 +104,15 @@ class DatasetTab(title : String = "Dataset") extends Tab {
           }
         )
         updateMessage("Trying to Infer Variable Types")
-        valueList.indices.foreach(i => variables(i).fxVariableType.set(inferVariableType(valueList(i))))
+        valueList
+          .indices
+          .foreach(
+            i => variables(i).fxVariableType.set(inferVariableType(valueList(i)))
+          )
+
+        variables
+          .filterNot(variable => variable.fxVariableType.get().isNumeric)
+          .foreach( variable => variable.fxIgnore.set(true))
 
         updateMessage("Dataset is loaded successfully")
         null
@@ -166,7 +174,7 @@ class DatasetTab(title : String = "Dataset") extends Tab {
         //TODO HANDLE THIS CASE
         //Create "Constant" Variable Type?
         println("CONSTANT")
-        return VariableTypes.Discrete
+        return VariableTypes.Constant
       case 2 =>
         return VariableTypes.Binary
       case it if 3 until 7 contains it =>
@@ -174,7 +182,6 @@ class DatasetTab(title : String = "Dataset") extends Tab {
       case _ => {
         try{
           val doubleList = valueSet.map(_.toDouble)
-
           // check for ordinal
           val sortedDouble = (collection.immutable.SortedSet[Double]() ++ doubleList).toBuffer
           if (sortedDouble.size >= 2){
@@ -184,7 +191,7 @@ class DatasetTab(title : String = "Dataset") extends Tab {
           } // if
           sortedDouble.remove(sortedDouble.size-1)
 
-          if ((sortedDouble.toSet).size == 1){
+          if (sortedDouble.toSet.size == 1){
             return VariableTypes.Ordinal
           } else {
             //how to use =~ instead of near_eq?
@@ -199,14 +206,11 @@ class DatasetTab(title : String = "Dataset") extends Tab {
           } // if
         } catch  { // The variable can't be cast to number.
           case e : NumberFormatException => { //Can not be cast to a number.
-            //TODO HOW TO HANDLE THIS? Create an ID type? Or pass null and mark the corresponding variable as ignore?
-            //return null
-            //VariableTypes.Continuous
-            return VariableTypes.Categorical
+            return VariableTypes.String
           }
         } // try
         // The most general Variable Type? Able to take on values that are both numeric and categorical
-        return VariableTypes.Discrete //Default variable type
+        return VariableTypes.String //Default variable type
       }
     }
   }

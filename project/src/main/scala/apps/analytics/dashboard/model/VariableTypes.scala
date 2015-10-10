@@ -12,7 +12,8 @@ object VariableTypes{
     */
   sealed abstract class VariableType(
                                       val ontologyID    : String,
-                                      val label         : String
+                                      val label         : String,
+                                      val isNumeric    : Boolean = true
                                       ){
 
     // The qualified name in Analytics ontology for the variable type
@@ -21,6 +22,7 @@ object VariableTypes{
     // Return label by default
     override def toString = label
   }
+
 
   //Continuous Variable Types
   case object Continuous extends VariableType("Continuous_Variable_Type", "Continuous")
@@ -36,7 +38,8 @@ object VariableTypes{
   case object Non_Negative_Integer extends VariableType("Non_Negative_Integer_Variable_Type", "Non Negative Integer")
 
   //Non-numeric
-  case object String extends VariableType("String_Variable_Type", "String")
+  case object String extends VariableType("String_Variable_Type", "String", false)
+  case object Constant extends VariableType("Constant_Variable_Type", "String" , false)
 
   val values = List(Continuous, Non_Negative_Continuous, Discrete, Categorical, Binary, Ordinal, Integer, Non_Negative_Integer)
 }
