@@ -28,6 +28,23 @@
     -fx-background-color: white;
 }
 
+.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
+    -fx-border-color: black;
+}
+
+#dataTab.tab {
+    -fx-background-color: #ff8784;
+}
+
+#modelSelectionTab.tab {
+    -fx-background-color: tan;
+}
+
+#resultTab.tab, #runtimeTab.tab {
+    -fx-background-color: #96cc94;
+}
+
+
 .padded-vbox {
     -fx-spacing: 15;
     -fx-padding: 10 ;

@@ -15,6 +15,7 @@ import scala.collection.mutable.ArrayBuffer
  */
 class RuntimeTab(modelType: ModelType, conceptualModel : Model) extends Tab {
   //Set the title of the Tabbed Pane
+  setId("runtimeTab")
   setClosable(true)
   setText(modelType.label + "_" + RuntimeTab.getCounter)
   val modelRuntime = new ModelRuntime(modelType, conceptualModel)
@@ -37,7 +38,7 @@ class RuntimeTab(modelType: ModelType, conceptualModel : Model) extends Tab {
 
   def handleRunButton (event: ActionEvent) : Unit = {
     val resultTab = new ResultTab(modelRuntime, conceptualModel)
-    resultTab.setText("Results: " + modelType.label + "_" + RuntimeTab.getCounter)
+    resultTab.setText("Results: " + this.getText)
     getTabPane.getTabs.add(resultTab)
     resultTab.init
     resultTab.run()

@@ -19,7 +19,7 @@ import scalation.stat.Q_Q_Plot
  * Created by mnural on 10/9/15.
  */
 class ResultTab (val modelRuntime: ModelRuntime, conceptualModel : Model) extends Tab{
-
+  setId("resultTab")
   val stack = new StackPane()
 
   val scrollPane = new ScrollPane()
