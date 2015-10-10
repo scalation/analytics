@@ -20,6 +20,14 @@
     -fx-background-color: rgba(255, 255, 255, 0.3);
 }
 
+.transparent-background {
+    -fx-background-color: rgba(0, 0, 0, 0.7);
+}
+
+.white-background {
+    -fx-background-color: white;
+}
+
 .padded-vbox {
     -fx-spacing: 15;
     -fx-padding: 10 ;

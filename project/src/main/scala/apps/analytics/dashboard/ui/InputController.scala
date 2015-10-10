@@ -90,6 +90,7 @@ class InputController(DEBUG : Boolean = false) extends VBox{
    */
   def handleExampleButton(event: ActionEvent): Unit = {
     file = new File("../examples/3d_road/3D_spatial_network.csv")
+//    file = new File("../examples/auto_mpg.csv")
     label.setText(file.getName)
     fileButton.setText("Choose a Different File")
     loadButton.fire()
