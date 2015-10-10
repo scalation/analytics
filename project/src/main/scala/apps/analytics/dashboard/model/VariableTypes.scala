@@ -35,5 +35,8 @@ object VariableTypes{
   case object Integer extends VariableType("Integer_Variable_Type", "Integer")
   case object Non_Negative_Integer extends VariableType("Non_Negative_Integer_Variable_Type", "Non Negative Integer")
 
+  //Non-numeric
+  case object String extends VariableType("String_Variable_Type", "String")
+
   val values = List(Continuous, Non_Negative_Continuous, Discrete, Categorical, Binary, Ordinal, Integer, Non_Negative_Integer)
 }

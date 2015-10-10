@@ -116,7 +116,7 @@ class DatasetTab(title : String = "Dataset") extends Tab {
     val progressMessage = new Label()
     val progress: ProgressIndicator = new ProgressIndicator(-1)
     progressMessage.textProperty.bind(task.messageProperty)
-    progressBox.getChildren.addAll(progress,progressMessage)
+    progressBox.getChildren.addAll(progress, progressMessage)
 
     task.setOnScheduled(e => {
       setContent(progressBox)
@@ -141,8 +141,6 @@ class DatasetTab(title : String = "Dataset") extends Tab {
     task.setOnCancelled(e =>{
       setContent(null)
     })
-
-
 
     val thread: Thread = new Thread(task)
     thread.setDaemon(true)
