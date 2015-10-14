@@ -1,16 +1,11 @@
 package apps.analytics.dashboard.ui
 
 import java.io.File
-import javafx.collections.{FXCollections, ObservableList}
+import javafx.collections.FXCollections
 import javafx.event.ActionEvent
 import javafx.scene.control._
 import javafx.scene.layout.{HBox, VBox}
-import javafx.scene.text.Text
 import javafx.stage.FileChooser
-
-import apps.analytics.dashboard.model.ModelTypes
-
-import scala.collection.JavaConverters._
 
 /**
  * Controller class for leftPane (input related actions)
@@ -29,6 +24,10 @@ class InputController(DEBUG : Boolean = false) extends VBox{
   fileBrowser.setInitialDirectory(
     new File(System.getProperty("user.home"))
   )
+
+  val urlLabel = new Label ("Load file from URL")
+  val urlField =  new TextField()
+  urlField
 
   val fileButton = new Button("Click to Select a File")
 
@@ -58,13 +57,11 @@ class InputController(DEBUG : Boolean = false) extends VBox{
   fileDetailsBox.setId("fileDetailsBox")
   fileDetailsBox.getChildren.addAll(delimBox, headersHBox, loadButton)
 
-  val getModelsButton = new Button("Suggest Models")
 
-  getModelsButton.setOnAction(handleGetModels(_))
   fileButton.setOnAction(handleFileSelection(_))
   loadButton.setOnAction(handleLoadButton(_))
 
-  getChildren.addAll(fileButton, label)
+  getChildren.addAll(fileButton, urlLabel, urlField, label)
 
 
   if (DEBUG){ // Add reload CSS and load example buttons if DEBUG mode
@@ -89,8 +86,8 @@ class InputController(DEBUG : Boolean = false) extends VBox{
    * @param event
    */
   def handleExampleButton(event: ActionEvent): Unit = {
-    file = new File("../examples/3d_road/3D_spatial_network.csv")
-//    file = new File("../examples/auto_mpg.csv")
+//    file = new File("../examples/3d_road/3D_spatial_network.csv")
+    file = new File("../examples/auto_mpg.csv")
     label.setText(file.getName)
     fileButton.setText("Choose a Different File")
     loadButton.fire()
@@ -128,84 +125,10 @@ class InputController(DEBUG : Boolean = false) extends VBox{
     val datasetTab = tabs.getTabs.get(0).asInstanceOf[DatasetTab]
     datasetTab.init(file, delimiter, headersCheckBox.isSelected)
     tabs.getSelectionModel.select(datasetTab)
-    if (!getChildren.contains(getModelsButton)) {
-      getChildren.add(getModelsButton)
-    }
+//    if (!getChildren.contains(getModelsButton)) {
+//      getChildren.add(getModelsButton)
+//    }
     loadButton.setText("Reload File")
   }
-
-    /**
-   * Event handler for get models button.
-   * A new tab will be created with the suggested models retrieved from the ontology.
-   * @param event
-   */
-  def handleGetModels(event: ActionEvent) : Unit = {
-    //println(model.variables)
-    val tabs = getScene.lookup("#tabs").asInstanceOf[TabPane]
-    val datasetTab = tabs.getTabs.get(0).asInstanceOf[DatasetTab]
-
-    val model = datasetTab.getConceptualModel
-    //variables.asScala.map(variable => model.variables += variable)
-
-    val suggestionsVBox = new VBox()
-    suggestionsVBox.setId("suggestionsVBox")
-
-    val modelSummaryLabel = new Label("Suggestions for:")
-    modelSummaryLabel.setId("modelSummaryLabel")
-
-    val modelSummary = new TextArea()
-    modelSummary.setBackground(suggestionsVBox.getBackground)
-    modelSummary.setId("modelSummary")
-    modelSummary.setText(model.toString)
-    modelSummary.setEditable(false)
-    modelSummary.setWrapText(true)
-
-    val suggestedModels = model.getModelTypes
-    val modelsAccordionPane = new Accordion()
-    modelsAccordionPane.setId("modelsAccordionPane")
-
-    for (suggestedModel <- suggestedModels){
-      val explanations = model.getExplanation(suggestedModel)
-      val listView = new ListView[String]()
-      listView.setCellFactory((list: ListView[String]) => {
-        new ListCell[String]() {
-          val text = new Text()
-          text.wrappingWidthProperty().bind(list.widthProperty().subtract(15))
-          text.textProperty().bind(itemProperty())
-
-          setPrefWidth(0)
-          setGraphic(text)
-        }
-      })
-
-      val items : ObservableList[String] = FXCollections.observableArrayList (explanations.asJavaCollection)
-      listView.setItems(items);
-
-      val justificationVBox = new VBox()
-      justificationVBox.setId("justificationVBox")
-      val justificationLabel = new Label("Justification For This Suggestion")
-
-
-      val runButton = new Button("Use This Model For My Dataset")
-      runButton.setOnAction(datasetTab.handleRunModel(_))
-
-      justificationVBox.getChildren.addAll(justificationLabel, listView, runButton)
-      val modelType = ModelTypes.getById(suggestedModel.getIRI.getRemainder.get())
-      val titledPane = new TitledPane(modelType.label, justificationVBox)
-      modelsAccordionPane.getPanes.add(titledPane)
-
-    }
-
-    modelsAccordionPane.setExpandedPane(modelsAccordionPane.getPanes.get(0))
-    suggestionsVBox.getChildren.addAll(modelSummaryLabel, modelSummary, modelsAccordionPane)
-
-
-    println(suggestedModels)
-    val modelSelectionTab = tabs.getTabs.get(1)
-    modelSelectionTab.setDisable(false)
-    modelSelectionTab.setContent(suggestionsVBox)
-    modelSelectionTab.getTabPane.getSelectionModel.select(modelSelectionTab)
-  }
-
 
 }

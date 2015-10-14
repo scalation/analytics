@@ -22,6 +22,7 @@ class RuntimeTab(modelType: ModelType, conceptualModel : Model) extends Tab {
   val results : ArrayBuffer[ResultTab] = ArrayBuffer()
 
   val scrollPane = new ScrollPane()
+  scrollPane.setId("runtimeTabContent")
   setContent(scrollPane)
   scrollPane.setFitToWidth(true)
 
