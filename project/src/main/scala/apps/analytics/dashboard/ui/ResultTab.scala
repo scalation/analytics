@@ -5,15 +5,16 @@ import javafx.concurrent.Task
 import javafx.geometry.Pos
 import javafx.scene.Node
 import javafx.scene.control._
-import javafx.scene.layout.{GridPane, StackPane, VBox}
+import javafx.scene.layout.{GridPane, HBox, StackPane, VBox}
 import javafx.scene.text.TextAlignment
 import javax.swing.SwingUtilities
 
 import apps.analytics.dashboard.model.{Model, ModelRuntime}
 
+import scala.math._
 import scalation.plot.FramelessPlot
-import scalation.random.Quantile
-import scalation.stat.Q_Q_Plot
+import scalation.random.{Normal, Quantile}
+import scalation.stat.{FramelessHistogram, GoodnessOfFit, Q_Q_Plot}
 
 /**
  * Created by mnural on 10/9/15.
@@ -21,6 +22,7 @@ import scalation.stat.Q_Q_Plot
 class ResultTab (val modelRuntime: ModelRuntime, conceptualModel : Model) extends Tab{
   setId("resultTab")
   val stack = new StackPane()
+  stack.setId("resultTabContent")
 
   val scrollPane = new ScrollPane()
   scrollPane.setFitToWidth(true)
@@ -49,8 +51,10 @@ class ResultTab (val modelRuntime: ModelRuntime, conceptualModel : Model) extend
   setContent(stack)
 
   def init = {
-    stack.setPrefWidth(getTabPane.getWidth)
-    stack.setPrefHeight(getTabPane.getHeight)
+    val tabPaneInsets = getTabPane.getInsets
+
+    stack.setPrefWidth(getTabPane.getWidth - tabPaneInsets.getLeft - tabPaneInsets.getRight)
+    stack.setPrefHeight(getTabPane.getHeight - tabPaneInsets.getTop - tabPaneInsets.getBottom)
 
     scrollPane.setContent(contents)
 
@@ -74,6 +78,9 @@ class ResultTab (val modelRuntime: ModelRuntime, conceptualModel : Model) extend
     val coefficientGrid = new GridPane()
     val coefficientLabel = new Label("Coefficients")
     coefficientLabel.getStyleClass.add("title")
+
+    val gofLabel = new Label("Do Residuals Pass Chi-Squared Goodness of Fit Test?  ")
+    val gofValue = new Label("")
 
     task = new Task[Void]{
       override def call(): Void = {
@@ -108,28 +115,68 @@ class ResultTab (val modelRuntime: ModelRuntime, conceptualModel : Model) extend
 
         Platform.runLater(() => { update(coefficientLabel, coefficientGrid) })
 
-        updateMessage("Performing Post Execution Analysis")
+        updateMessage("Performing Post Execution Analysis\nCreating QQ-Plot")
+
+        val residuals = predictor.residual
+        val dmin  = residuals.min ()         // the minimum
+        val dmax  = residuals.max ()         // the minimum
+        val dmu   = residuals.mean           // the mean
+        val dsig2 = residuals.variance       // the variance
+        val dsig  = sqrt (dsig2)
+
+//        val interval = sqrt(residuals.dim).toInt
+        val interval = sqrt(residuals.dim).toInt
+        val gof = new GoodnessOfFit(residuals, dmin , dmax, interval)
+        val fit = gof.fit(new Normal(dmu, dsig2))
+        gofValue.setText(if (fit) "Yes" else "No")
+        gofValue.getStyleClass.add("bold")
+        val hbox = new HBox()
+        hbox.getChildren.addAll(gofLabel, gofValue)
+        Platform.runLater(() => { contents.getChildren.add(hbox) })
 
         contents.setPrefWidth(getTabPane.getWidth - 25)
         //        contents.getChildren.remove(runButton)
 
-        val plotWidth = contents.getPrefWidth - contents.getPadding.getLeft - contents.getPadding.getLeft
+        val plotWidth : Int = (contents.getPrefWidth - contents.getPadding.getLeft - contents.getPadding.getLeft).toInt
         val plotHeight = 480
         val plot : FramelessPlot = Q_Q_Plot.plot(predictor.residual, Quantile.normalInv, Array ())
+        plot.width = plotWidth.toInt
+        plot.height = plotHeight
 
         if (isCancelled) { return null }
 
         //    val plot = new FramelessPlot(predictor.residual, predictor.residual)
 
-        plot.width = plotWidth.toInt
-        plot.height = plotHeight
-        val swingNode = new MySwingNode(plotWidth, plotHeight)
+        val qqNode = new MySwingNode(plotWidth, plotHeight)
+        qqNode.setId("swingNode")
+        SwingUtilities.invokeLater(() => { qqNode.setContent(plot.canvas) } )
 
-        swingNode.setId("swingNode")
-        SwingUtilities.invokeLater(() => { swingNode.setContent(plot.canvas) } )
+        if (isCancelled) { return null }
+
         val plotLabel = new Label("Q-Q Plot of Residuals")
         plotLabel.getStyleClass.add("title")
-        Platform.runLater(() => { contents.getChildren.addAll(plotLabel, swingNode) } )
+        Platform.runLater(() => { contents.getChildren.addAll(plotLabel, qqNode) } )
+
+        if (isCancelled) { return null }
+
+        updateMessage("Performing Post Execution Analysis\nCreating Histogram")
+
+        val hist = new FramelessHistogram(plotWidth, plotHeight, predictor.residual, interval)
+
+        if (isCancelled) { return null }
+
+        val histNode = new MySwingNode(plotWidth, plotHeight)
+        histNode.setId("swingNode")
+
+        SwingUtilities.invokeLater(() => { histNode.setContent(hist.canvas) } )
+
+        val histLabel = new Label("Histogram of Residuals")
+        histLabel.getStyleClass.add("title")
+
+        if (isCancelled) { return null }
+
+        Platform.runLater(() => {contents.getChildren.addAll(histLabel, histNode)})
+
         updateMessage("Completed Post Execution Analysis. Displaying Results")
         null
       }
@@ -137,6 +184,7 @@ class ResultTab (val modelRuntime: ModelRuntime, conceptualModel : Model) extend
 
     task.setOnScheduled(e => {
       getTabPane.getSelectionModel.select(this)
+      getContent.requestFocus()
     })
 
     task.setOnSucceeded(e => {
@@ -151,6 +199,8 @@ class ResultTab (val modelRuntime: ModelRuntime, conceptualModel : Model) extend
     cancelButton.setOnAction(event => {
       task.cancel()
     })
+
+
   }
 
   def run() = {
