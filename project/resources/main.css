@@ -29,7 +29,43 @@
 }
 
 .tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
-    -fx-border-color: black;
+    -fx-border-color: none;
+}
+
+.tab-pane:focused > .tab-header-area > .headers-region > #modelSelectionTab.tab:selected,
+.tab-pane > .tab-header-area > .headers-region > #modelSelectionTab.tab:selected {
+    -fx-border-color: tan;
+}
+
+.tab-pane:focused > .tab-header-area > .headers-region > #dataTab.tab:selected,
+.tab-pane > .tab-header-area > .headers-region > #dataTab.tab:selected {
+    -fx-border-color: #ff8784;
+}
+.tab-pane:focused > .tab-header-area > .headers-region > #resultTab.tab:selected,
+.tab-pane:focused > .tab-header-area > .headers-region > #resultTab.tab:selected,
+.tab-pane > .tab-header-area > .headers-region > #runtimeTab.tab:selected,
+.tab-pane > .tab-header-area > .headers-region > #runtimeTab.tab:selected {
+    -fx-border-color: #96cc94;
+}
+
+.tab-pane > .tab-content-area #dataTabContent {
+    -fx-border-width: 4 1 1 1;
+    -fx-border-color: ff8784;
+    -fx-border-style: solid;
+}
+
+.tab-pane > .tab-content-area #modelSelectionTabContent {
+    -fx-border-width: 4 1 1 1;
+    -fx-border-color: tan;
+    -fx-border-style: solid;
+}
+
+.tab-pane > .tab-content-area #runtimeTabContent,
+.tab-pane > .tab-content-area #resultTabContent{
+    -fx-border-width: 4 1 1 1;
+    -fx-border-color: #96cc94;
+    -fx-border-style: solid;
+    /*-fx-border-insets: 0 0 0 0;*/
 }
 
 #dataTab.tab {
@@ -80,7 +116,7 @@
     -fx-background-color: transparent;
 }
 
-#suggestionsVBox .label, #suggestionsVBox #modelSummary{
+#modelSelectionTabContent .label, #modelSelectionTabContent #modelSummary{
     /*-fx-background-color: rgba(255, 255, 255, 0.15);*/
     -fx-padding: 10 10 10 10;
     -fx-text-wrap: true;
@@ -103,8 +139,14 @@
         /*-fx-background-color: linear-gradient(#328BDB 0%, #207BCF 25%, #1973C9 75%, #0A65BF 100%);*/
 }
 
-/*#swingNode {*/
-    /*-fx-background-color: rgba(255, 250, 245, 0.15);*/
-    /*-fx-min-width: 640;*/
-    /*-fx-min-height: 480;*/
-/*}*/
+#propertiesPane {
+    /*-fx-padding: 50 5 5 5;*/
+}
+
+.bold {
+    -fx-font-weight: bold;
+}
+
+.right-padded {
+    -fx-padding: 0 20 5 0;
+}
