@@ -30,10 +30,12 @@ class Main extends Application {
 
     val rowConstraint = new RowConstraints()
     rowConstraint.setPercentHeight(50)
+
     rowConstraint.setVgrow(Priority.ALWAYS)
     leftPane.getRowConstraints.addAll(rowConstraint, rowConstraint)
 
     val firstColumnConstraint = new ColumnConstraints()
+
     firstColumnConstraint.setPercentWidth(100)
 
     leftPane.getColumnConstraints.addAll(firstColumnConstraint)
@@ -63,10 +65,10 @@ class Main extends Application {
     mainGrid.getRowConstraints.add(rowConstraint)
 
     val firstColumnConstraint = new ColumnConstraints()
-    firstColumnConstraint.setPercentWidth(40)
+    firstColumnConstraint.setPercentWidth(30)
 
     val secondColumnConstraint = new ColumnConstraints()
-    secondColumnConstraint.setPercentWidth(60)
+    secondColumnConstraint.setPercentWidth(70)
 
     mainGrid.getColumnConstraints.addAll(firstColumnConstraint, secondColumnConstraint)
     inputController.setId("inputController")
@@ -84,7 +86,7 @@ class Main extends Application {
     val inputTab = new DatasetTab()
     inputTab.setId("dataTab")
 
-    val modelSelectionTab = new Tab("Model Selection");
+    val modelSelectionTab = new Tab("Model Selection")
     modelSelectionTab.setId("modelSelectionTab")
     modelSelectionTab.setDisable(true)
 
