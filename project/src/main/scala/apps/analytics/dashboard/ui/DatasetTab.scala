@@ -1,8 +1,8 @@
 package apps.analytics.dashboard.ui
 
-import java.io.File
 import java.lang.Boolean
-import java.net.URI
+import java.net.URL
+import javafx.beans.binding.Bindings
 import javafx.beans.property.{ObjectProperty, SimpleBooleanProperty, SimpleObjectProperty}
 import javafx.collections.{FXCollections, ObservableList}
 import javafx.concurrent.Task
@@ -11,20 +11,18 @@ import javafx.geometry.{Pos, VPos}
 import javafx.scene.control._
 import javafx.scene.control.cell.{CheckBoxTableCell, PropertyValueFactory, TextFieldTableCell}
 import javafx.scene.layout.{GridPane, VBox}
-import javafx.scene.text.Text
 import javafx.util.StringConverter
 import javafx.util.converter.DefaultStringConverter
 
-import apps.analytics.dashboard.model.ModelTypes.ModelType
 import apps.analytics.dashboard.model.VariableTypes.VariableType
-import apps.analytics.dashboard.model.{Model, ModelTypes, VariableTypes}
+import apps.analytics.dashboard.model.{Model, VariableTypes}
 import apps.analytics.dashboard.ui.model.FXVariable
 
 import scala.collection.JavaConverters._
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
-import scala.io.Source
 import scalation.math.near_eq
+import scalation.util.getFromURL_File
 
 /**
  * Controller class for dataset.
@@ -32,18 +30,21 @@ import scalation.math.near_eq
  * Created by mnural on 8/16/15.
  */
 class DatasetTab(title : String = "Dataset") extends Tab {
+  var mergeDelims : Boolean = false
+
   setClosable(false)
   setText(title) // Title of the Tab
 
   //Model Parameters
   var variables = ArrayBuffer[FXVariable]() // reference to the list holding variables
-  var file : URI = null
+  var url : URL = null
   var delimiter : String = null
   var hasRepeatedObservations = new SimpleBooleanProperty()
   var noInstances : Int = -1
   var hasMissingValues = new SimpleBooleanProperty()
 
-
+  val errorBox = new VBox()
+  errorBox.getStyleClass.addAll("padded-vbox","error-box")
 
   //UI Controls
   var table : TableView[FXVariable] = null // reference to the table
@@ -100,25 +101,26 @@ class DatasetTab(title : String = "Dataset") extends Tab {
   /**
    * When called, reads dataset from the specified file and populates the dataset tab
    *
-   * @param file File object pointing to the dataset file on the machine
+   * @param url url pointing to a local or remote dataset
    * @param delimiter The delimiter used to separate variables in the files
    * @param hasHeaders true if first line contains headers, false otherwise.
    */
-  def init(file: File, delimiter: String, hasHeaders : Boolean = true) : Unit = {
+  def init(url: URL, delimiter: String, hasHeaders : Boolean = true, mergeDelims : Boolean = false) : Unit = {
     reset()
-
-
+    this.mergeDelims = mergeDelims
     this.hasRepeatedObservations = new SimpleBooleanProperty()
     this.hasMissingValues = new SimpleBooleanProperty()
-    this.file = file.toURI
+//    this.file = file.toURI
+    this.url = url
     this.delimiter = delimiter
-    val stream = Source.fromURI(file.toURI)
+    val stream = getFromURL_File(url.toString) //Source.fromURI(file.toURI)
 
     val task: Task[Void] = new Task[Void]() {
       @throws(classOf[InterruptedException])
       def call : Void = {
         updateMessage("Loading Dataset")
-        val firstLine = stream.getLines().next().split(delimiter)
+        val splitPattern = if (mergeDelims) delimiter + "+" else delimiter //treat consecutive delimiters as one
+        val firstLine = stream.next().split(splitPattern)
         val valueList = new Array[Set[String]](firstLine.length).map(m => mutable.SortedSet[String]())
 
         if(hasHeaders) {
@@ -131,10 +133,9 @@ class DatasetTab(title : String = "Dataset") extends Tab {
           })
         }
 
-
-        stream.getLines().foreach(
+        stream.foreach(
           line => {
-            val values = line.split(delimiter)
+            val values = line.split(splitPattern)
             values.indices.foreach(i => valueList(i) += values(i))
             noInstances += 1
           }
@@ -163,18 +164,25 @@ class DatasetTab(title : String = "Dataset") extends Tab {
     progressMessage.textProperty.bind(task.messageProperty)
     progressBox.getChildren.addAll(progress, progressMessage)
 
+    task.setOnFailed(e => {
+      setContent(new Label("An error has occurred, please make sure the parameters are correct and try loading the file again."))
+      task.getException.printStackTrace()
+    })
+
     task.setOnScheduled(e => {
       setContent(progressBox)
     })
 
     task.setOnSucceeded(e => {
-      stream.close()
+//      stream.close()
 
       table = new TableView[FXVariable]()
+//
       table.getColumns.addAll(labelColumn, isResponseColumn, ignoreColumn, variableTypeColumn)
       table.setEditable(true)
       table.setItems(FXCollections.observableArrayList[FXVariable](variables.asJava))
-      //contents.getChildren.add(table)
+      table.setFixedCellSize(35)
+      table.prefHeightProperty().bind(Bindings.size(table.getItems()).multiply(table.getFixedCellSize).add(30))
 
       variables.foreach(f => f.fxResponse.addListener((observable, oldValue, newValue :java.lang.Boolean) => {
         if (newValue.equals(true)) {
@@ -292,7 +300,7 @@ class DatasetTab(title : String = "Dataset") extends Tab {
    * @return runtime model to be used for obtaining model type suggestions
    */
   def getConceptualModel : Model = {
-    val model = new Model(file, delimiter, hasRepeatedObservations.get())
+    val model = new Model(url, delimiter, hasRepeatedObservations.get(), mergeDelims)
     variables.foreach( fxVariable => model.variables += fxVariable.toVariable)
     model
   }
@@ -307,15 +315,13 @@ class DatasetTab(title : String = "Dataset") extends Tab {
   }
 
 
-  def handleRunModel(event: ActionEvent) = {
-    val modelsAccordionPane = getTabPane.getScene.lookup("#modelsAccordionPane").asInstanceOf[Accordion]
-    val currentPane : TitledPane = modelsAccordionPane.getExpandedPane
-    val modelType : ModelType = ModelTypes.getByLabel(currentPane.getText)
-    val runtimeTab = new RuntimeTab(modelType, getConceptualModel)
-    getTabPane.getTabs.add(runtimeTab)
-    getTabPane.getSelectionModel.select(runtimeTab)
-    runtimeTab.getContent.requestFocus()
-
+  def clearErrors() = {
+    if(!errorBox.getChildren.isEmpty){
+      errorBox.getChildren.removeAll(errorBox.getChildren)
+    }
+    if(contents.getChildren.contains(errorBox)) {
+      contents.getChildren.remove(errorBox)
+    }
   }
 
   /**
@@ -324,71 +330,20 @@ class DatasetTab(title : String = "Dataset") extends Tab {
    * @param event
    */
   def handleGetModels(event: ActionEvent) : Unit = {
-    //println(model.variables)
-    val tabs = getTabPane
-
-    val model = getConceptualModel
-    //variables.asScala.map(variable => model.variables += variable)
-
-    val suggestionsVBox = new VBox()
-    suggestionsVBox.setId("modelSelectionTabContent")
-
-    val modelSummaryLabel = new Label("Suggestions for:")
-    modelSummaryLabel.setId("modelSummaryLabel")
-
-    val modelSummary = new TextArea()
-    modelSummary.setBackground(suggestionsVBox.getBackground)
-    modelSummary.setId("modelSummary")
-    modelSummary.setText(model.toString)
-    modelSummary.setEditable(false)
-    modelSummary.setWrapText(true)
-
-    val suggestedModels = model.getModelTypes
-    val modelsAccordionPane = new Accordion()
-    modelsAccordionPane.setId("modelsAccordionPane")
-
-    for (suggestedModel <- suggestedModels){
-      val explanations = model.getExplanation(suggestedModel)
-      val listView = new ListView[String]()
-      listView.setCellFactory((list: ListView[String]) => {
-        new ListCell[String]() {
-          val text = new Text()
-          text.wrappingWidthProperty().bind(list.widthProperty().subtract(15))
-          text.textProperty().bind(itemProperty())
-
-          setPrefWidth(0)
-          setGraphic(text)
-        }
-      })
-
-      val items : ObservableList[String] = FXCollections.observableArrayList (explanations.asJavaCollection)
-      listView.setItems(items)
-
-      val justificationVBox = new VBox()
-      justificationVBox.setId("justificationVBox")
-      val justificationLabel = new Label("Justification For This Suggestion")
-
-
-      val runButton = new Button("Use This Model For My Dataset")
-      runButton.setOnAction(handleRunModel(_))
-
-      justificationVBox.getChildren.addAll(justificationLabel, listView, runButton)
-      val modelType = ModelTypes.getById(suggestedModel.getIRI.getRemainder.get())
-      val titledPane = new TitledPane(modelType.label, justificationVBox)
-      modelsAccordionPane.getPanes.add(titledPane)
-
+    if (!variables.exists(variable => variable.fxResponse.get())){
+      val errorMessage = new Label("No response variable is selected! Please mark one of the variables as Response. ")
+      errorMessage.getStyleClass.add("text-label")
+      errorBox.getChildren.add(errorMessage)
+      contents.getChildren.add(0, errorBox)
+    }else{
+      clearErrors()
+      val tabs = getTabPane
+      val modelSelectionTab = tabs.getTabs.get(1).asInstanceOf[SuggestionTab]
+      modelSelectionTab.setDisable(false)
+      modelSelectionTab.init(getConceptualModel)
+      tabs.getSelectionModel.select(modelSelectionTab)
+      modelSelectionTab.getContent.requestFocus()
     }
-
-    modelsAccordionPane.setExpandedPane(modelsAccordionPane.getPanes.get(0))
-    suggestionsVBox.getChildren.addAll(modelSummaryLabel, modelSummary, modelsAccordionPane)
-
-
-    println(suggestedModels)
-    val modelSelectionTab = tabs.getTabs.get(1)
-    modelSelectionTab.setDisable(false)
-    modelSelectionTab.setContent(suggestionsVBox)
-    tabs.getSelectionModel.select(modelSelectionTab)
-    modelSelectionTab.getContent.requestFocus()
   }
 
 }

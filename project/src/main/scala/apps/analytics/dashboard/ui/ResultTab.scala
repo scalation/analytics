@@ -10,6 +10,7 @@ import javafx.scene.text.TextAlignment
 import javax.swing.SwingUtilities
 
 import apps.analytics.dashboard.model.{Model, ModelRuntime}
+import play.api.libs.json.{JsDefined, Json, JsValue}
 
 import scala.math._
 import scalation.plot.FramelessPlot
@@ -65,7 +66,7 @@ class ResultTab (val modelRuntime: ModelRuntime, conceptualModel : Model) extend
     stack.getChildren().addAll(scrollPane, lightBox, progressBox)
 
 
-    val resultsLabel = new Label("Results")
+    val resultsLabel = new Label("Diagnostics")
     resultsLabel.getStyleClass.add("title")
     resultsLabel.setAlignment(Pos.CENTER)
     contents.getChildren.add(resultsLabel)
@@ -83,6 +84,20 @@ class ResultTab (val modelRuntime: ModelRuntime, conceptualModel : Model) extend
     val gofValue = new Label("")
 
     task = new Task[Void]{
+
+      def createReportNode(jsonReport: JsValue) : VBox = {
+        val container = new VBox()
+        val fit = jsonReport.\("fit")
+        fit.productIterator.foreach( p => {
+          val jsValue = p.asInstanceOf[JsDefined].value
+
+        })
+        val coefficients = jsonReport.\("coefficients")
+        val label = new Label(Json.prettyPrint(jsonReport))
+        container.getChildren.add(label)
+        container
+      }
+
       override def call(): Void = {
         updateMessage("Preparing Dataset for Execution")
         val predictor = modelRuntime.predictor
@@ -93,13 +108,16 @@ class ResultTab (val modelRuntime: ModelRuntime, conceptualModel : Model) extend
         if (isCancelled) { return null }
 
         updateMessage("Finished Executing Model, Printing Results")
+
+        val report = createReportNode(predictor.jsonReport)
+
         val labeledParams = predictor.fitLabels.zip(predictor.fit.toList)
         labeledParams.indices.foreach(i => {
           fitGrid.add(new Label(labeledParams(i)._1), 0, i)
           fitGrid.add(new Label(labeledParams(i)._2.toString), 1, i)
         })
 
-        Platform.runLater(() => { update(fitLabel, fitGrid)})
+//        Platform.runLater(() => { update(fitLabel, fitGrid)})
 
         val labeledCoefficients = conceptualModel.variables
           .filterNot(v => {
@@ -113,7 +131,13 @@ class ResultTab (val modelRuntime: ModelRuntime, conceptualModel : Model) extend
           coefficientGrid.add(new Label(labeledCoefficients(i)._2.toString), 1, i)
         })
 
-        Platform.runLater(() => { update(coefficientLabel, coefficientGrid) })
+//        Platform.runLater(() => { update(coefficientLabel, coefficientGrid) })
+
+        fitLabel.setText(predictor.reportToString)
+        fitLabel.setStyle("-fx-font-family:monospace")
+        fitLabel.setWrapText(true)
+
+        Platform.runLater(()=> update(fitLabel))
 
         updateMessage("Performing Post Execution Analysis\nCreating QQ-Plot")
 
@@ -137,6 +161,7 @@ class ResultTab (val modelRuntime: ModelRuntime, conceptualModel : Model) extend
         contents.setPrefWidth(getTabPane.getWidth - 25)
         //        contents.getChildren.remove(runButton)
 
+        Q_Q_Plot.frameless = true
         val plotWidth : Int = (contents.getPrefWidth - contents.getPadding.getLeft - contents.getPadding.getLeft).toInt
         val plotHeight = 480
         val plot : FramelessPlot = Q_Q_Plot.plot(predictor.residual, Quantile.normalInv, Array ())
@@ -155,7 +180,7 @@ class ResultTab (val modelRuntime: ModelRuntime, conceptualModel : Model) extend
 
         val plotLabel = new Label("Q-Q Plot of Residuals")
         plotLabel.getStyleClass.add("title")
-        Platform.runLater(() => { contents.getChildren.addAll(plotLabel, qqNode) } )
+//        Platform.runLater(() => { contents.getChildren.addAll(plotLabel, qqNode) } )
 
         if (isCancelled) { return null }
 
@@ -195,6 +220,10 @@ class ResultTab (val modelRuntime: ModelRuntime, conceptualModel : Model) extend
       stack.getChildren.removeAll(lightBox, progressBox)
     })
 
+    task.setOnFailed(e => {
+      task.getException.printStackTrace()
+      stack.getChildren.removeAll(lightBox, progressBox)
+    })
     progressMessage.textProperty.bind(task.messageProperty)
     cancelButton.setOnAction(event => {
       task.cancel()

@@ -2,8 +2,8 @@ package apps.analytics.dashboard.ui
 
 import javafx.embed.swing.SwingNode
 import javafx.event.ActionEvent
-import javafx.scene.control.{Button, ScrollPane, Tab}
-import javafx.scene.layout.VBox
+import javafx.scene.control._
+import javafx.scene.layout.{HBox, VBox}
 
 import apps.analytics.dashboard.model.ModelTypes.ModelType
 import apps.analytics.dashboard.model.{Model, ModelRuntime}
@@ -31,10 +31,20 @@ class RuntimeTab(modelType: ModelType, conceptualModel : Model) extends Tab {
   scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER)
   contents.getStyleClass.add("padded-vbox")
 
+  val params = new Label("Parameters")
+  val radio = new ToggleGroup()
+  val qr = new RadioButton("QR Factorization  ")
+  qr.setToggleGroup(radio)
+  qr.setSelected(true)
+  var cholesky = new RadioButton("Cholesky Factorization  ")
+  cholesky.setToggleGroup(radio)
+
+  val group = new HBox(new Label("Factorization Technique:   "), qr, cholesky)
+
   val runButton = new Button("Run Model")
   runButton.setOnAction(handleRunButton(_))
 
-  contents.getChildren.add(runButton)
+  contents.getChildren.addAll(params, group, runButton)
   scrollPane.setContent(contents)
 
   def handleRunButton (event: ActionEvent) : Unit = {

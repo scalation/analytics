@@ -1,5 +1,7 @@
 package apps.analytics.dashboard.model
 
+import scalation.analytics.RegTechnique
+
 
 /**
  * Created by mnural on 9/10/15.
@@ -13,7 +15,8 @@ object ModelTypes {
     */
   sealed abstract class ModelType(
                                       val ontologyID    : String,
-                                      val label         : String
+                                      val label         : String,
+                                      val params        : Map[String, Tuple2[Any, String]] = null
                                     ){
 
     // The qualified name in Analytics ontology for the model class
@@ -22,6 +25,8 @@ object ModelTypes {
     // Return label by default
     override def toString = label
   }
+
+  val regressionParams = Map[String, Tuple2[Any, String]]("Factorization Technique" -> (RegTechnique, "QR_Factorization"))
 
   //Root Class
   case object Model extends ModelType("Model", "Model")
@@ -47,7 +52,7 @@ object ModelTypes {
   case object ANCOVA extends ModelType("ANCOVA", "ANCOVA")
   case object ANOVA extends ModelType("ANOVA", "ANOVA")
 
-  case object MultipleLinearRegression extends ModelType("Multiple_Linear_Regression", "Multiple Linear Regression")
+  case object MultipleLinearRegression extends ModelType("Multiple_Linear_Regression", "Multiple Linear Regression", regressionParams)
   case object SimpleLinearRegression extends ModelType("Simple_Linear_Regression", "Simple Linear Regression")
 
   case object PolynomialRegression extends ModelType("Polynomial_Regression", "Polynomial Regression")

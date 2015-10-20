@@ -30,7 +30,8 @@ object ModelRuntime {
    */
   def get(modelType: ModelType, params: Map[String, Tuple2[Any, String]], dataset: Model): Predictor = {
     //load the data into a Relation object, assuming all domains are "S", StrNum
-    val dataTable = Relation(dataset.file.getPath, "Current Data", -1, null, dataset.delimiter)
+    val delim = if (dataset.mergeDelims) dataset.delimiter + "+" else dataset.delimiter
+    val dataTable = Relation(dataset.file.getPath, "Current Data", -1, null, delim)
     val dataTable_s = MakeSchema(dataTable)
     println("dataTable_s domain = " + dataTable_s.domain)
     var predictorsIndices = new ArrayBuffer[Int]()

@@ -1,6 +1,6 @@
 package apps.analytics.dashboard.model
 
-import java.net.URI
+import java.net.URL
 
 import apps.analytics.dashboard.AnalyticsOntology
 import org.semanticweb.owl.explanation.api._
@@ -16,7 +16,7 @@ import scala.collection.mutable.ArrayBuffer
  * @author Mustafa Nural
  * Created by mnural on 3/29/15.
  */
-class Model (val file : URI = null, val delimiter : String = ",", var hasRepeatedObservations : Boolean = false){
+class Model (val file : URL = null, val delimiter : String = ",", var hasRepeatedObservations : Boolean = false, var mergeDelims : Boolean = false){
 
   /**
    * Alternative constructor in case no dataset is specified
@@ -119,10 +119,16 @@ class Model (val file : URI = null, val delimiter : String = ",", var hasRepeate
 
   override def toString = {
     var summary = new StringBuilder()
-    summary ++=  "Has repeated observations? : " + {if(hasRepeatedObservations) "Yes" else "No"} + "\n"
-    summary ++= "\n"
-    variables.filterNot(_.ignore).foreach(summary ++= "\t" + _.toString + "\n")
 
+    variables.filter(_.isResponse).foreach(v => summary ++= v.label + "(" + v.variableType + ")" + " ~ ")
+    variables.filterNot(v => v.ignore || v.isResponse).foreach(v=> summary ++= v.label + "(" + v.variableType + ")" +" + ")
+
+    summary.delete(summary.length - 2, summary.length)
+    summary ++= "\n\n"
+
+    summary ++=  "Has repeated observations? : " + {if(hasRepeatedObservations) "Yes" else "No"} + "\n"
+//    summary ++= "\n"
+//    variables.filterNot(_.ignore).foreach(summary ++= "\t" + _.toString + "\n")
     summary.toString
   }
 }

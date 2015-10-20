@@ -79,14 +79,14 @@ class Main extends Application {
     leftPane.add(inputController, 0, 0)
     leftPane.add(new ModelExplorer(), 0, 1)
 
-    val tabbedPane = new TabPane();
+    val tabbedPane = new TabPane()
     tabbedPane.setId("tabs")
     tabbedPane.setTabClosingPolicy(TabPane.TabClosingPolicy.SELECTED_TAB)
 
     val inputTab = new DatasetTab()
     inputTab.setId("dataTab")
 
-    val modelSelectionTab = new Tab("Model Selection")
+    val modelSelectionTab = new SuggestionTab("Model Selection")
     modelSelectionTab.setId("modelSelectionTab")
     modelSelectionTab.setDisable(true)
 
