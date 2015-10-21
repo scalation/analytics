@@ -26,7 +26,7 @@ class SuggestionTab (title : String = "Model Selection") extends Tab {
   val modelTabContent = new VBox()
   modelTabContent.setId("modelSelectionTabContent")
 
-  val summaryLabel = new Label("Suggestions for:")
+  val summaryLabel = new Label("Conceptual Model Summary:")
   summaryLabel.setId("modelSummaryLabel")
 
   val suggestedModelsLabel = new VBox(new Label("Suggested Models"))
@@ -153,6 +153,9 @@ class SuggestionTab (title : String = "Model Selection") extends Tab {
   def handleRunModel(event: ActionEvent) = {
     val modelType : ModelType = ModelTypes.getByLabel(suggestionsListView.getSelectionModel.getSelectedItem)
     val runtimeTab = new RuntimeTab(modelType, conceptualModel)
+
+    getTabPane.getScene.lookup("#modelExplorer").asInstanceOf[ModelExplorer].add(runtimeTab)
+
     getTabPane.getTabs.add(runtimeTab)
     getTabPane.getSelectionModel.select(runtimeTab)
     runtimeTab.getContent.requestFocus()

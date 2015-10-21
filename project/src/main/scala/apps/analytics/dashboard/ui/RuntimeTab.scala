@@ -26,7 +26,6 @@ class RuntimeTab(modelType: ModelType, conceptualModel : Model) extends Tab {
   setContent(scrollPane)
   scrollPane.setFitToWidth(true)
 
-
   val contents = new VBox()
   scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER)
   contents.getStyleClass.add("padded-vbox")
