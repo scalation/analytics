@@ -170,7 +170,7 @@ class ResultTab (val modelRuntime: ModelRuntime, conceptualModel : Model) extend
 
         if (isCancelled) { return null }
 
-        //    val plot = new FramelessPlot(predictor.residual, predictor.residual)
+//           val plot = new FramelessPlot(predictor.residual, predictor.residual)
 
         val qqNode = new MySwingNode(plotWidth, plotHeight)
         qqNode.setId("swingNode")
@@ -180,7 +180,7 @@ class ResultTab (val modelRuntime: ModelRuntime, conceptualModel : Model) extend
 
         val plotLabel = new Label("Q-Q Plot of Residuals")
         plotLabel.getStyleClass.add("title")
-//        Platform.runLater(() => { contents.getChildren.addAll(plotLabel, qqNode) } )
+        Platform.runLater(() => { contents.getChildren.addAll(plotLabel, qqNode) } )
 
         if (isCancelled) { return null }
 
