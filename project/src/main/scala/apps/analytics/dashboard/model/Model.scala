@@ -10,6 +10,7 @@ import scala.collection.JavaConversions._
 import scala.collection.JavaConverters._
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
+import scalation.relalgebra.Relation
 
 /**
  * Model provides a conceptual representation of a dataset
@@ -17,6 +18,8 @@ import scala.collection.mutable.ArrayBuffer
  * Created by mnural on 3/29/15.
  */
 class Model (val file : URL = null, val delimiter : String = ",", var hasRepeatedObservations : Boolean = false, var mergeDelims : Boolean = false){
+  var relation : Relation = null
+
 
   /**
    * Alternative constructor in case no dataset is specified

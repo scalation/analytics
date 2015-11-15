@@ -6,7 +6,6 @@ import scala.collection.mutable.ArrayBuffer
 import scalation.analytics._
 import scalation.linalgebra.MatrixD
 import scalation.linalgebra.VectorD._
-import scalation.relalgebra.{MakeSchema, Relation}
 
 /**
  * Created by mnural on 8/30/15.
@@ -29,11 +28,7 @@ object ModelRuntime {
    * @param dataset the meta-data
    */
   def get(modelType: ModelType, params: Map[String, Tuple2[Any, String]], dataset: Model): Predictor = {
-    //load the data into a Relation object, assuming all domains are "S", StrNum
-    val delim = if (dataset.mergeDelims) dataset.delimiter + "+" else dataset.delimiter
-    val dataTable = Relation(dataset.file.getPath, "Current Data", -1, null, delim)
-    val dataTable_s = MakeSchema(dataTable)
-    println("dataTable_s domain = " + dataTable_s.domain)
+    val dataTable = dataset.relation
     var predictorsIndices = new ArrayBuffer[Int]()
     var responseIndex = 0
     //var predictors = new MatrixD(dataTable.rows, 0)
@@ -44,7 +39,7 @@ object ModelRuntime {
       if (!(variable ignore)) {
         if (variable isResponse) responseIndex = i
         //by default, ignore all columns that are VectorS
-        else if (dataTable_s.domain(i) != 'S') predictorsIndices += i
+        else if (dataTable.domain(i) != 'S') predictorsIndices += i
       } // if
     } // for
 

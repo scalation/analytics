@@ -12,10 +12,11 @@ import javax.swing.SwingUtilities
 import apps.analytics.dashboard.model.{Model, ModelRuntime}
 import play.api.libs.json.{JsDefined, Json, JsValue}
 
+import scala.collection.immutable.Vector
 import scala.math._
 import scalation.plot.FramelessPlot
-import scalation.random.{Normal, Quantile}
-import scalation.stat.{FramelessHistogram, GoodnessOfFit, Q_Q_Plot}
+import scalation.random.{CDF, Normal, Quantile}
+import scalation.stat.{GoodnessOfFit_KS, FramelessHistogram, GoodnessOfFit, Q_Q_Plot}
 
 /**
  * Created by mnural on 10/9/15.
@@ -80,8 +81,11 @@ class ResultTab (val modelRuntime: ModelRuntime, conceptualModel : Model) extend
     val coefficientLabel = new Label("Coefficients")
     coefficientLabel.getStyleClass.add("title")
 
-    val gofLabel = new Label("Do Residuals Pass Chi-Squared Goodness of Fit Test?  ")
-    val gofValue = new Label("")
+    val gofChiLabel = new Label("Do Residuals Pass Chi-Squared Goodness of Fit Test?  ")
+    val gofChiValue = new Label("")
+
+    val gofKsLabel = new Label("Do Residuals Pass K-S Goodness of Fit Test?")
+    val gofKsValue = new Label("")
 
     task = new Task[Void]{
 
@@ -98,6 +102,8 @@ class ResultTab (val modelRuntime: ModelRuntime, conceptualModel : Model) extend
         container
       }
 
+
+
       override def call(): Void = {
         updateMessage("Preparing Dataset for Execution")
         val predictor = modelRuntime.predictor
@@ -109,7 +115,7 @@ class ResultTab (val modelRuntime: ModelRuntime, conceptualModel : Model) extend
 
         updateMessage("Finished Executing Model, Printing Results")
 
-        val report = createReportNode(predictor.jsonReport)
+//        val report = createReportNode(predictor.jsonReport)
 
         val labeledParams = predictor.fitLabels.zip(predictor.fit.toList)
         labeledParams.indices.foreach(i => {
@@ -133,7 +139,7 @@ class ResultTab (val modelRuntime: ModelRuntime, conceptualModel : Model) extend
 
 //        Platform.runLater(() => { update(coefficientLabel, coefficientGrid) })
 
-        fitLabel.setText(predictor.reportToString)
+//        fitLabel.setText(predictor.reportToString)
         fitLabel.setStyle("-fx-font-family:monospace")
         fitLabel.setWrapText(true)
 
@@ -152,11 +158,20 @@ class ResultTab (val modelRuntime: ModelRuntime, conceptualModel : Model) extend
         val interval = sqrt(residuals.dim).toInt
         val gof = new GoodnessOfFit(residuals, dmin , dmax, interval)
         val fit = gof.fit(new Normal(dmu, dsig2))
-        gofValue.setText(if (fit) "Yes" else "No")
-        gofValue.getStyleClass.add("bold")
+        gofChiValue.setText(if (fit) "Yes" else "No")
+        gofChiValue.getStyleClass.add("bold")
         val hbox = new HBox()
-        hbox.getChildren.addAll(gofLabel, gofValue)
+        hbox.getChildren.addAll(gofChiLabel, gofChiValue)
         Platform.runLater(() => { contents.getChildren.add(hbox) })
+
+        val ks = new GoodnessOfFit_KS(residuals)
+        val ksFit = ks.fit(CDF.normalCDF)
+        gofKsValue.setText(if (ksFit > .5) "Yes" else "No")
+        gofKsValue.getStyleClass.add("bold")
+        val ksHbox = new HBox()
+        ksHbox.getChildren.addAll(gofKsLabel, gofKsValue)
+        Platform.runLater(() => { contents.getChildren.add(ksHbox) })
+
 
         contents.setPrefWidth(getTabPane.getWidth - 25)
         //        contents.getChildren.remove(runButton)
@@ -164,7 +179,7 @@ class ResultTab (val modelRuntime: ModelRuntime, conceptualModel : Model) extend
         Q_Q_Plot.frameless = true
         val plotWidth : Int = (contents.getPrefWidth - contents.getPadding.getLeft - contents.getPadding.getLeft).toInt
         val plotHeight = 480
-        val plot : FramelessPlot = Q_Q_Plot.plot(predictor.residual, Quantile.normalInv, Array ())
+        val plot : FramelessPlot = Q_Q_Plot.plot(predictor.residual, Quantile.normalInv,Vector.empty, 200)
         plot.width = plotWidth.toInt
         plot.height = plotHeight
 

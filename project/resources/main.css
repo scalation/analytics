@@ -23,6 +23,9 @@
     -fx-background-color: transparent;
 }
 
+.text-field-table-cell{
+    -fx-font-family: monospace;
+}
 .bold {
     -fx-font-weight: bold;
 }

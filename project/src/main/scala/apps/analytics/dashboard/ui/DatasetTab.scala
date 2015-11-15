@@ -1,5 +1,6 @@
 package apps.analytics.dashboard.ui
 
+import java.lang
 import java.lang.Boolean
 import java.net.URL
 import javafx.beans.binding.Bindings
@@ -12,18 +13,20 @@ import javafx.scene.control._
 import javafx.scene.control.cell.{CheckBoxTableCell, PropertyValueFactory, TextFieldTableCell}
 import javafx.scene.layout.{GridPane, VBox}
 import javafx.util.StringConverter
-import javafx.util.converter.DefaultStringConverter
+import javafx.util.converter.{DoubleStringConverter, DefaultStringConverter}
 
 import apps.analytics.dashboard.model.VariableTypes.VariableType
 import apps.analytics.dashboard.model.{Model, VariableTypes}
 import apps.analytics.dashboard.ui.model.FXVariable
 
 import scala.collection.JavaConverters._
-import scala.collection.mutable
+import scala.collection.immutable.HashSet
 import scala.collection.mutable.ArrayBuffer
-import scalation.math.near_eq
-import scalation.util.getFromURL_File
 
+import scalation.linalgebra.{VectorD, VectorI, VectorS, Vec}
+import scalation.relalgebra.{Relation, MakeSchema}
+import scalation.util.getFromURL_File
+import scalation.stat.vectorD2StatVector
 /**
  * Controller class for dataset.
  * @author Mustafa Nural
@@ -42,6 +45,7 @@ class DatasetTab(title : String = "Dataset") extends Tab {
   var hasRepeatedObservations = new SimpleBooleanProperty()
   var noInstances : Int = -1
   var hasMissingValues = new SimpleBooleanProperty()
+  var dataTable : Relation = null
 
   val errorBox = new VBox()
   errorBox.getStyleClass.addAll("padded-vbox","error-box")
@@ -70,12 +74,12 @@ class DatasetTab(title : String = "Dataset") extends Tab {
 
   val isResponseColumn = new TableColumn[FXVariable, Boolean]("Response?")
   isResponseColumn.setCellValueFactory(new PropertyValueFactory[FXVariable, Boolean]("fxResponse"))
-  isResponseColumn.setPrefWidth(130)
+  isResponseColumn.setPrefWidth(100)
   isResponseColumn.setCellFactory(CheckBoxTableCell.forTableColumn(isResponseColumn))
 
   val ignoreColumn = new TableColumn[FXVariable, Boolean]("Ignore?")
   ignoreColumn.setCellValueFactory(new PropertyValueFactory[FXVariable, Boolean]("fxIgnore"))
-  ignoreColumn.setPrefWidth(130)
+  ignoreColumn.setPrefWidth(100)
   ignoreColumn.setCellFactory(CheckBoxTableCell.forTableColumn(ignoreColumn))
 
   val variableTypeColumn = new TableColumn[FXVariable,VariableType]("Type")
@@ -83,12 +87,20 @@ class DatasetTab(title : String = "Dataset") extends Tab {
   variableTypeColumn.setPrefWidth(240)
   variableTypeColumn.setCellFactory( tableColumn  => { new ComboBoxCell() })
 
+  val meanColumn = new TableColumn[FXVariable, Double]("Mean")
+  meanColumn.setCellValueFactory(new PropertyValueFactory[FXVariable, Double]("fxMean"))
+  meanColumn.setCellFactory(tableColumn => { new TextFieldTableCell[FXVariable, Double](new FormattedDoubleStringConverter())})
+
+  val stdDevColumn = new TableColumn[FXVariable, Double]("StdDev")
+  stdDevColumn.setCellValueFactory(new PropertyValueFactory[FXVariable, Double]("fxStdDev"))
+  stdDevColumn.setCellFactory(tableColumn => {new TextFieldTableCell[FXVariable, Double](new FormattedDoubleStringConverter())})
 
   def reset() = {
     this.variables = ArrayBuffer()
     this.noInstances = 0
     this.hasRepeatedObservations = null
     this.hasMissingValues = null
+    this.dataTable = null
 
     contents = new VBox()
     contents.getStyleClass.add("padded-vbox")
@@ -113,6 +125,7 @@ class DatasetTab(title : String = "Dataset") extends Tab {
 //    this.file = file.toURI
     this.url = url
     this.delimiter = delimiter
+
     val stream = getFromURL_File(url.toString) //Source.fromURI(file.toURI)
 
     val task: Task[Void] = new Task[Void]() {
@@ -121,35 +134,60 @@ class DatasetTab(title : String = "Dataset") extends Tab {
         updateMessage("Loading Dataset")
         val splitPattern = if (mergeDelims) delimiter + "+" else delimiter //treat consecutive delimiters as one
         val firstLine = stream.next().split(splitPattern)
-        val valueList = new Array[Set[String]](firstLine.length).map(m => mutable.SortedSet[String]())
+//        val valueList = new Array[Set[String]](firstLine.length).map(m => mutable.SortedSet[String]())
+
+        var colBuffer: Array [ArrayBuffer [String]] = null
+        var colName: Seq [String] = null
+
+        colBuffer = Array.ofDim (firstLine.length)
+        colBuffer.indices.foreach(i => colBuffer(i) = new ArrayBuffer() )
 
         if(hasHeaders) {
           firstLine.foreach(label => variables += new FXVariable(label))
+          colName = firstLine
         } else {
           firstLine.indices.foreach(i => {
             variables += new FXVariable("Variable" + i)
-            valueList(i) += firstLine(i)
-            noInstances += 1
+            colName :+ ("Variable" + i)
+            colBuffer(i) += firstLine(i)
           })
         }
 
         stream.foreach(
           line => {
             val values = line.split(splitPattern)
-            values.indices.foreach(i => valueList(i) += values(i))
-            noInstances += 1
+            values.indices.foreach(i => colBuffer(i) += values(i))
           }
         )
+
+        val rel = Relation (url.toString, colName, colBuffer.indices.map (i => VectorS (colBuffer(i).toArray)).toVector, -1, null)
+
+        noInstances = colBuffer(0).length
+
         updateMessage("Trying to Infer Variable Types")
-        valueList
+
+        dataTable = MakeSchema(rel)
+
+        variables
           .indices
           .foreach(
-            i => variables(i).fxVariableType.set(inferVariableType(valueList(i)))
+            i => variables(i).fxVariableType.set(inferVariableType(dataTable.col(i), dataTable.domain.charAt(i)))
           )
 
         variables
           .filterNot(variable => variable.fxVariableType.get().isNumeric)
           .foreach( variable => variable.fxIgnore.set(true))
+
+        updateMessage("Analyzing dataset")
+        variables.filter(variable => variable.fxVariableTypeProperty.get.isNumeric).indices.
+          foreach( i => {
+            val vectorD : VectorD= Vec.toDouble(dataTable.col(i))
+            variables(i).fxMean.set(vectorD.mean)
+            variables(i).fxStdDev.set(vectorD.stddev)
+            variables(i).fxOverDispersed.set(vectorD.variance > (vectorD.mean + vectorD.interval()))
+
+        })
+        //TODO
 
         updateMessage("Dataset is loaded successfully")
         null
@@ -178,7 +216,7 @@ class DatasetTab(title : String = "Dataset") extends Tab {
 
       table = new TableView[FXVariable]()
 //
-      table.getColumns.addAll(labelColumn, isResponseColumn, ignoreColumn, variableTypeColumn)
+      table.getColumns.addAll(labelColumn, isResponseColumn, ignoreColumn, variableTypeColumn, meanColumn, stdDevColumn)
       table.setEditable(true)
       table.setItems(FXCollections.observableArrayList[FXVariable](variables.asJava))
       table.setFixedCellSize(35)
@@ -247,49 +285,55 @@ class DatasetTab(title : String = "Dataset") extends Tab {
    * @param valueSet
    * @return Inferred VariableType for the provided value set.
    */
-  def inferVariableType(valueSet : mutable.Set[String]): VariableType = {
+  def inferVariableType(column : Vec, typ : Char): VariableType = {
+
+    val valueSet = {
+      typ match {
+        case 'I' => HashSet(column.asInstanceOf[VectorI].toSeq:_* )
+        case 'D' => HashSet(column.asInstanceOf[VectorD].toSeq:_*)
+        case _ => HashSet(column.asInstanceOf[VectorS].toSeq:_*)
+      }
+    }
     valueSet.size match {
       case 1 =>
         //TODO HANDLE THIS CASE
         //Create "Constant" Variable Type?
         println("CONSTANT")
-        return VariableTypes.Constant
+        VariableTypes.Constant
       case 2 =>
-        return VariableTypes.Binary
-      case it if 3 until 7 contains it =>
-        return VariableTypes.Categorical
+        VariableTypes.Binary
+      case it if 3 until 10 contains it =>
+        VariableTypes.Categorical
       case _ => {
-        try{
-          val doubleList = valueSet.map(_.toDouble)
-          // check for ordinal
-          val sortedDouble = (collection.immutable.SortedSet[Double]() ++ doubleList).toBuffer
-          if (sortedDouble.size >= 2){
-            for (i <- 1 until sortedDouble.size){
-              sortedDouble(i-1) = sortedDouble(i) - sortedDouble(i-1)
+        typ match{
+          case 'I' =>
+            if (valueSet.asInstanceOf[Set[Int]].exists(_ < 0)){
+              VariableTypes.Integer
+            } else{
+              VariableTypes.Non_Negative_Integer
             }
-          } // if
-          sortedDouble.remove(sortedDouble.size-1)
-
-          if (sortedDouble.toSet.size == 1){
-            return VariableTypes.Ordinal
-          } else {
-            //how to use =~ instead of near_eq?
-            if (doubleList.count(d => near_eq(d.toInt, d)) == doubleList.size) {
-              if (doubleList.count(_ >= 0) == doubleList.size) return VariableTypes.Non_Negative_Integer
-              else return VariableTypes.Integer
-            } else {
-              if (doubleList.count(_ >= 0) == doubleList.size) return VariableTypes.Non_Negative_Continuous
-              //added "Continuous" by following the pattern above
-              else return VariableTypes.Continuous
-            } // if
-          } // if
-        } catch  { // The variable can't be cast to number.
-          case e : NumberFormatException => { //Can not be cast to a number.
-            return VariableTypes.String
-          }
-        } // try
-        // The most general Variable Type? Able to take on values that are both numeric and categorical
-        return VariableTypes.String //Default variable type
+          case 'D' =>
+            if (valueSet.asInstanceOf[Set[Double]].exists(_ < 0)){
+              VariableTypes.Continuous
+            } else{
+              VariableTypes.Non_Negative_Continuous
+            }
+          case _ =>
+            VariableTypes.String
+        }
+//        try{
+//          val doubleList = valueSet.map(_.toDouble)
+//          // check for ordinal
+//          val sortedDouble = (collection.immutable.SortedSet[Double]() ++ doubleList).toBuffer
+//          if (sortedDouble.size >= 2){
+//            for (i <- 1 until sortedDouble.size){
+//              sortedDouble(i-1) = sortedDouble(i) - sortedDouble(i-1)
+//            }
+//          } // if
+//          sortedDouble.remove(sortedDouble.size-1)
+//
+//          if (sortedDouble.toSet.size == 1){
+//            return VariableTypes.Ordinal
       }
     }
   }
@@ -302,6 +346,7 @@ class DatasetTab(title : String = "Dataset") extends Tab {
   def getConceptualModel : Model = {
     val model = new Model(url, delimiter, hasRepeatedObservations.get(), mergeDelims)
     variables.foreach( fxVariable => model.variables += fxVariable.toVariable)
+    model.relation = this.dataTable
     model
   }
 
@@ -416,4 +461,16 @@ class ComboBoxCell extends TableCell[FXVariable, VariableType]{
     super.cancelEdit()
   }
 
+}
+
+class FormattedDoubleStringConverter(formatString : String = "%.2f") extends StringConverter[Double] {
+  override def fromString(string: String): Double = string.toDouble
+
+  override def toString(doubleVal: Double): String = {
+    if (doubleVal.isNaN) {
+      "N/A"
+    } else {
+      formatString format doubleVal
+    }
+  }
 }
