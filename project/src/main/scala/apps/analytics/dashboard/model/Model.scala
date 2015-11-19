@@ -1,6 +1,6 @@
 package apps.analytics.dashboard.model
 
-import java.net.URI
+import java.net.URL
 
 import apps.analytics.dashboard.AnalyticsOntology
 import org.semanticweb.owl.explanation.api._
@@ -10,13 +10,16 @@ import scala.collection.JavaConversions._
 import scala.collection.JavaConverters._
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
+import scalation.relalgebra.Relation
 
 /**
  * Model provides a conceptual representation of a dataset
  * @author Mustafa Nural
  * Created by mnural on 3/29/15.
  */
-class Model (val file : URI = null, val delimiter : String = ",", var hasRepeatedObservations : Boolean = false){
+class Model (val file : URL = null, val delimiter : String = ",", var hasRepeatedObservations : Boolean = false, var mergeDelims : Boolean = false){
+  var relation : Relation = null
+
 
   /**
    * Alternative constructor in case no dataset is specified
@@ -59,6 +62,7 @@ class Model (val file : URI = null, val delimiter : String = ",", var hasRepeate
     ontology.retrieveTypes(this)
   }
 
+
   //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   /** Gets user friendly label for the given OWLClass
     * @param ontologyModel The model class
@@ -78,6 +82,7 @@ class Model (val file : URI = null, val delimiter : String = ",", var hasRepeate
   }
 
   //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
   /**
    * Retrieves all annotations of type "rdf:comment" for the given axiom
    * @param owlAxiom The axiom to get the annotations for
@@ -94,6 +99,7 @@ class Model (val file : URI = null, val delimiter : String = ",", var hasRepeate
     * @param suggestedModel The suggested model class
     * @return The set of possible explanations for this suggestion
     */
+
   def getExplanation(suggestedModel: OWLClass) : mutable.Set[String] = {
     val modelIndividual = ontology.sfProvider.getEntity("analytics:" + this.id).asOWLNamedIndividual()
     val entailment : OWLAxiom = ontology.factory.getOWLClassAssertionAxiom(suggestedModel, modelIndividual)
@@ -116,10 +122,16 @@ class Model (val file : URI = null, val delimiter : String = ",", var hasRepeate
 
   override def toString = {
     var summary = new StringBuilder()
-    summary ++=  "Has repeated observations? : " + {if(hasRepeatedObservations) "Yes" else "No"} + "\n"
-    summary ++= "\n"
-    variables.filterNot(_.ignore).foreach(summary ++= "\t" + _.toString + "\n")
 
+    variables.filter(_.isResponse).foreach(v => summary ++= v.label + "(" + v.variableType + ")" + " ~ ")
+    variables.filterNot(v => v.ignore || v.isResponse).foreach(v=> summary ++= v.label + "(" + v.variableType + ")" +" + ")
+
+    summary.delete(summary.length - 2, summary.length)
+    summary ++= "\n\n"
+
+    summary ++=  "Has repeated observations? : " + {if(hasRepeatedObservations) "Yes" else "No"} + "\n"
+//    summary ++= "\n"
+//    variables.filterNot(_.ignore).foreach(summary ++= "\t" + _.toString + "\n")
     summary.toString
   }
 }

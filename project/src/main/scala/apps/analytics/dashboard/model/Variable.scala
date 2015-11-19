@@ -8,7 +8,7 @@ import apps.analytics.dashboard.model.VariableTypes.VariableType
  * @author Mustafa Nural
  * Created by mnural on 3/29/15.
  */
-class Variable(var label : String = "", var isResponse : Boolean = false, var variableType : VariableType = VariableTypes.Continuous, var ignore : Boolean = false) {
+class Variable(var label : String = "", var isResponse : Boolean = false, var variableType : VariableType = VariableTypes.Continuous, var ignore : Boolean = false, var overDispersed : Boolean = false) {
   //Use a counter to create a unique ID for ontology
   val id = "Variable" + Variable.counter ; Variable.counter += 1
 

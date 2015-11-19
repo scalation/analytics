@@ -176,7 +176,7 @@ class AnalyticsOntology private()
     manager.applyChanges(manager.addAxioms(ontology, changes))
 
     //manager.saveOntology(ontology)
-    //        manager.saveOntology(ontology, new FileOutputStream("/home/mnural/research/analytics/test.owl"))
+//    manager.saveOntology(ontology, new FileOutputStream("/home/mnural/Desktop/test.owl"))
 
     retrieveTypes(ontModel, isDirect)
 
