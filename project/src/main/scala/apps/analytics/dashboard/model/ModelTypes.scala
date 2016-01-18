@@ -31,18 +31,18 @@ object ModelTypes {
   //Root Class
   case object Model extends ModelType("Model", "Model")
 
-  //Time Dependent Models
+  //Dependent Models
+  case object DependentModel extends ModelType("DependentModel", "Dependent Model")
+  case object GEE extends ModelType("GEE", "General Estimating Equations")
+  case object GLMM extends ModelType("GLMM", "Generalized Linear Mixed Model")
   case object TimeDependentModel extends ModelType("TimeDependentModel", "Time Dependent Model")
   case object ARIMA extends ModelType("ARIMA", "ARIMA")
   case object ARMA extends ModelType("ARMA", "ARMA")
   case object AR extends ModelType("AR", "AR")
   case object MA extends ModelType("MA", "MA")
 
-  //Time Independent Models
-  case object TimeIndependentModel extends ModelType("TimeIndependentModel", "Time Independent Model")
-  case object GEE extends ModelType("GEE", "General Estimating Equations")
-  case object GLMM extends ModelType("GLMM", "Generalized Linear Mixed Model")
-
+  //Independent Models
+  case object IndependentModel extends ModelType("IndependentModel", "Independent Model")
   case object GZLM extends ModelType("GZLM", "Generalized Linear Model")
   case object ExponentialRegression extends ModelType("Exponential_Regression", "Exponential Regression")
   case object GammaRegression extends ModelType("Gamma_Regression", "Gamma Regression")
@@ -63,18 +63,21 @@ object ModelTypes {
   case object LogisticRegression extends ModelType("Logistic_Regression", "Logistic Regression")
   case object MultinomialLogisticRegression extends ModelType("Multinomial_Logistic_Regression", "Multinomial Logistic Regression")
   case object NegativeBinomialRegression extends ModelType("Negative_Binomial_Regression", "Negative Binomial Regression")
+  case object ZeroInflatedNegativeBinomialRegression extends ModelType("Zero-Inflated_Negative_Binomial_Regression", "Zero-Inflated Negative Binomial Regression")
   case object OrdinalLogisticRegression extends ModelType("Ordinal_Logistic_Regression", "Ordinal Logistic Regression")
   case object PoissonRegression extends ModelType("Poisson_Regression", "Poisson Regression")
+  case object ZeroInflatedPoissonRegression extends ModelType("Zero-Inflated_Poisson_Regression", "Zero-Inflated Poisson Regression")
+  case object LogLinearRegression extends ModelType("LogLinearRegression", "Log Linear Regression")
 
   case object NaiveBayes extends ModelType("Naive_Bayes", "Naive Bayes")
   case object Perceptron extends ModelType("Perceptron", "Perceptron")
 
   //Enumeration of all model types.
-  val values = List(Model, TimeDependentModel, ARIMA, ARMA, AR, MA, TimeIndependentModel, GEE, GLMM, GZLM,
+  val values = List(Model, DependentModel, TimeDependentModel, ARIMA, ARMA, AR, MA, IndependentModel, GEE, GLMM, GZLM,
     ExponentialRegression, GammaRegression, GLM, ANCOVA, ANOVA, MultipleLinearRegression, SimpleLinearRegression,
     PolynomialRegression, ResponseSurfaceAnalysis, TransformedMultipleLinearRegression, TrigonometricRegression,
-    LogisticRegression, MultinomialLogisticRegression, NegativeBinomialRegression, OrdinalLogisticRegression,
-    PoissonRegression, NaiveBayes, Perceptron
+    LogisticRegression, MultinomialLogisticRegression, NegativeBinomialRegression, ZeroInflatedNegativeBinomialRegression,
+    OrdinalLogisticRegression, PoissonRegression, ZeroInflatedPoissonRegression, LogLinearRegression, NaiveBayes, Perceptron
   )
 
   def getById(ontologyId : String): ModelType = {

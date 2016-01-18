@@ -1,6 +1,5 @@
 package apps.analytics.dashboard.ui
 
-import java.lang
 import java.lang.Boolean
 import java.net.URL
 import javafx.beans.binding.Bindings
@@ -13,7 +12,7 @@ import javafx.scene.control._
 import javafx.scene.control.cell.{CheckBoxTableCell, PropertyValueFactory, TextFieldTableCell}
 import javafx.scene.layout.{GridPane, VBox}
 import javafx.util.StringConverter
-import javafx.util.converter.{DoubleStringConverter, DefaultStringConverter}
+import javafx.util.converter.DefaultStringConverter
 
 import apps.analytics.dashboard.model.VariableTypes.VariableType
 import apps.analytics.dashboard.model.{Model, VariableTypes}
@@ -22,14 +21,14 @@ import apps.analytics.dashboard.ui.model.FXVariable
 import scala.collection.JavaConverters._
 import scala.collection.immutable.HashSet
 import scala.collection.mutable.ArrayBuffer
-
-import scalation.linalgebra.{VectorD, VectorI, VectorS, Vec}
-import scalation.relalgebra.{Relation, MakeSchema}
-import scalation.util.getFromURL_File
+import scalation.linalgebra.{Vec, VectorD, VectorI, VectorS}
+import scalation.relalgebra.{MakeSchema, Relation}
 import scalation.stat.vectorD2StatVector
+import scalation.util.getFromURL_File
 /**
  * Controller class for dataset.
- * @author Mustafa Nural
+  *
+  * @author Mustafa Nural
  * Created by mnural on 8/16/15.
  */
 class DatasetTab(title : String = "Dataset") extends Tab {
@@ -146,6 +145,7 @@ class DatasetTab(title : String = "Dataset") extends Tab {
           firstLine.foreach(label => variables += new FXVariable(label))
           colName = firstLine
         } else {
+          colName = List()
           firstLine.indices.foreach(i => {
             variables += new FXVariable("Variable" + i)
             colName :+ ("Variable" + i)
@@ -179,14 +179,16 @@ class DatasetTab(title : String = "Dataset") extends Tab {
           .foreach( variable => variable.fxIgnore.set(true))
 
         updateMessage("Analyzing dataset")
-        variables.filter(variable => variable.fxVariableTypeProperty.get.isNumeric).indices.
-          foreach( i => {
-            val vectorD : VectorD= Vec.toDouble(dataTable.col(i))
-            variables(i).fxMean.set(vectorD.mean)
-            variables(i).fxStdDev.set(vectorD.stddev)
-            variables(i).fxOverDispersed.set(vectorD.variance > (vectorD.mean + vectorD.interval()))
-
-        })
+        variables
+          .indices
+          .foreach( i => {
+            if (variables(i).fxVariableType.get().isNumeric) {
+              val vectorD: VectorD = Vec.toDouble(dataTable.col(i))
+              variables(i).fxMean.set(vectorD.mean)
+              variables(i).fxStdDev.set(vectorD.stddev)
+              variables(i).fxOverDispersed.set(vectorD.variance > (vectorD.mean + vectorD.interval()))
+            }
+          })
         //TODO
 
         updateMessage("Dataset is loaded successfully")
@@ -274,7 +276,8 @@ class DatasetTab(title : String = "Dataset") extends Tab {
 
   /**
    * Uncheck response column for all variables except the variable passed as a parameter
-   * @param variable The variable that is checked as response
+    *
+    * @param variable The variable that is checked as response
    */
   def toggleResponse(variable: FXVariable) = {
     variables.filterNot( _ equals variable ).foreach(_.fxResponse.set(false))
@@ -282,7 +285,8 @@ class DatasetTab(title : String = "Dataset") extends Tab {
 
   /**
    * Given a value set, this method tries to infer the domain.
-   * @param valueSet
+    *
+    * @param valueSet
    * @return Inferred VariableType for the provided value set.
    */
   def inferVariableType(column : Vec, typ : Char): VariableType = {
@@ -341,7 +345,8 @@ class DatasetTab(title : String = "Dataset") extends Tab {
   /**
    * This method provides a newly created Model object representing the current
    * state of the user interface.
-   * @return runtime model to be used for obtaining model type suggestions
+    *
+    * @return runtime model to be used for obtaining model type suggestions
    */
   def getConceptualModel : Model = {
     val model = new Model(url, delimiter, hasRepeatedObservations.get(), mergeDelims)
@@ -353,7 +358,8 @@ class DatasetTab(title : String = "Dataset") extends Tab {
   /**
    * This method would set user interface to the given conceptual model.
    * This would especially be handy to revert back to a previous setting during analysis
-   * @param conceptualModel
+    *
+    * @param conceptualModel
    */
   def update (conceptualModel : Model) = {
     //TODO IMPLEMENT
@@ -372,7 +378,8 @@ class DatasetTab(title : String = "Dataset") extends Tab {
   /**
    * Event handler for get models button.
    * A new tab will be created with the suggested models retrieved from the ontology.
-   * @param event
+    *
+    * @param event
    */
   def handleGetModels(event: ActionEvent) : Unit = {
     if (!variables.exists(variable => variable.fxResponse.get())){

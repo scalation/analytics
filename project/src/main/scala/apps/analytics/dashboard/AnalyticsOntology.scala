@@ -1,5 +1,6 @@
 package apps.analytics.dashboard
 
+import java.io.FileOutputStream
 import java.util
 
 import apps.analytics.dashboard.model.Model
@@ -79,7 +80,13 @@ class AnalyticsOntology private()
     val allTypes = hreasoner.getTypes(individual, isDirect).getFlattened
 
     //Filter out any suggestion if any of it's subclasses are also among suggestions.
-    allTypes.filterNot(suggestedClass => hreasoner.getSubClasses(suggestedClass, false).getFlattened.exists((subClass) => allTypes.contains(subClass)))
+    allTypes.filterNot(
+      suggestedClass =>
+        hreasoner
+          .getSubClasses(suggestedClass, false)
+          .getFlattened
+          .exists((subClass) => allTypes.contains(subClass))
+    )
   }
 
   //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -112,6 +119,7 @@ class AnalyticsOntology private()
     val hasVariableType = factory.getOWLObjectProperty( IRI.create(baseIRI + "#hasVariableType"))
 
     val hasResidualDistribution = factory.getOWLObjectProperty( IRI.create(baseIRI + "#hasResidualDistribution"))
+    val hasDistribution = factory.getOWLObjectProperty( IRI.create(baseIRI + "#hasDistribution"))
     //val hasLinkFunction = factory.getOWLObjectProperty( IRI.create(baseIRI + "#hasLinkFunction"))
 
     val isDataIndependent = factory.getOWLDataProperty( IRI.create (baseIRI + "#hasRepeatedObservations"))
@@ -136,13 +144,26 @@ class AnalyticsOntology private()
 
       if (variable.variableType != null)
       {
-        val variableTypeAxiom = factory.getOWLObjectPropertyAssertionAxiom(hasVariableType, ontVariable, getVariableType(variable.variableType))
+        val variableType = getVariableType(variable.variableType)
+        val variableTypeAxiom = factory.getOWLObjectPropertyAssertionAxiom(hasVariableType, ontVariable, variableType )
+        val variableTypeClosureAxiom = factory.getOWLClassAssertionAxiom(
+          factory.getOWLObjectAllValuesFrom(hasVariableType, factory.getOWLObjectOneOf(variableType)),
+          ontVariable
+        )
         changes.add(variableTypeAxiom)
+        changes.add(variableTypeClosureAxiom)
       }
 
       if (variable.isResponse){
         val responseVariableAxiom = factory.getOWLObjectPropertyAssertionAxiom(hasResponseVariable,ontModel, ontVariable)
+        val responseDistributionAxiom = factory.getOWLObjectPropertyAssertionAxiom(hasDistribution, ontVariable, normalDistribution)
+        val responseDistributionClosureAxiom = factory.getOWLClassAssertionAxiom(
+          factory.getOWLObjectAllValuesFrom(hasDistribution, factory.getOWLObjectOneOf(normalDistribution)),
+          ontVariable
+        )
         changes.add(responseVariableAxiom)
+        changes.add(responseDistributionAxiom)
+        changes.add(responseDistributionClosureAxiom)
       }else{
         val predictorVariableAxiom = factory.getOWLObjectPropertyAssertionAxiom(hasPredictorVariable, ontModel, ontVariable)
         changes.add(predictorVariableAxiom)
@@ -164,8 +185,9 @@ class AnalyticsOntology private()
     val dataIndependenceAxiom = factory.getOWLDataPropertyAssertionAxiom(isDataIndependent, ontModel, model.hasRepeatedObservations)
     changes.add( dataIndependenceAxiom)
 
-    //val residualDistributionAxiom = factory.getOWLObjectPropertyAssertionAxiom(hasResidualDistribution, ontModel, normalDistribution)
-    //changes.add( residualDistributionAxiom )
+    changes.add(factory.getOWLClassAssertionAxiom(factory.getOWLObjectExactCardinality(0, hasResidualDistribution), ontModel))
+//    val residualDistributionAxiom = factory.getOWLObjectPropertyAssertionAxiom(hasResidualDistribution, ontModel, normalDistribution)
+//    changes.add( residualDistributionAxiom )
 
     //val objectOneOfDistribution = factory.getOWLObjectOneOf(normalDistribution)
     //val allValuesFromExpressionDistribution = factory.getOWLObjectAllValuesFrom(hasResidualDistribution, objectOneOfDistribution)
@@ -176,7 +198,7 @@ class AnalyticsOntology private()
     manager.applyChanges(manager.addAxioms(ontology, changes))
 
     //manager.saveOntology(ontology)
-//    manager.saveOntology(ontology, new FileOutputStream("/home/mnural/Desktop/test.owl"))
+    manager.saveOntology(ontology, new FileOutputStream("/home/mnural/Desktop/test.owl"))
 
     retrieveTypes(ontModel, isDirect)
 
