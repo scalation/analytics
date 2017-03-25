@@ -14,14 +14,14 @@ import javafx.scene.layout.{GridPane, VBox}
 import javafx.util.StringConverter
 import javafx.util.converter.DefaultStringConverter
 
-import apps.analytics.dashboard.model.VariableTypes.VariableType
-import apps.analytics.dashboard.model.{Model, VariableTypes}
+import apps.analytics.model.VariableTypes.VariableType
+import apps.analytics.dashboard.model.Model
 import apps.analytics.dashboard.ui.model.FXVariable
+import apps.analytics.model.VariableTypes
 
 import scala.collection.JavaConverters._
-import scala.collection.immutable.HashSet
 import scala.collection.mutable.ArrayBuffer
-import scalation.linalgebra.{Vec, VectorD, VectorI, VectorS}
+import scalation.linalgebra.{Vec, VectorD, VectorS}
 import scalation.relalgebra.{MakeSchema, Relation}
 import scalation.stat.vectorD2StatVector
 import scalation.util.getFromURL_File
@@ -171,7 +171,7 @@ class DatasetTab(title : String = "Dataset") extends Tab {
         variables
           .indices
           .foreach(
-            i => variables(i).fxVariableType.set(inferVariableType(dataTable.col(i), dataTable.domain.charAt(i)))
+            i => variables(i).fxVariableType.set(VariableTypes.inferVariableType(dataTable.col(i), dataTable.domain.charAt(i)))
           )
 
         variables
@@ -283,64 +283,7 @@ class DatasetTab(title : String = "Dataset") extends Tab {
     variables.filterNot( _ equals variable ).foreach(_.fxResponse.set(false))
   }
 
-  /**
-   * Given a value set, this method tries to infer the domain.
-    *
-    * @param valueSet
-   * @return Inferred VariableType for the provided value set.
-   */
-  def inferVariableType(column : Vec, typ : Char): VariableType = {
 
-    val valueSet = {
-      typ match {
-        case 'I' => HashSet(column.asInstanceOf[VectorI].toSeq:_* )
-        case 'D' => HashSet(column.asInstanceOf[VectorD].toSeq:_*)
-        case _ => HashSet(column.asInstanceOf[VectorS].toSeq:_*)
-      }
-    }
-    valueSet.size match {
-      case 1 =>
-        //TODO HANDLE THIS CASE
-        //Create "Constant" Variable Type?
-        println("CONSTANT")
-        VariableTypes.Constant
-      case 2 =>
-        VariableTypes.Binary
-      case it if 3 until 10 contains it =>
-        VariableTypes.Categorical
-      case _ => {
-        typ match{
-          case 'I' =>
-            if (valueSet.asInstanceOf[Set[Int]].exists(_ < 0)){
-              VariableTypes.Integer
-            } else{
-              VariableTypes.Non_Negative_Integer
-            }
-          case 'D' =>
-            if (valueSet.asInstanceOf[Set[Double]].exists(_ < 0)){
-              VariableTypes.Continuous
-            } else{
-              VariableTypes.Non_Negative_Continuous
-            }
-          case _ =>
-            VariableTypes.String
-        }
-//        try{
-//          val doubleList = valueSet.map(_.toDouble)
-//          // check for ordinal
-//          val sortedDouble = (collection.immutable.SortedSet[Double]() ++ doubleList).toBuffer
-//          if (sortedDouble.size >= 2){
-//            for (i <- 1 until sortedDouble.size){
-//              sortedDouble(i-1) = sortedDouble(i) - sortedDouble(i-1)
-//            }
-//          } // if
-//          sortedDouble.remove(sortedDouble.size-1)
-//
-//          if (sortedDouble.toSet.size == 1){
-//            return VariableTypes.Ordinal
-      }
-    }
-  }
 
   /**
    * This method provides a newly created Model object representing the current

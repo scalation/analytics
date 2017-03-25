@@ -10,13 +10,14 @@ import javafx.scene.text.TextAlignment
 import javax.swing.SwingUtilities
 
 import apps.analytics.dashboard.model.{Model, ModelRuntime}
-import play.api.libs.json.{JsDefined, Json, JsValue}
+import play.api.libs.json.{JsDefined, JsValue, Json}
 
 import scala.collection.immutable.Vector
 import scala.math._
+import scalation.linalgebra.VectorD
 import scalation.plot.FramelessPlot
 import scalation.random.{CDF, Normal, Quantile}
-import scalation.stat.{GoodnessOfFit_KS, FramelessHistogram, GoodnessOfFit, Q_Q_Plot}
+import scalation.stat._
 
 /**
  * Created by mnural on 10/9/15.
@@ -138,7 +139,7 @@ class ResultTab (val modelRuntime: ModelRuntime, conceptualModel : Model) extend
         })
 
 //        Platform.runLater(() => { update(coefficientLabel, coefficientGrid) })
-
+//        predictor.asInstanceOf[Regression].report
 //        fitLabel.setText(predictor.reportToString)
         fitLabel.setStyle("-fx-font-family:monospace")
         fitLabel.setWrapText(true)
@@ -155,22 +156,26 @@ class ResultTab (val modelRuntime: ModelRuntime, conceptualModel : Model) extend
         val dsig  = sqrt (dsig2)
 
 //        val interval = sqrt(residuals.dim).toInt
-        val interval = sqrt(residuals.dim).toInt
-        val gof = new GoodnessOfFit(residuals, dmin , dmax, interval)
+        val interval = 100
+        val gof = new GoodnessOfFit_CS(residuals.asInstanceOf[VectorD], dmin , dmax, interval)
         val fit = gof.fit(new Normal(dmu, dsig2))
         gofChiValue.setText(if (fit) "Yes" else "No")
         gofChiValue.getStyleClass.add("bold")
         val hbox = new HBox()
         hbox.getChildren.addAll(gofChiLabel, gofChiValue)
-        Platform.runLater(() => { contents.getChildren.add(hbox) })
+//        Platform.runLater(() => { contents.getChildren.add(hbox) })
 
-        val ks = new GoodnessOfFit_KS(residuals)
+        val gof2 = new GoodnessOfFit_CS2(residuals.asInstanceOf[VectorD], dmin,dmax, Quantile.normalInv)
+        val gof2_fit = gof2.fit()
+        println ("CS2 fit:" + gof2_fit)
+
+        val ks = new GoodnessOfFit_KS(residuals.asInstanceOf[VectorD])
         val ksFit = ks.fit(CDF.normalCDF)
         gofKsValue.setText(if (ksFit > .5) "Yes" else "No")
         gofKsValue.getStyleClass.add("bold")
         val ksHbox = new HBox()
         ksHbox.getChildren.addAll(gofKsLabel, gofKsValue)
-        Platform.runLater(() => { contents.getChildren.add(ksHbox) })
+//        Platform.runLater(() => { contents.getChildren.add(ksHbox) })
 
 
         contents.setPrefWidth(getTabPane.getWidth - 25)
@@ -179,7 +184,7 @@ class ResultTab (val modelRuntime: ModelRuntime, conceptualModel : Model) extend
         Q_Q_Plot.frameless = true
         val plotWidth : Int = (contents.getPrefWidth - contents.getPadding.getLeft - contents.getPadding.getLeft).toInt
         val plotHeight = 480
-        val plot : FramelessPlot = Q_Q_Plot.plot(predictor.residual, Quantile.normalInv,Vector.empty, 200)
+        val plot : FramelessPlot = Q_Q_Plot.plot(predictor.residual.asInstanceOf[VectorD], Quantile.normalInv,Vector.empty, 200)
         plot.width = plotWidth.toInt
         plot.height = plotHeight
 
@@ -201,7 +206,7 @@ class ResultTab (val modelRuntime: ModelRuntime, conceptualModel : Model) extend
 
         updateMessage("Performing Post Execution Analysis\nCreating Histogram")
 
-        val hist = new FramelessHistogram(plotWidth, plotHeight, predictor.residual, interval)
+        val hist = new FramelessHistogram(plotWidth, plotHeight, predictor.residual.asInstanceOf[VectorD], interval)
 
         if (isCancelled) { return null }
 

@@ -4,12 +4,12 @@ import java.io.FileOutputStream
 import java.util
 
 import apps.analytics.dashboard.model.Model
-import apps.analytics.dashboard.model.VariableTypes.VariableType
+import apps.analytics.model.VariableTypes.VariableType
 import org.semanticweb.HermiT.{Reasoner => HermiTReasoner}
 import org.semanticweb.owlapi.model._
 import org.semanticweb.owlapi.util.{BidirectionalShortFormProviderAdapter, QNameShortFormProvider}
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import scala.collection.mutable.Set
 
 class AnalyticsOntology private()
@@ -77,7 +77,7 @@ class AnalyticsOntology private()
     hreasoner.precomputeInferences()
 
     //Get all suitable types from the reasoner
-    val allTypes = hreasoner.getTypes(individual, isDirect).getFlattened
+    val allTypes = hreasoner.getTypes(individual, isDirect).getFlattened.asScala
 
     //Filter out any suggestion if any of it's subclasses are also among suggestions.
     allTypes.filterNot(
@@ -85,6 +85,7 @@ class AnalyticsOntology private()
         hreasoner
           .getSubClasses(suggestedClass, false)
           .getFlattened
+          .asScala
           .exists((subClass) => allTypes.contains(subClass))
     )
   }
@@ -171,10 +172,10 @@ class AnalyticsOntology private()
       variables += ontVariable
     })
 
-    val variableDifferentIndividualsAxiom = factory.getOWLDifferentIndividualsAxiom(variables)
+    val variableDifferentIndividualsAxiom = factory.getOWLDifferentIndividualsAxiom(variables.asJava)
     changes.add(variableDifferentIndividualsAxiom)
 
-    val objectOneOfVariables = factory.getOWLObjectOneOf(variables)
+    val objectOneOfVariables = factory.getOWLObjectOneOf(variables.asJava)
     val allValuesFromExpressionVariables = factory.getOWLObjectAllValuesFrom(hasVariable, objectOneOfVariables)
     val variablesClosureAxiom = factory.getOWLClassAssertionAxiom(allValuesFromExpressionVariables, ontModel)
     changes.add(variablesClosureAxiom)

@@ -6,7 +6,6 @@ import apps.analytics.dashboard.AnalyticsOntology
 import org.semanticweb.owl.explanation.api._
 import org.semanticweb.owlapi.model._
 
-import scala.collection.JavaConversions._
 import scala.collection.JavaConverters._
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
@@ -70,7 +69,7 @@ class Model (val file : URL = null, val delimiter : String = ",", var hasRepeate
     */
 
   def getLabel(ontologyModel: OWLClass): String = {
-    for (annotation : OWLAnnotation <- ontologyModel.getAnnotations(ontology.ontology, ontology.factory.getRDFSLabel)) {
+    for (annotation : OWLAnnotation <- ontologyModel.getAnnotations(ontology.ontology, ontology.factory.getRDFSLabel).asScala) {
       if (annotation.getValue .isInstanceOf[OWLLiteral]) {
         val value: OWLLiteral = annotation.getValue().asInstanceOf[OWLLiteral];
         if (value.getLiteral() != null){
@@ -90,7 +89,7 @@ class Model (val file : URL = null, val delimiter : String = ",", var hasRepeate
    */
   def getAnnotation(owlAxiom: OWLAxiom): String = {
     val annot = new StringBuilder()
-    val comments = owlAxiom.getAnnotations.filter(annotation => annotation.getProperty.isComment)
+    val comments = owlAxiom.getAnnotations.asScala.filter(annotation => annotation.getProperty.isComment)
     comments.foreach(c => annot.append(c.getValue.asInstanceOf[OWLLiteral].getLiteral))
     annot.toString()
   }
@@ -113,7 +112,7 @@ class Model (val file : URL = null, val delimiter : String = ",", var hasRepeate
 
     // Get our explanations.  Ask for a maximum of 1
     val expl = gen.getExplanations(entailment, 1).asScala.toArray;
-    val expressions = expl(0).getAxioms.filter( axiom => axiom.isInstanceOf[OWLEquivalentClassesAxiom])
+    val expressions = expl(0).getAxioms.asScala.filter( axiom => axiom.isInstanceOf[OWLEquivalentClassesAxiom])
     val explanations = expressions.map(f => getAnnotation(f))
     println(expressions)
 

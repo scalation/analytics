@@ -2,7 +2,8 @@ package apps.analytics.dashboard
 
 import java.util
 
-import apps.analytics.dashboard.model.{Model, Variable, VariableTypes}
+import apps.analytics.dashboard.model.{Model, Variable}
+import apps.analytics.model.VariableTypes
 import org.coode.owlapi.manchesterowlsyntax.ManchesterOWLSyntaxEditorParser
 import org.semanticweb.HermiT.{Reasoner => HermiTReasoner}
 import org.semanticweb.owl.explanation.api.{Explanation, ExplanationGenerator, ExplanationGeneratorFactory, ExplanationManager}
@@ -12,9 +13,9 @@ import org.semanticweb.owlapi.reasoner.structural.StructuralReasonerFactory
 import org.semanticweb.owlapi.util.{BidirectionalShortFormProviderAdapter, QNameShortFormProvider}
 import uk.ac.manchester.cs.jfact.JFactFactory
 
-import scala.collection.JavaConversions._
-import scalation.analytics.{Regression, ExpRegression, SimpleRegression}
-import scalation.linalgebra.{VectorD, MatrixD}
+import scala.collection.JavaConverters._
+import scalation.analytics.{ExpRegression, Regression, SimpleRegression}
+import scalation.linalgebra.{MatrixD, VectorD}
 
 object ModelClassifier
 {
@@ -64,7 +65,7 @@ object ModelClassifierInferenceTest extends App
 
   // Retrieve all generic models which are instances of owl:Thing
   println("Direct instances of owl:Thing")
-  for (individual <- instances.getFlattened){
+  for (individual <- instances.getFlattened.asScala){
     println("\t" + sfProvider.getShortForm(individual))
   }
   println()
@@ -80,7 +81,7 @@ object ModelClassifierInferenceTest extends App
   println("Direct Inferred types of:" + sfProvider.getShortForm(genericModel))
   //Only retrieve direct inferred types.
   val directTypes = hreasoner.getTypes(genericModel, true) // only get direct inferred types
-  for (modelType <- directTypes.getFlattened){
+  for (modelType <- directTypes.getFlattened.asScala){
     println("\t" + sfProvider.getShortForm(modelType))
   }
 
@@ -88,7 +89,7 @@ object ModelClassifierInferenceTest extends App
 
   //Retrieve Both direct and indirect inferred types.
   val allTypes = hreasoner.getTypes(genericModel, false) // get all inferred types
-  for (modelType <- allTypes.getFlattened){
+  for (modelType <- allTypes.getFlattened.asScala){
     println("\t" + sfProvider.getShortForm(modelType))
   }
 
@@ -190,14 +191,14 @@ object ModelClassifierCreationTest extends App
 
   println("Model Types:")
   reasoner.precomputeInferences()
-  val modelTypes = reasoner.getTypes(model, true).getFlattened
+  val modelTypes = reasoner.getTypes(model, true).getFlattened.asScala
   for (variableType <- modelTypes){
     println("\t" + sfProvider.getShortForm(variableType))
   }
 
 
   println("Response Variables of Model:")
-  val variableTypes = reasoner.getObjectPropertyValues(model, hasVariable).getFlattened
+  val variableTypes = reasoner.getObjectPropertyValues(model, hasVariable).getFlattened.asScala
   for (variableType <- variableTypes){
     println("\t" + sfProvider.getShortForm(variableType))
   }
@@ -279,7 +280,7 @@ object ExponentialTest extends App{
 
   println ("fit = " + rg.fit)
 
-  println(erg.predict(x).map( (e: Double) => math.exp(e)) )
+//  println(erg.predict(x).map( (e: Double) => math.exp(e)) )
   println(y)
   println()
 }

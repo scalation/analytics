@@ -1,6 +1,7 @@
 package apps.analytics.dashboard.model
 
-import apps.analytics.dashboard.model.VariableTypes.VariableType
+import apps.analytics.model.VariableTypes
+import apps.analytics.model.VariableTypes.VariableType
 
 /**
  * Variable provides a conceptual representation of a single variable in the dataset.

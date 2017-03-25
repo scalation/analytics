@@ -2,8 +2,9 @@ package apps.analytics.dashboard.ui.model
 
 import javafx.beans.property._
 
-import apps.analytics.dashboard.model.VariableTypes.VariableType
-import apps.analytics.dashboard.model.{Variable, VariableTypes}
+import apps.analytics.model.VariableTypes.VariableType
+import apps.analytics.dashboard.model.Variable
+import apps.analytics.model.VariableTypes
 
 /**
  * @author Mustafa Nural

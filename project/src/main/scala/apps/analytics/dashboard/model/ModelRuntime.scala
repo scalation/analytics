@@ -4,7 +4,7 @@ import apps.analytics.dashboard.model.ModelTypes._
 
 import scala.collection.mutable.ArrayBuffer
 import scalation.analytics._
-import scalation.linalgebra.MatrixD
+import scalation.linalgebra.{MatrixD, VectorD, VectorI}
 import scalation.linalgebra.VectorD._
 
 /**
@@ -36,8 +36,8 @@ object ModelRuntime {
     // TODO use params?
     for (i <- dataset.variables.indices) {
       val variable = dataset.variables(i)
-      if (!(variable ignore)) {
-        if (variable isResponse) responseIndex = i
+      if (!(variable.ignore)) {
+        if (variable.isResponse) responseIndex = i
         //by default, ignore all columns that are VectorS
         else if (dataTable.domain(i) != 'S') predictorsIndices += i
       } // if
@@ -50,21 +50,21 @@ object ModelRuntime {
     modelType match {
       //time data in the predictors matrix? Use params to determine?
       case ARMA =>
-        new ARMA(response, predictors(0))
+        new ARMA(response, predictors(0).asInstanceOf[VectorD])
       case ExponentialRegression =>
         new ExpRegression(predictors.asInstanceOf[MatrixD], true, response)
       //use params to determine t and levels?
       case ModelTypes.ANCOVA =>
-        new ANCOVA(one (predictors.dim1) +^: predictors.asInstanceOf[MatrixD], predictors(predictors.dim2 - 1).toInt, response, 4)
+        new ANCOVA(one (predictors.dim1) +^: predictors.asInstanceOf[MatrixD], predictors(predictors.dim2 - 1).toInt.asInstanceOf[VectorI], response, 4)
       case ModelTypes.ANOVA =>
-        new ANOVA(predictors(0).toInt, response, 4)
+        new ANOVA(predictors(0).toInt.asInstanceOf[VectorI], response, 4)
       case MultipleLinearRegression =>
         new Regression(one (predictors.dim1) +^: predictors.asInstanceOf[MatrixD], response)
       case SimpleLinearRegression =>
         new SimpleRegression(one (predictors.dim1) +^: predictors.asInstanceOf[MatrixD], response)
       //use params to determine t and order?
       case PolynomialRegression =>
-        new PolyRegression(predictors(0), response, 8)
+        new PolyRegression(predictors(0).asInstanceOf[VectorD], response, 8)
       case ResponseSurfaceAnalysis =>
         new ResponseSurface(predictors.asInstanceOf[MatrixD], response)
       //use params to determine transformation function?
@@ -72,7 +72,7 @@ object ModelRuntime {
         new TranRegression(predictors.asInstanceOf[MatrixD], response)
       //use params to determine kwt?
       case TrigonometricRegression =>
-        new TrigRegression(predictors(0), response, 8)
+        new TrigRegression(predictors(0).asInstanceOf[VectorD], response, 8)
       case ModelTypes.PoissonRegression =>
         new PoissonRegression(one (predictors.dim1) +^: predictors.asInstanceOf[MatrixD], response.toInt)
       case ModelTypes.Perceptron =>
