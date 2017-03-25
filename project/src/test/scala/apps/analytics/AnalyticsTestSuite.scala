@@ -1,12 +1,14 @@
 package apps.analytics
 
 import apps.analytics.dashboard.AnalyticsOntologyFactory
-import apps.analytics.dashboard.model.{VariableTypes, ModelTypes}
+import apps.analytics.dashboard.model.ModelTypes
+import apps.analytics.model.VariableTypes
 import org.scalatest._
 import org.semanticweb.HermiT.{Reasoner => HermiTReasoner}
 import org.semanticweb.owlapi.model.IRI
 import uk.ac.manchester.cs.jfact.JFactFactory
-import scala.collection.JavaConversions._
+
+import scala.collection.JavaConverters._
 import scala.language.reflectiveCalls
 
 /**
@@ -52,7 +54,7 @@ class AnalyticsTestSuite extends FunSuite with GivenWhenThen
     val modelClass = factory.getOWLClass(IRI.create(baseIRI + "#Model"))
     val modelTypes = ModelTypes.values.map(_.ontologyID)
 
-    val subClasses = fixture.hreasoner.getSubClasses(modelClass, false).getFlattened.filterNot(_.isBottomEntity)
+    val subClasses = fixture.hreasoner.getSubClasses(modelClass, false).getFlattened.asScala.filterNot(_.isBottomEntity)
 
     val missingClasses = subClasses.filterNot(
       subClass => modelTypes.contains(subClass.asOWLClass().getIRI.getRemainder.get())
@@ -75,7 +77,7 @@ class AnalyticsTestSuite extends FunSuite with GivenWhenThen
 
     val individuals = fixture.hreasoner.getInstances(variableTypeClass, false).getFlattened
 
-    val missingIndividuals = individuals.filterNot(
+    val missingIndividuals = individuals.asScala.filterNot(
       individual => variableTypes.contains(individual.getIRI.getRemainder.get())
     )
 
