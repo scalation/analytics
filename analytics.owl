@@ -1,18 +1,4 @@
 <?xml version="1.0"?>
-
-
-<!DOCTYPE rdf:RDF [
-    <!ENTITY terms "http://purl.org/dc/terms/" >
-    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
-    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
-    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
-    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
-    <!ENTITY protege "http://protege.stanford.edu/plugins/owl/protege#" >
-    <!ENTITY xsp "http://www.owl-ontologies.com/2005/08/07/xsp.owl#" >
-    <!ENTITY analytics "https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#" >
-]>
-
-
 <rdf:RDF xmlns="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#"
      xml:base="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl"
      xmlns:analytics="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#"
@@ -20,18 +6,19 @@
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:terms="http://purl.org/dc/terms/"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
     <owl:Ontology rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl">
-        <rdfs:label rdf:datatype="&xsd;string">Analytics Ontology</rdfs:label>
-        <owl:versionInfo rdf:datatype="&xsd;string">1.0</owl:versionInfo>
-        <rdfs:comment rdf:datatype="&xsd;string">This ontology aims to provide comphresensive yet practical representation of data analytics framework.</rdfs:comment>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://cobweb.cs.uga.edu/~jam/scalation.html</rdfs:seeAlso>
-        <terms:creator xml:lang="en">John A. Miller</terms:creator>
+        <owl:versionIRI rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl"/>
         <terms:creator xml:lang="en">Michael E. Cotterell</terms:creator>
         <terms:creator xml:lang="en">Mustafa V. Nural</terms:creator>
-        <owl:versionIRI rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl"/>
+        <rdfs:seeAlso rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://cobweb.cs.uga.edu/~jam/scalation.html</rdfs:seeAlso>
+        <terms:creator xml:lang="en">John A. Miller</terms:creator>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">This ontology aims to provide comphresensive yet practical representation of data analytics framework.</rdfs:comment>
+        <owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1.0</owl:versionInfo>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Analytics Ontology</rdfs:label>
     </owl:Ontology>
     
 
@@ -49,25 +36,31 @@
 
     <!-- http://purl.org/dc/terms/alternative -->
 
-    <owl:AnnotationProperty rdf:about="&terms;alternative"/>
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/alternative"/>
     
 
 
     <!-- http://purl.org/dc/terms/creator -->
 
-    <owl:AnnotationProperty rdf:about="&terms;creator"/>
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/creator"/>
     
 
 
     <!-- http://purl.org/dc/terms/description -->
 
-    <owl:AnnotationProperty rdf:about="&terms;description"/>
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/description"/>
     
 
 
     <!-- http://purl.org/dc/terms/source -->
 
-    <owl:AnnotationProperty rdf:about="&terms;source"/>
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/source"/>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#defaultModel -->
+
+    <owl:AnnotationProperty rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#defaultModel"/>
     
 
 
@@ -82,61 +75,167 @@
     
 
 
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasDistribution -->
+
+    <owl:ObjectProperty rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasDistribution">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Variable"/>
+        <rdfs:range rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Distribution"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasLinkFunction -->
 
-    <owl:ObjectProperty rdf:about="&analytics;hasLinkFunction">
-        <rdfs:range rdf:resource="&analytics;Function"/>
-        <rdfs:domain rdf:resource="&analytics;GZLM"/>
+    <owl:ObjectProperty rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasLinkFunction">
+        <rdfs:domain rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GZLM"/>
+        <rdfs:range rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Function"/>
     </owl:ObjectProperty>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasPredictorVariable -->
 
-    <owl:ObjectProperty rdf:about="&analytics;hasPredictorVariable">
-        <rdfs:domain rdf:resource="&analytics;Model"/>
-        <rdfs:range rdf:resource="&analytics;Variable"/>
-        <owl:propertyDisjointWith rdf:resource="&analytics;hasResponseVariable"/>
-        <rdfs:subPropertyOf rdf:resource="&analytics;hasVariable"/>
+    <owl:ObjectProperty rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasPredictorVariable">
+        <rdfs:subPropertyOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariable"/>
+        <rdfs:domain rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Model"/>
+        <rdfs:range rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Variable"/>
+        <owl:propertyDisjointWith rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResponseVariable"/>
+        <owl:propertyDisjointWith rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasTemporalVariable"/>
     </owl:ObjectProperty>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution -->
 
-    <owl:ObjectProperty rdf:about="&analytics;hasResidualDistribution">
-        <rdfs:range rdf:resource="&analytics;Distribution"/>
-        <rdfs:domain rdf:resource="&analytics;Model"/>
+    <owl:ObjectProperty rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Model"/>
+        <rdfs:range rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Distribution"/>
     </owl:ObjectProperty>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResponseVariable -->
 
-    <owl:ObjectProperty rdf:about="&analytics;hasResponseVariable">
-        <rdfs:domain rdf:resource="&analytics;Model"/>
-        <rdfs:range rdf:resource="&analytics;Variable"/>
-        <rdfs:subPropertyOf rdf:resource="&analytics;hasVariable"/>
+    <owl:ObjectProperty rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResponseVariable">
+        <rdfs:subPropertyOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariable"/>
+        <rdfs:domain rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Model"/>
+        <rdfs:range rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Variable"/>
+        <owl:propertyDisjointWith rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasTemporalVariable"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasTemporalVariable -->
+
+    <owl:ObjectProperty rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasTemporalVariable">
+        <rdfs:subPropertyOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariable"/>
+        <rdfs:domain rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Model"/>
+        <rdfs:range rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Variable"/>
     </owl:ObjectProperty>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariable -->
 
-    <owl:ObjectProperty rdf:about="&analytics;hasVariable">
-        <rdfs:domain rdf:resource="&analytics;Model"/>
-        <rdfs:range rdf:resource="&analytics;Variable"/>
+    <owl:ObjectProperty rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariable">
+        <rdfs:domain rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Model"/>
+        <rdfs:range rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Variable"/>
     </owl:ObjectProperty>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType -->
 
-    <owl:ObjectProperty rdf:about="&analytics;hasVariableType">
-        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:domain rdf:resource="&analytics;Variable"/>
-        <rdfs:range rdf:resource="&analytics;Variable_Type"/>
+    <owl:ObjectProperty rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Variable"/>
+        <rdfs:range rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Variable_Type"/>
     </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasConditionNumber -->
+
+    <owl:DatatypeProperty rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasConditionNumber">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Model"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasKurtosis -->
+
+    <owl:DatatypeProperty rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasKurtosis">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Variable"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasNegativeDF -->
+
+    <owl:DatatypeProperty rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasNegativeDF">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Model"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasRepeatedObservations -->
+
+    <owl:DatatypeProperty rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasRepeatedObservations">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Model"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#isIllConditioned -->
+
+    <owl:DatatypeProperty rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#isIllConditioned">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Model"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <rdfs:comment xml:lang="en">Indicates whether the input matrix (predictors) of this model is ill-conditioned. If the log of condition number of the matrix is greater than or equal to 18, it is determined to be ill-conditioned.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#isOverDispersed -->
+
+    <owl:DatatypeProperty rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#isOverDispersed">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Variable"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <owl:propertyDisjointWith rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#isZeroInflated"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#isZeroInflated -->
+
+    <owl:DatatypeProperty rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#isZeroInflated">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Variable"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
     
 
 
@@ -153,472 +252,939 @@
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#ANCOVA -->
 
-    <owl:Class rdf:about="&analytics;ANCOVA">
-        <rdfs:label xml:lang="en">ANCOVA</rdfs:label>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#ANCOVA">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&analytics;GLM"/>
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GLM"/>
                     <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasPredictorVariable"/>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasPredictorVariable"/>
                         <owl:someValuesFrom>
                             <owl:Restriction>
-                                <owl:onProperty rdf:resource="&analytics;hasVariableType"/>
-                                <owl:allValuesFrom rdf:resource="&analytics;Categorical"/>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Categorical"/>
                             </owl:Restriction>
                         </owl:someValuesFrom>
                     </owl:Restriction>
-                </owl:intersectionOf>
-            </owl:Class>
-        </owl:equivalentClass>
-        <rdfs:subClassOf rdf:resource="&analytics;GLM"/>
-        <terms:alternative xml:lang="en">Analysis of Covariance</terms:alternative>
-    </owl:Class>
-    
-
-
-    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#ANOVA -->
-
-    <owl:Class rdf:about="&analytics;ANOVA">
-        <rdfs:label xml:lang="en">ANOVA</rdfs:label>
-        <owl:equivalentClass>
-            <owl:Class>
-                <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&analytics;ANCOVA"/>
                     <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasPredictorVariable"/>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResponseVariable"/>
                         <owl:allValuesFrom>
                             <owl:Restriction>
-                                <owl:onProperty rdf:resource="&analytics;hasVariableType"/>
-                                <owl:allValuesFrom rdf:resource="&analytics;Categorical"/>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasDistribution"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Normal_Distribution"/>
                             </owl:Restriction>
                         </owl:allValuesFrom>
                     </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
         </owl:equivalentClass>
-        <rdfs:subClassOf rdf:resource="&analytics;ANCOVA"/>
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GLM"/>
+        <terms:alternative xml:lang="en">Analysis of Covariance</terms:alternative>
+        <rdfs:label xml:lang="en">ANCOVA</rdfs:label>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#ANCOVA"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2002/07/owl#equivalentClass"/>
+        <owl:annotatedTarget>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GLM"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasPredictorVariable"/>
+                        <owl:someValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Categorical"/>
+                            </owl:Restriction>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResponseVariable"/>
+                        <owl:allValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasDistribution"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Normal_Distribution"/>
+                            </owl:Restriction>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:annotatedTarget>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A model may be considered as an ANCOVA model if in addition to conforming to GLM requirements it has some categorical variables (factors).</rdfs:comment>
+    </owl:Axiom>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#ANOVA -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#ANOVA">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#ANCOVA"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasPredictorVariable"/>
+                        <owl:allValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Categorical"/>
+                            </owl:Restriction>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#ANCOVA"/>
         <terms:alternative xml:lang="en">Analysis of Variance</terms:alternative>
+        <rdfs:label xml:lang="en">ANOVA</rdfs:label>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#ANOVA"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2002/07/owl#equivalentClass"/>
+        <owl:annotatedTarget>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#ANCOVA"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasPredictorVariable"/>
+                        <owl:allValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Categorical"/>
+                            </owl:Restriction>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:annotatedTarget>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">An ANCOVA model may be considered as an ANOVA model if it only has categorical variables (factors).</rdfs:comment>
+    </owl:Axiom>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#AR -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#AR">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#ARMA"/>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#ARIMA -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#ARIMA">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#TimeDependentModel"/>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#ARMA -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#ARMA">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#ARIMA"/>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Algorithm -->
 
-    <owl:Class rdf:about="&analytics;Algorithm"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Algorithm"/>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Bernoulli_Distribution -->
 
-    <owl:Class rdf:about="&analytics;Bernoulli_Distribution">
-        <rdfs:label xml:lang="en">Bernoulli Distribution</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;Exponential_Family"/>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://www.math.uah.edu/stat/bernoulli/Introduction.html</rdfs:seeAlso>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Bernoulli_Distribution">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Exponential_Family"/>
         <terms:description xml:lang="en">A Bernoulli distribution is a probability distribution that models the Bernoulli trials process. A sequence of Bernoulli trials satisfies the following assumptions: i) Each trial has two possible outcomes, in the language of reliability called success and failure; ii) The trials are independent;
 iii) On each trial, the probability of success is p and the probability of failure is 1−p where p is an element of [0,1].</terms:description>
+        <rdfs:label xml:lang="en">Bernoulli Distribution</rdfs:label>
+        <rdfs:seeAlso rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://www.math.uah.edu/stat/bernoulli/Introduction.html</rdfs:seeAlso>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Binary -->
 
-    <owl:Class rdf:about="&analytics;Binary">
-        <rdfs:label xml:lang="en">Binary</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;Categorical"/>
-        <owl:disjointWith rdf:resource="&analytics;Ordinal"/>
-        <terms:description xml:lang="en">A variable with a binary variable type generally denotes that the domain of discourse of the variable is dichotomous. This means that the variable can only take on one of two values.</terms:description>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Binary">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Categorical"/>
+        <owl:disjointWith rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Ordinal"/>
         <terms:alternative xml:lang="en">Dichotomous</terms:alternative>
+        <terms:description xml:lang="en">A variable with a binary variable type generally denotes that the domain of discourse of the variable is dichotomous. This means that the variable can only take on one of two values.</terms:description>
+        <rdfs:label xml:lang="en">Binary</rdfs:label>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Binomial_Distribution -->
 
-    <owl:Class rdf:about="&analytics;Binomial_Distribution">
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Binomial_Distribution">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Exponential_Family"/>
         <rdfs:label xml:lang="en">Binomial Distribution</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;Exponential_Family"/>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Categorical -->
 
-    <owl:Class rdf:about="&analytics;Categorical">
-        <rdfs:label xml:lang="en">Categorical</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;Discrete"/>
-        <owl:disjointWith rdf:resource="&analytics;Integer"/>
-        <terms:description xml:lang="en">A variable with a categorical variable type generally denotes that the domain of discourse of the variable is polychotomous. This means that the variable can take on one of a finite number of values.</terms:description>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Categorical">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Discrete"/>
+        <owl:disjointWith rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Integer"/>
         <terms:alternative xml:lang="en">Polychotomous</terms:alternative>
+        <terms:description xml:lang="en">A variable with a categorical variable type generally denotes that the domain of discourse of the variable is polychotomous. This means that the variable can take on one of a finite number of values.</terms:description>
+        <rdfs:label xml:lang="en">Categorical</rdfs:label>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Cholesky_Factorization -->
 
-    <owl:Class rdf:about="&analytics;Cholesky_Factorization">
-        <rdfs:subClassOf rdf:resource="&analytics;Algorithm"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Cholesky_Factorization">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Algorithm"/>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Continuous -->
 
-    <owl:Class rdf:about="&analytics;Continuous">
-        <rdfs:label xml:lang="en">Continuous</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;Variable_Type"/>
-        <owl:disjointWith rdf:resource="&analytics;Discrete"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Continuous">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Variable_Type"/>
+        <owl:disjointWith rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Discrete"/>
         <terms:description xml:lang="en">A variable with a continuous variable type generally denotes that the domain of discourse for the variable is the set of real numbers.</terms:description>
+        <rdfs:label xml:lang="en">Continuous</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Dataset -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Dataset"/>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#DependentModel -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#DependentModel">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Model"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasRepeatedObservations"/>
+                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Model"/>
+        <rdfs:label xml:lang="en">Dependent Model</rdfs:label>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Discrete -->
 
-    <owl:Class rdf:about="&analytics;Discrete">
-        <rdfs:label xml:lang="en">Discrete</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;Variable_Type"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Discrete">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Variable_Type"/>
         <terms:description xml:lang="en">A variable with a discrete variable type generally denotes that the domain of discourse of the variable includes only elements that are individually separate and distinct.</terms:description>
+        <rdfs:label xml:lang="en">Discrete</rdfs:label>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Distribution -->
 
-    <owl:Class rdf:about="&analytics;Distribution">
-        <rdfs:label xml:lang="en">Distribution</rdfs:label>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Distribution">
         <terms:description xml:lang="en">A probability distribution assigns a probability to each measurable subset of the possible outcomes of a random experiment, survey, or procedure of statistical inference.</terms:description>
+        <rdfs:label xml:lang="en">Distribution</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#DynamicRegression -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#DynamicRegression">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#TimeDependentModel"/>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Eigenvector_Approach -->
 
-    <owl:Class rdf:about="&analytics;Eigenvector_Approach">
-        <rdfs:subClassOf rdf:resource="&analytics;Singular_Value_Decomposition"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Eigenvector_Approach">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Singular_Value_Decomposition"/>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Estimation_Procedure -->
 
-    <owl:Class rdf:about="&analytics;Estimation_Procedure"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Estimation_Procedure"/>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Exponential_Distribution -->
 
-    <owl:Class rdf:about="&analytics;Exponential_Distribution">
-        <rdfs:label xml:lang="en">Exponential Distribution</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;Exponential_Family"/>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://www.math.uah.edu/stat/poisson/Exponential.html</rdfs:seeAlso>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Exponential_Distribution">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Exponential_Family"/>
         <terms:description xml:lang="en">An exponential distribution is a probability distribution that models the time between subsequent events based on a rate parameter.</terms:description>
+        <rdfs:label xml:lang="en">Exponential Distribution</rdfs:label>
+        <rdfs:seeAlso rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://www.math.uah.edu/stat/poisson/Exponential.html</rdfs:seeAlso>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Exponential_Family -->
 
-    <owl:Class rdf:about="&analytics;Exponential_Family">
-        <rdfs:label xml:lang="en">Exponential Family</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;Distribution"/>
-        <terms:source xml:lang="en">FISHER, R. A. (1934). Two new properties of mathematical likelihood. Proceedings of the Royal Society A, 144, 285-307.</terms:source>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Exponential_Family">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Distribution"/>
         <terms:description xml:lang="en">The exponential family of distributions is the set of probability distributions whose probaility distribution functions (PDFs) and cumulative distribution functions (CDFs) can be written such that their terms are moved to the exponent (often called the canonical form.</terms:description>
+        <terms:source xml:lang="en">FISHER, R. A. (1934). Two new properties of mathematical likelihood. Proceedings of the Royal Society A, 144, 285-307.</terms:source>
+        <rdfs:label xml:lang="en">Exponential Family</rdfs:label>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Exponential_Regression -->
 
-    <owl:Class rdf:about="&analytics;Exponential_Regression">
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Exponential_Regression">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GZLM"/>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Exponential_Distribution"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
+                                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:cardinality>
+                            </owl:Restriction>
+                        </owl:unionOf>
+                    </owl:Class>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResponseVariable"/>
+                                <owl:allValuesFrom>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
+                                        <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Non_Negative_Continuous"/>
+                                    </owl:Restriction>
+                                </owl:allValuesFrom>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResponseVariable"/>
+                                <owl:allValuesFrom>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
+                                        <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Non_Negative_Integer"/>
+                                    </owl:Restriction>
+                                </owl:allValuesFrom>
+                            </owl:Restriction>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GZLM"/>
         <rdfs:label xml:lang="en">Exponential Regression</rdfs:label>
-        <owl:equivalentClass>
-            <owl:Class>
-                <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&analytics;GZLM"/>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasPredictorVariable"/>
-                        <owl:allValuesFrom>
-                            <owl:Restriction>
-                                <owl:onProperty rdf:resource="&analytics;hasVariableType"/>
-                                <owl:allValuesFrom rdf:resource="&analytics;Continuous"/>
-                            </owl:Restriction>
-                        </owl:allValuesFrom>
-                    </owl:Restriction>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasResponseVariable"/>
-                        <owl:allValuesFrom>
-                            <owl:Restriction>
-                                <owl:onProperty rdf:resource="&analytics;hasVariableType"/>
-                                <owl:allValuesFrom rdf:resource="&analytics;Non_Negative_Continuous"/>
-                            </owl:Restriction>
-                        </owl:allValuesFrom>
-                    </owl:Restriction>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasLinkFunction"/>
-                        <owl:onClass rdf:resource="&analytics;Log_Function"/>
-                        <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
-                    </owl:Restriction>
-                </owl:intersectionOf>
-            </owl:Class>
-        </owl:equivalentClass>
-        <owl:equivalentClass>
-            <owl:Class>
-                <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&analytics;Exponential_Regression"/>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
-                        <owl:allValuesFrom rdf:resource="&analytics;Exponential_Distribution"/>
-                    </owl:Restriction>
-                </owl:intersectionOf>
-            </owl:Class>
-        </owl:equivalentClass>
-        <rdfs:subClassOf rdf:resource="&analytics;GZLM"/>
     </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Exponential_Regression"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2002/07/owl#equivalentClass"/>
+        <owl:annotatedTarget>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GZLM"/>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Exponential_Distribution"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
+                                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:cardinality>
+                            </owl:Restriction>
+                        </owl:unionOf>
+                    </owl:Class>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResponseVariable"/>
+                                <owl:allValuesFrom>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
+                                        <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Non_Negative_Continuous"/>
+                                    </owl:Restriction>
+                                </owl:allValuesFrom>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResponseVariable"/>
+                                <owl:allValuesFrom>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
+                                        <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Non_Negative_Integer"/>
+                                    </owl:Restriction>
+                                </owl:allValuesFrom>
+                            </owl:Restriction>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:annotatedTarget>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A GZLM model may be considered as an Exponential Regression Model if the residual distribution of the model is Exponential Distribution and the response variable is a Non-Negative Continuous variable.</rdfs:comment>
+    </owl:Axiom>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Function -->
 
-    <owl:Class rdf:about="&analytics;Function">
-        <rdfs:label xml:lang="en">Function</rdfs:label>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://mathworld.wolfram.com/Function.html</rdfs:seeAlso>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Function">
         <terms:description xml:lang="en">A function is a relation that uniquely associates members of one set with members of another set.</terms:description>
+        <rdfs:label xml:lang="en">Function</rdfs:label>
+        <rdfs:seeAlso rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://mathworld.wolfram.com/Function.html</rdfs:seeAlso>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GEE -->
 
-    <owl:Class rdf:about="&analytics;GEE">
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GEE">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#DependentModel"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasRepeatedObservations"/>
+                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#DependentModel"/>
+        <terms:alternative xml:lang="en">Generalized Estimating Equations</terms:alternative>
         <rdfs:label xml:lang="en">GEE</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;Model"/>
-        <terms:alternative xml:lang="en">Generalized Estimating Equation</terms:alternative>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GLM -->
 
-    <owl:Class rdf:about="&analytics;GLM">
-        <rdfs:label xml:lang="en">GLM</rdfs:label>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GLM">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&analytics;GLM"/>
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GZLM"/>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Normal_Distribution"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
+                                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:cardinality>
+                            </owl:Restriction>
+                        </owl:unionOf>
+                    </owl:Class>
                     <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasLinkFunction"/>
-                        <owl:onClass rdf:resource="&analytics;Identity_Function"/>
-                        <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
-                    </owl:Restriction>
-                </owl:intersectionOf>
-            </owl:Class>
-        </owl:equivalentClass>
-        <owl:equivalentClass>
-            <owl:Class>
-                <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&analytics;GZLM"/>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasResponseVariable"/>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResponseVariable"/>
                         <owl:allValuesFrom>
                             <owl:Restriction>
-                                <owl:onProperty rdf:resource="&analytics;hasVariableType"/>
-                                <owl:allValuesFrom rdf:resource="&analytics;Continuous"/>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Continuous"/>
                             </owl:Restriction>
                         </owl:allValuesFrom>
                     </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
         </owl:equivalentClass>
-        <rdfs:subClassOf rdf:resource="&analytics;GZLM"/>
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GZLM"/>
         <terms:alternative xml:lang="en">General Linear Model</terms:alternative>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">GLM model makes two major assumptions
+1) The response variable is a Continuous variable.
+2) The residuals are Normally distributed.</rdfs:comment>
+        <rdfs:label xml:lang="en">GLM</rdfs:label>
+        <defaultModel rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Multiple_Linear_Regression"/>
     </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GLM"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2002/07/owl#equivalentClass"/>
+        <owl:annotatedTarget>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GZLM"/>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Normal_Distribution"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
+                                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:cardinality>
+                            </owl:Restriction>
+                        </owl:unionOf>
+                    </owl:Class>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResponseVariable"/>
+                        <owl:allValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Continuous"/>
+                            </owl:Restriction>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:annotatedTarget>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A GZLM model may be considered as a GLM model if its residuals are Normally Distributed and the response variable is a Continuous variable.</rdfs:comment>
+    </owl:Axiom>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GLMM -->
 
-    <owl:Class rdf:about="&analytics;GLMM">
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GLMM">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#DependentModel"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasRepeatedObservations"/>
+                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#DependentModel"/>
+        <terms:alternative xml:lang="en">Generalized Linear Mixed Models</terms:alternative>
         <rdfs:label xml:lang="en">GLMM</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;Model"/>
-        <terms:alternative xml:lang="en">Generalized Linear Mixed Model</terms:alternative>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GMM -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GMM">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GLMM"/>
+        <terms:alternative>Gaussian Mixture Models</terms:alternative>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GZLM -->
 
-    <owl:Class rdf:about="&analytics;GZLM">
-        <rdfs:label xml:lang="en">GZLM</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;GLMM"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GZLM">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#IndependentModel"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasConditionNumber"/>
+                        <owl:someValuesFrom>
+                            <rdfs:Datatype>
+                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+                                <owl:withRestrictions rdf:parseType="Collection">
+                                    <rdf:Description>
+                                        <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#int">16</xsd:maxInclusive>
+                                    </rdf:Description>
+                                </owl:withRestrictions>
+                            </rdfs:Datatype>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasNegativeDF"/>
+                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</owl:hasValue>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#IndependentModel"/>
         <terms:alternative xml:lang="en">Generalized Linear Model</terms:alternative>
+        <rdfs:label xml:lang="en">GZLM</rdfs:label>
+        <defaultModel rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Multinomial_Logistic_Regression"/>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Gamma_Distribution -->
 
-    <owl:Class rdf:about="&analytics;Gamma_Distribution">
-        <rdfs:label xml:lang="en">Gamma Distribution</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;Exponential_Family"/>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://www.math.uah.edu/stat/special/Gamma.html</rdfs:seeAlso>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Gamma_Distribution">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Exponential_Family"/>
         <terms:description xml:lang="en">The gamma distribution family is a subset of the exponential family of distributions that have a shape parameter and a rate parameter.</terms:description>
+        <rdfs:label xml:lang="en">Gamma Distribution</rdfs:label>
+        <rdfs:seeAlso rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://www.math.uah.edu/stat/special/Gamma.html</rdfs:seeAlso>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Gamma_Regression -->
 
-    <owl:Class rdf:about="&analytics;Gamma_Regression">
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Gamma_Regression">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GZLM"/>
         <rdfs:label xml:lang="en">Gamma Regression</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;GZLM"/>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Gaussian_Inverse -->
 
-    <owl:Class rdf:about="&analytics;Gaussian_Inverse">
-        <rdfs:subClassOf rdf:resource="&analytics;Algorithm"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Gaussian_Inverse">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Algorithm"/>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Golub-Kahan-Reinsch -->
 
-    <owl:Class rdf:about="&analytics;Golub-Kahan-Reinsch">
-        <rdfs:subClassOf rdf:resource="&analytics;Singular_Value_Decomposition"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Golub-Kahan-Reinsch">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Singular_Value_Decomposition"/>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Householder_Rotations -->
 
-    <owl:Class rdf:about="&analytics;Householder_Rotations">
-        <rdfs:subClassOf rdf:resource="&analytics;Algorithm"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Householder_Rotations">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Algorithm"/>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Identity_Function -->
 
-    <owl:Class rdf:about="&analytics;Identity_Function">
-        <rdfs:label xml:lang="en">Identity Function</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;Function"/>
-        <terms:description xml:lang="en">The identity function, given a number x, returns x (the identity).</terms:description>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Identity_Function">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Function"/>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Implicit_QR_Shift -->
 
-    <owl:Class rdf:about="&analytics;Implicit_QR_Shift">
-        <rdfs:subClassOf rdf:resource="&analytics;Singular_Value_Decomposition"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Implicit_QR_Shift">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Singular_Value_Decomposition"/>
     </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#IndependentModel -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#IndependentModel">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Model"/>
+                    <owl:Class>
+                        <owl:complementOf>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasTemporalVariable"/>
+                                <owl:someValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Variable"/>
+                            </owl:Restriction>
+                        </owl:complementOf>
+                    </owl:Class>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasRepeatedObservations"/>
+                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</owl:hasValue>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Model"/>
+        <rdfs:label xml:lang="en">Independent Model</rdfs:label>
+        <defaultModel rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GZLM"/>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#IndependentModel"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2002/07/owl#equivalentClass"/>
+        <owl:annotatedTarget>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Model"/>
+                    <owl:Class>
+                        <owl:complementOf>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasTemporalVariable"/>
+                                <owl:someValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Variable"/>
+                            </owl:Restriction>
+                        </owl:complementOf>
+                    </owl:Class>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasRepeatedObservations"/>
+                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</owl:hasValue>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:annotatedTarget>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A model may be considered an independent model if the model does not have repeated observations (i.e., dependency within response).</rdfs:comment>
+    </owl:Axiom>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Integer -->
 
-    <owl:Class rdf:about="&analytics;Integer">
-        <rdfs:label xml:lang="en">Integer</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;Discrete"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Integer">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Discrete"/>
         <terms:description xml:lang="en">A variable with an integer variable type generally denotes that the domain of discourse for the variable is the set of integer numbers.</terms:description>
+        <rdfs:label xml:lang="en">Integer</rdfs:label>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Inverse_Function -->
 
-    <owl:Class rdf:about="&analytics;Inverse_Function">
-        <rdfs:label xml:lang="en">Inverse Function</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;Function"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Inverse_Function">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Function"/>
         <terms:description xml:lang="en">The inverse function is a function that reverses another function.</terms:description>
+        <rdfs:label xml:lang="en">Inverse Function</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Inverse_Gaussian_Regression -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Inverse_Gaussian_Regression">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GZLM"/>
+        <rdfs:label>Inverse Gaussian Regression</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#KalmanFilter -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#KalmanFilter">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#TimeDependentModel"/>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#LU_Factorization -->
 
-    <owl:Class rdf:about="&analytics;LU_Factorization">
-        <rdfs:subClassOf rdf:resource="&analytics;Algorithm"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#LU_Factorization">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Algorithm"/>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Lasso_Regression -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Lasso_Regression">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <owl:Class>
+                        <owl:intersectionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#IndependentModel"/>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResponseVariable"/>
+                                <owl:allValuesFrom>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
+                                        <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Discrete"/>
+                                    </owl:Restriction>
+                                </owl:allValuesFrom>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasNegativeDF"/>
+                                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</owl:hasValue>
+                            </owl:Restriction>
+                        </owl:intersectionOf>
+                    </owl:Class>
+                    <owl:Class>
+                        <owl:intersectionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#IndependentModel"/>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasConditionNumber"/>
+                                <owl:someValuesFrom>
+                                    <rdfs:Datatype>
+                                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+                                        <owl:withRestrictions rdf:parseType="Collection">
+                                            <rdf:Description>
+                                                <xsd:minExclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#int">16</xsd:minExclusive>
+                                            </rdf:Description>
+                                        </owl:withRestrictions>
+                                    </rdfs:Datatype>
+                                </owl:someValuesFrom>
+                            </owl:Restriction>
+                        </owl:intersectionOf>
+                    </owl:Class>
+                </owl:unionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#IndependentModel"/>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#LogLinearRegression -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#LogLinearRegression">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GZLM"/>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Negative_Binomial_Distribution"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Poisson_Distribution"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
+                                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:cardinality>
+                            </owl:Restriction>
+                        </owl:unionOf>
+                    </owl:Class>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasPredictorVariable"/>
+                        <owl:allValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Categorical"/>
+                            </owl:Restriction>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResponseVariable"/>
+                        <owl:allValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasDistribution"/>
+                                        <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Poisson_Distribution"/>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
+                                        <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Non_Negative_Integer"/>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GZLM"/>
+        <rdfs:label xml:lang="en">Log Linear Regression</rdfs:label>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Log_Function -->
 
-    <owl:Class rdf:about="&analytics;Log_Function">
-        <rdfs:label xml:lang="en">Log Function</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;Function"/>
-        <terms:alternative xml:lang="en">Natural Log Function</terms:alternative>
-        <terms:description xml:lang="en">The natural logarithm function, given a number x, produces a result y such that x = exp(y).</terms:description>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Log_Function">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Function"/>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Logistic_Regression -->
 
-    <owl:Class rdf:about="&analytics;Logistic_Regression">
-        <rdfs:label xml:lang="en">Logistic Regression</rdfs:label>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Logistic_Regression">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&analytics;GZLM"/>
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GZLM"/>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Bernoulli_Distribution"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
+                                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:cardinality>
+                            </owl:Restriction>
+                        </owl:unionOf>
+                    </owl:Class>
                     <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasResponseVariable"/>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResponseVariable"/>
                         <owl:allValuesFrom>
                             <owl:Restriction>
-                                <owl:onProperty rdf:resource="&analytics;hasVariableType"/>
-                                <owl:allValuesFrom rdf:resource="&analytics;Binary"/>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Binary"/>
                             </owl:Restriction>
                         </owl:allValuesFrom>
                     </owl:Restriction>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasLinkFunction"/>
-                        <owl:onClass rdf:resource="&analytics;Logit_Function"/>
-                        <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
-                    </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
         </owl:equivalentClass>
-        <owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GZLM"/>
+        <rdfs:label xml:lang="en">Logistic Regression</rdfs:label>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Logistic_Regression"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2002/07/owl#equivalentClass"/>
+        <owl:annotatedTarget>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&analytics;Logistic_Regression"/>
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GZLM"/>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Bernoulli_Distribution"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
+                                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:cardinality>
+                            </owl:Restriction>
+                        </owl:unionOf>
+                    </owl:Class>
                     <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
-                        <owl:allValuesFrom rdf:resource="&analytics;Bernoulli_Distribution"/>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResponseVariable"/>
+                        <owl:allValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Binary"/>
+                            </owl:Restriction>
+                        </owl:allValuesFrom>
                     </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
-        </owl:equivalentClass>
-        <rdfs:subClassOf rdf:resource="&analytics;GZLM"/>
-    </owl:Class>
+        </owl:annotatedTarget>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A GZLM model may be considered as a Logistic Regression Model if the residual distribution of the model is Bernoulli Distribution and the response variable is a binary variable.</rdfs:comment>
+    </owl:Axiom>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Logit_Function -->
 
-    <owl:Class rdf:about="&analytics;Logit_Function">
-        <rdfs:label xml:lang="en">Logit Function</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;Function"/>
-        <terms:description xml:lang="en">The logit function is the inverse of the logistic transform.</terms:description>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Logit_Function">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Function"/>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#MA -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#MA">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#ARMA"/>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Maximum_Likelihood -->
 
-    <owl:Class rdf:about="&analytics;Maximum_Likelihood">
-        <rdfs:subClassOf rdf:resource="&analytics;Estimation_Procedure"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Maximum_Likelihood">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Estimation_Procedure"/>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Model -->
 
-    <owl:Class rdf:about="&analytics;Model">
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Model">
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">All individuals that have at least one variable are considered a Model. A model then could be inferred to have more specific model types depending on how it conforms to the equivalence axioms stated in the hierarchy.</rdfs:comment>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Model class and its subclasses define different model types that can be used for analyzing data. There are many ways of specifying the class hierarchy for a collection of model types, however, we have given priority to correspondence with implementations of these types (e.g., ScalaTion). This becomes important when running models generated from the abstract models represented in the ontology.</rdfs:comment>
         <rdfs:label xml:lang="en">Model</rdfs:label>
     </owl:Class>
     
@@ -626,323 +1192,697 @@ iii) On each trial, the probability of success is p and the probability of failu
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Modified_Gram_Schmidt_Orthogonalization -->
 
-    <owl:Class rdf:about="&analytics;Modified_Gram_Schmidt_Orthogonalization">
-        <rdfs:subClassOf rdf:resource="&analytics;QR_Factorization"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Modified_Gram_Schmidt_Orthogonalization">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#QR_Factorization"/>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Multinomial -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Multinomial">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Non_Negative_Integer"/>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Multinomial_Distribution -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Multinomial_Distribution">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Exponential_Family"/>
+        <rdfs:label xml:lang="en">Multinomial Distribution</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Multinomial_Logistic_Regression -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Multinomial_Logistic_Regression">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GZLM"/>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Multinomial_Distribution"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
+                                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:cardinality>
+                            </owl:Restriction>
+                        </owl:unionOf>
+                    </owl:Class>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResponseVariable"/>
+                        <owl:allValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasDistribution"/>
+                                        <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Multinomial_Distribution"/>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
+                                        <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Multinomial"/>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GZLM"/>
+        <rdfs:label xml:lang="en">Multinomial Logistic Regression</rdfs:label>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Multiple_Linear_Regression -->
 
-    <owl:Class rdf:about="&analytics;Multiple_Linear_Regression">
-        <rdfs:label xml:lang="en">Muliple Linear Regression</rdfs:label>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Multiple_Linear_Regression">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&analytics;GLM"/>
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GLM"/>
                     <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasPredictorVariable"/>
-                        <owl:someValuesFrom>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResponseVariable"/>
+                        <owl:allValuesFrom>
                             <owl:Restriction>
-                                <owl:onProperty rdf:resource="&analytics;hasVariableType"/>
-                                <owl:allValuesFrom rdf:resource="&analytics;Continuous"/>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasDistribution"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Normal_Distribution"/>
                             </owl:Restriction>
-                        </owl:someValuesFrom>
+                        </owl:allValuesFrom>
                     </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
         </owl:equivalentClass>
-        <rdfs:subClassOf rdf:resource="&analytics;GLM"/>
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GLM"/>
         <terms:alternative xml:lang="en">MLR</terms:alternative>
         <terms:alternative xml:lang="en">Multiple Regression</terms:alternative>
+        <rdfs:label xml:lang="en">Multiple Linear Regression</rdfs:label>
     </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Multiple_Linear_Regression"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2002/07/owl#equivalentClass"/>
+        <owl:annotatedTarget>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GLM"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResponseVariable"/>
+                        <owl:allValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasDistribution"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Normal_Distribution"/>
+                            </owl:Restriction>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:annotatedTarget>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A GLM model may be considered a Multiple Linear Regression if at least some of its variables are Continuous variables.</rdfs:comment>
+    </owl:Axiom>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Naive_Bayes -->
 
-    <owl:Class rdf:about="&analytics;Naive_Bayes">
-        <rdfs:label xml:lang="en">Naive Bayes</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;Model"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Naive_Bayes">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#IndependentModel"/>
         <terms:alternative xml:lang="en">Naïve Bayes</terms:alternative>
+        <rdfs:label xml:lang="en">Naive Bayes</rdfs:label>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Negative_Binomial_Distribution -->
 
-    <owl:Class rdf:about="&analytics;Negative_Binomial_Distribution">
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Negative_Binomial_Distribution">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Exponential_Family"/>
         <rdfs:label xml:lang="en">Negative Binomial Distribution</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;Exponential_Family"/>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Negative_Binomial_Regression -->
 
-    <owl:Class rdf:about="&analytics;Negative_Binomial_Regression">
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Negative_Binomial_Regression">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GZLM"/>
+                    <owl:Class>
+                        <owl:intersectionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResponseVariable"/>
+                                <owl:allValuesFrom>
+                                    <owl:Class>
+                                        <owl:intersectionOf rdf:parseType="Collection">
+                                            <owl:Restriction>
+                                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasDistribution"/>
+                                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Poisson_Distribution"/>
+                                            </owl:Restriction>
+                                            <owl:Restriction>
+                                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
+                                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Non_Negative_Integer"/>
+                                            </owl:Restriction>
+                                        </owl:intersectionOf>
+                                    </owl:Class>
+                                </owl:allValuesFrom>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#isOverDispersed"/>
+                                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+                            </owl:Restriction>
+                        </owl:intersectionOf>
+                    </owl:Class>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Negative_Binomial_Distribution"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Poisson_Distribution"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
+                                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:cardinality>
+                            </owl:Restriction>
+                        </owl:unionOf>
+                    </owl:Class>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasPredictorVariable"/>
+                        <owl:someValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Continuous"/>
+                            </owl:Restriction>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GZLM"/>
         <rdfs:label xml:lang="en">Negative Binomial Regression</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;GZLM"/>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Non_Negative_Continuous -->
 
-    <owl:Class rdf:about="&analytics;Non_Negative_Continuous">
-        <rdfs:label xml:lang="en">Non-Negative Continuous</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;Continuous"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Non_Negative_Continuous">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Continuous"/>
         <terms:description xml:lang="en">A variable with a continuous non-negative variable type generally denotes that the domain of discourse for the variable is the set of all non-negative real numbers.</terms:description>
+        <rdfs:label xml:lang="en">Non-Negative Continuous</rdfs:label>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Non_Negative_Integer -->
 
-    <owl:Class rdf:about="&analytics;Non_Negative_Integer">
-        <rdfs:label xml:lang="en">Non-Negative Integer</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;Integer"/>
-        <terms:description xml:lang="en">A variable with an integer non-negative variable type generally denotes that the domain of discourse for the variable is the set of all non-negative integer numbers.</terms:description>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Non_Negative_Integer">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Integer"/>
         <terms:alternative xml:lang="en">Natural</terms:alternative>
+        <terms:description xml:lang="en">A variable with an integer non-negative variable type generally denotes that the domain of discourse for the variable is the set of all non-negative integer numbers.</terms:description>
+        <rdfs:label xml:lang="en">Non-Negative Integer</rdfs:label>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Normal_Distribution -->
 
-    <owl:Class rdf:about="&analytics;Normal_Distribution">
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Normal_Distribution">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Exponential_Family"/>
         <rdfs:label xml:lang="en">Normal Distribution</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;Exponential_Family"/>
-        <terms:alternative xml:lang="en">Gaussian Distribution</terms:alternative>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Ordinal -->
 
-    <owl:Class rdf:about="&analytics;Ordinal">
-        <rdfs:label xml:lang="en">Ordinal</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;Categorical"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Ordinal">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Categorical"/>
         <terms:description xml:lang="en">A variable with an ordinal variable type generally denotes that the domain of discourse of the variable is polychotomous and ordered. This means that the variable can take on one of a finite number of values and that the set has an ordering.</terms:description>
+        <rdfs:label xml:lang="en">Ordinal</rdfs:label>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Ordinal_Logistic_Regression -->
 
-    <owl:Class rdf:about="&analytics;Ordinal_Logistic_Regression">
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Ordinal_Logistic_Regression">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GZLM"/>
         <rdfs:label xml:lang="en">Ordinal Logistic Regression</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;GZLM"/>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Ordinary_Least_Squares -->
 
-    <owl:Class rdf:about="&analytics;Ordinary_Least_Squares">
-        <rdfs:subClassOf rdf:resource="&analytics;Estimation_Procedure"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Ordinary_Least_Squares">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Estimation_Procedure"/>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Parameter -->
 
-    <owl:Class rdf:about="&analytics;Parameter"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Parameter"/>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#PartialLeastSquaresRegression -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#PartialLeastSquaresRegression">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#IndependentModel"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasNegativeDF"/>
+                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#IndependentModel"/>
+    </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Perceptron -->
 
-    <owl:Class rdf:about="&analytics;Perceptron">
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Perceptron">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#IndependentModel"/>
         <rdfs:label xml:lang="en">Perceptron</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;Model"/>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Poisson_Distribution -->
 
-    <owl:Class rdf:about="&analytics;Poisson_Distribution">
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Poisson_Distribution">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Exponential_Family"/>
         <rdfs:label xml:lang="en">Poisson Distribution</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;Exponential_Family"/>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Poisson_Regression -->
 
-    <owl:Class rdf:about="&analytics;Poisson_Regression">
-        <rdfs:label xml:lang="en">Poisson Regression</rdfs:label>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Poisson_Regression">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&analytics;GZLM"/>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasResponseVariable"/>
-                        <owl:allValuesFrom>
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GZLM"/>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
                             <owl:Restriction>
-                                <owl:onProperty rdf:resource="&analytics;hasVariableType"/>
-                                <owl:allValuesFrom rdf:resource="&analytics;Non_Negative_Integer"/>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Negative_Binomial_Distribution"/>
                             </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Poisson_Distribution"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
+                                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:cardinality>
+                            </owl:Restriction>
+                        </owl:unionOf>
+                    </owl:Class>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasPredictorVariable"/>
+                        <owl:someValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Continuous"/>
+                            </owl:Restriction>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResponseVariable"/>
+                        <owl:allValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasDistribution"/>
+                                        <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Poisson_Distribution"/>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
+                                        <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Non_Negative_Integer"/>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
                         </owl:allValuesFrom>
                     </owl:Restriction>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasLinkFunction"/>
-                        <owl:onClass>
-                            <owl:Class>
-                                <owl:unionOf rdf:parseType="Collection">
-                                    <rdf:Description rdf:about="&analytics;Identity_Function"/>
-                                    <rdf:Description rdf:about="&analytics;Log_Function"/>
-                                    <rdf:Description rdf:about="&analytics;Square_Root_Function"/>
-                                </owl:unionOf>
-                            </owl:Class>
-                        </owl:onClass>
-                        <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
-                    </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
         </owl:equivalentClass>
-        <owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GZLM"/>
+        <rdfs:label xml:lang="en">Poisson Regression</rdfs:label>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Poisson_Regression"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2002/07/owl#equivalentClass"/>
+        <owl:annotatedTarget>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&analytics;Poisson_Regression"/>
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GZLM"/>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Negative_Binomial_Distribution"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Poisson_Distribution"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
+                                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:cardinality>
+                            </owl:Restriction>
+                        </owl:unionOf>
+                    </owl:Class>
                     <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasResidualDistribution"/>
-                        <owl:allValuesFrom rdf:resource="&analytics;Binomial_Distribution"/>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasPredictorVariable"/>
+                        <owl:someValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Continuous"/>
+                            </owl:Restriction>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResponseVariable"/>
+                        <owl:allValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasDistribution"/>
+                                        <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Poisson_Distribution"/>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
+                                        <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Non_Negative_Integer"/>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:allValuesFrom>
                     </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
-        </owl:equivalentClass>
-        <rdfs:subClassOf rdf:resource="&analytics;GZLM"/>
-    </owl:Class>
+        </owl:annotatedTarget>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A GZLM model may be considered as a Poisson Regression model if the residual distribution of the model is Binomial Distribution and the response variable is a Non-Negative Integer.</rdfs:comment>
+    </owl:Axiom>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Polynomial_Regression -->
 
-    <owl:Class rdf:about="&analytics;Polynomial_Regression">
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Polynomial_Regression">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GLM"/>
         <rdfs:label xml:lang="en">Polynomial Regression</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;GLM"/>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#QR_Factorization -->
 
-    <owl:Class rdf:about="&analytics;QR_Factorization">
-        <rdfs:subClassOf rdf:resource="&analytics;Algorithm"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#QR_Factorization">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Algorithm"/>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Quasi_Likelihood -->
 
-    <owl:Class rdf:about="&analytics;Quasi_Likelihood">
-        <rdfs:subClassOf rdf:resource="&analytics;Estimation_Procedure"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Quasi_Likelihood">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Estimation_Procedure"/>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Reciprocal_Function -->
 
-    <owl:Class rdf:about="&analytics;Reciprocal_Function">
-        <rdfs:label xml:lang="en">Reciprocal Function</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;Function"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Reciprocal_Function">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Function"/>
         <terms:description xml:lang="en">The reciprocal function, given a number x, returns 1/x (i.e., the reciprocal).</terms:description>
+        <rdfs:label xml:lang="en">Reciprocal Function</rdfs:label>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Response_Surface_Analysis -->
 
-    <owl:Class rdf:about="&analytics;Response_Surface_Analysis">
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Response_Surface_Analysis">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GLM"/>
         <rdfs:label xml:lang="en">Response Surface Analysis</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;GLM"/>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Simple_Linear_Regression -->
 
-    <owl:Class rdf:about="&analytics;Simple_Linear_Regression">
-        <rdfs:label xml:lang="en">Simple Linear Regression</rdfs:label>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Simple_Linear_Regression">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&analytics;Multiple_Linear_Regression"/>
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Multiple_Linear_Regression"/>
                     <owl:Restriction>
-                        <owl:onProperty rdf:resource="&analytics;hasPredictorVariable"/>
-                        <owl:onClass rdf:resource="&analytics;Variable"/>
-                        <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasPredictorVariable"/>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onClass rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Variable"/>
                     </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
         </owl:equivalentClass>
-        <rdfs:subClassOf rdf:resource="&analytics;Multiple_Linear_Regression"/>
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Multiple_Linear_Regression"/>
         <terms:alternative xml:lang="en">SLR</terms:alternative>
+        <rdfs:label xml:lang="en">Simple Linear Regression</rdfs:label>
     </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Simple_Linear_Regression"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2002/07/owl#equivalentClass"/>
+        <owl:annotatedTarget>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Multiple_Linear_Regression"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasPredictorVariable"/>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onClass rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Variable"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:annotatedTarget>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A MLR model may be considered a Simple Linear Regression model if it has only one predictor variable.</rdfs:comment>
+    </owl:Axiom>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Singular_Value_Decomposition -->
 
-    <owl:Class rdf:about="&analytics;Singular_Value_Decomposition">
-        <rdfs:subClassOf rdf:resource="&analytics;Algorithm"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Singular_Value_Decomposition">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Algorithm"/>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Square_Root_Function -->
 
-    <owl:Class rdf:about="&analytics;Square_Root_Function">
-        <rdfs:label xml:lang="en">Square Root Function</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;Function"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Square_Root_Function">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Function"/>
         <terms:description xml:lang="en">The square root function, given a number x, returns a value y such that y * y = x. In most cases, this function produces a positive value. If the input to the function is a negative number, then the function produces a complex number.</terms:description>
+        <rdfs:label xml:lang="en">Square Root Function</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#TimeDependentModel -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#TimeDependentModel">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#DependentModel"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasTemporalVariable"/>
+                        <owl:someValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Variable"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#DependentModel"/>
+        <rdfs:label xml:lang="en">Time Series Model</rdfs:label>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Transformed_Multiple_Linear_Regression -->
 
-    <owl:Class rdf:about="&analytics;Transformed_Multiple_Linear_Regression">
-        <rdfs:label xml:lang="en">Transformed Multiple Linear Regression</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;GLM"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Transformed_Multiple_Linear_Regression">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GLM"/>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
+                                <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Normal_Distribution"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
+                                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:cardinality>
+                            </owl:Restriction>
+                        </owl:unionOf>
+                    </owl:Class>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResponseVariable"/>
+                        <owl:allValuesFrom>
+                            <owl:Class>
+                                <owl:complementOf>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasDistribution"/>
+                                        <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Normal_Distribution"/>
+                                    </owl:Restriction>
+                                </owl:complementOf>
+                            </owl:Class>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GLM"/>
         <terms:alternative xml:lang="en">Transformed Multiple Regression</terms:alternative>
+        <rdfs:label xml:lang="en">Transformed Multiple Linear Regression</rdfs:label>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Trigonometric_Regression -->
 
-    <owl:Class rdf:about="&analytics;Trigonometric_Regression">
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Trigonometric_Regression">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GLM"/>
         <rdfs:label xml:lang="en">Trigonometric Regression</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&analytics;GLM"/>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Variable -->
 
-    <owl:Class rdf:about="&analytics;Variable">
-        <rdfs:label xml:lang="en">Variable</rdfs:label>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Variable">
         <terms:description xml:lang="en">A variable is an element, feature, or factor that is liable to vary or change.</terms:description>
+        <rdfs:label xml:lang="en">Variable</rdfs:label>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Variable_Type -->
 
-    <owl:Class rdf:about="&analytics;Variable_Type">
-        <rdfs:label xml:lang="en">Variable Type</rdfs:label>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Variable_Type">
         <terms:description xml:lang="en">The type of a variable usually denotes or restricts its corresponding domain of discourse.</terms:description>
+        <rdfs:label xml:lang="en">Variable Type</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#WLS -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#WLS">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#IndependentModel"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResponseVariable"/>
+                        <owl:allValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasKurtosis"/>
+                                <owl:someValuesFrom>
+                                    <rdfs:Datatype>
+                                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+                                        <owl:withRestrictions rdf:parseType="Collection">
+                                            <rdf:Description>
+                                                <xsd:minExclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">100.0</xsd:minExclusive>
+                                            </rdf:Description>
+                                        </owl:withRestrictions>
+                                    </rdfs:Datatype>
+                                </owl:someValuesFrom>
+                            </owl:Restriction>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#IndependentModel"/>
+        <rdfs:label>Weighted Least Squares Regression</rdfs:label>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Weighted_Least_Squares -->
 
-    <owl:Class rdf:about="&analytics;Weighted_Least_Squares">
-        <rdfs:subClassOf rdf:resource="&analytics;Estimation_Procedure"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Weighted_Least_Squares">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Estimation_Procedure"/>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Zero-Inflated_Negative_Binomial_Regression -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Zero-Inflated_Negative_Binomial_Regression">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Negative_Binomial_Regression"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResponseVariable"/>
+                        <owl:allValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#isZeroInflated"/>
+                                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+                            </owl:Restriction>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Negative_Binomial_Regression"/>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Zero-Inflated Negative Binomial Regression</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Zero-Inflated_Poisson_Regression -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Zero-Inflated_Poisson_Regression">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Poisson_Regression"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResponseVariable"/>
+                        <owl:allValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#isZeroInflated"/>
+                                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+                            </owl:Restriction>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Poisson_Regression"/>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Zero-Inflated Poisson Regression</rdfs:label>
     </owl:Class>
     
 
@@ -958,480 +1898,603 @@ iii) On each trial, the probability of success is p and the probability of failu
     
 
 
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Bernoulli_Distribution_Instance -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Bernoulli_Distribution_Instance">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Bernoulli_Distribution"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Binary_Variable_Type -->
 
-    <owl:NamedIndividual rdf:about="&analytics;Binary_Variable_Type">
-        <rdf:type rdf:resource="&analytics;Binary"/>
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Binary_Variable_Type">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Binary"/>
     </owl:NamedIndividual>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Categorical_Variable_Type -->
 
-    <owl:NamedIndividual rdf:about="&analytics;Categorical_Variable_Type">
-        <rdf:type rdf:resource="&analytics;Categorical"/>
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Categorical_Variable_Type">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Categorical"/>
     </owl:NamedIndividual>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Continuous_Variable_Type -->
 
-    <owl:NamedIndividual rdf:about="&analytics;Continuous_Variable_Type">
-        <rdf:type rdf:resource="&analytics;Continuous"/>
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Continuous_Variable_Type">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Continuous"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Discrete_Variable_Type -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Discrete_Variable_Type">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Discrete"/>
     </owl:NamedIndividual>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Exponential_Distribution_Instance -->
 
-    <owl:NamedIndividual rdf:about="&analytics;Exponential_Distribution_Instance">
-        <rdf:type rdf:resource="&analytics;Exponential_Distribution"/>
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Exponential_Distribution_Instance">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Exponential_Distribution"/>
     </owl:NamedIndividual>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GenericANCOVAModel -->
 
-    <owl:Thing rdf:about="&analytics;GenericANCOVAModel">
-        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    <owl:Thing rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GenericANCOVAModel">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
         <rdf:type>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&analytics;hasVariable"/>
+                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
                 <owl:allValuesFrom>
                     <owl:Class>
                         <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;horsepower"/>
-                            <rdf:Description rdf:about="&analytics;mpg"/>
-                            <rdf:Description rdf:about="&analytics;cylinders"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Normal_Distribution_Instance"/>
                         </owl:oneOf>
                     </owl:Class>
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <hasLinkFunction rdf:resource="&analytics;Identity_Function"/>
-        <hasPredictorVariable rdf:resource="&analytics;cylinders"/>
-        <hasPredictorVariable rdf:resource="&analytics;horsepower"/>
-        <hasResponseVariable rdf:resource="&analytics;mpg"/>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariable"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#cylinders"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#horsepower"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#mpg"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdf:type>
+        <hasPredictorVariable rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#cylinders"/>
+        <hasPredictorVariable rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#horsepower"/>
+        <hasResidualDistribution rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Normal_Distribution_Instance"/>
+        <hasResponseVariable rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#mpg"/>
+        <hasRepeatedObservations rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasRepeatedObservations>
     </owl:Thing>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GenericANOVAModel -->
 
-    <owl:Thing rdf:about="&analytics;GenericANOVAModel">
-        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    <owl:Thing rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GenericANOVAModel">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
         <rdf:type>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&analytics;hasVariable"/>
+                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
                 <owl:allValuesFrom>
                     <owl:Class>
                         <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;mpg"/>
-                            <rdf:Description rdf:about="&analytics;cylinders"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Normal_Distribution_Instance"/>
                         </owl:oneOf>
                     </owl:Class>
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <hasLinkFunction rdf:resource="&analytics;Identity_Function"/>
-        <hasPredictorVariable rdf:resource="&analytics;cylinders"/>
-        <hasResponseVariable rdf:resource="&analytics;mpg"/>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariable"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#cylinders"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#mpg"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdf:type>
+        <hasPredictorVariable rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#cylinders"/>
+        <hasResidualDistribution rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Normal_Distribution_Instance"/>
+        <hasResponseVariable rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#mpg"/>
+        <hasRepeatedObservations rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasRepeatedObservations>
     </owl:Thing>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GenericExponentialModel -->
 
-    <owl:Thing rdf:about="&analytics;GenericExponentialModel">
-        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    <owl:Thing rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GenericExponentialModel">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
         <rdf:type>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&analytics;hasVariable"/>
+                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
                 <owl:allValuesFrom>
                     <owl:Class>
                         <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;horsepower"/>
-                            <rdf:Description rdf:about="&analytics;mpg"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Exponential_Distribution_Instance"/>
                         </owl:oneOf>
                     </owl:Class>
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <hasLinkFunction rdf:resource="&analytics;Log_Function"/>
-        <hasPredictorVariable rdf:resource="&analytics;horsepower"/>
-        <hasResponseVariable rdf:resource="&analytics;mpg"/>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariable"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#horsepower"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#mpg"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdf:type>
+        <hasPredictorVariable rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#horsepower"/>
+        <hasResidualDistribution rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Exponential_Distribution_Instance"/>
+        <hasResponseVariable rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#mpg"/>
+        <hasRepeatedObservations rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasRepeatedObservations>
     </owl:Thing>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GenericLogisticRegressionModel -->
 
-    <owl:Thing rdf:about="&analytics;GenericLogisticRegressionModel">
-        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    <owl:Thing rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GenericLogisticRegressionModel">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
         <rdf:type>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&analytics;hasVariable"/>
+                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
                 <owl:allValuesFrom>
                     <owl:Class>
                         <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;mpg"/>
-                            <rdf:Description rdf:about="&analytics;isDomestic"/>
-                            <rdf:Description rdf:about="&analytics;cylinders"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Bernoulli_Distribution_Instance"/>
                         </owl:oneOf>
                     </owl:Class>
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <hasLinkFunction rdf:resource="&analytics;Logit_Function"/>
-        <hasPredictorVariable rdf:resource="&analytics;cylinders"/>
-        <hasResponseVariable rdf:resource="&analytics;isDomestic"/>
-        <hasPredictorVariable rdf:resource="&analytics;mpg"/>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariable"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#cylinders"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#isDomestic"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#mpg"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdf:type>
+        <hasPredictorVariable rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#cylinders"/>
+        <hasPredictorVariable rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#mpg"/>
+        <hasResidualDistribution rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Bernoulli_Distribution_Instance"/>
+        <hasResponseVariable rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#isDomestic"/>
+        <hasRepeatedObservations rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasRepeatedObservations>
     </owl:Thing>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GenericMLRModel -->
 
-    <owl:Thing rdf:about="&analytics;GenericMLRModel">
-        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    <owl:Thing rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GenericMLRModel">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
         <rdf:type>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&analytics;hasVariable"/>
+                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
                 <owl:allValuesFrom>
                     <owl:Class>
                         <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;horsepower"/>
-                            <rdf:Description rdf:about="&analytics;acceleration"/>
-                            <rdf:Description rdf:about="&analytics;mpg"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Normal_Distribution_Instance"/>
                         </owl:oneOf>
                     </owl:Class>
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <hasLinkFunction rdf:resource="&analytics;Identity_Function"/>
-        <hasPredictorVariable rdf:resource="&analytics;acceleration"/>
-        <hasPredictorVariable rdf:resource="&analytics;horsepower"/>
-        <hasResponseVariable rdf:resource="&analytics;mpg"/>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariable"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#acceleration"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#horsepower"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#mpg"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdf:type>
+        <hasPredictorVariable rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#acceleration"/>
+        <hasPredictorVariable rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#horsepower"/>
+        <hasResidualDistribution rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Normal_Distribution_Instance"/>
+        <hasResponseVariable rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#mpg"/>
+        <hasRepeatedObservations rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasRepeatedObservations>
     </owl:Thing>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GenericModel -->
 
-    <owl:Thing rdf:about="&analytics;GenericModel">
-        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    <owl:Thing rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GenericModel">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
         <rdf:type>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&analytics;hasLinkFunction"/>
+                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariable"/>
                 <owl:allValuesFrom>
                     <owl:Class>
                         <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;Identity_Function"/>
-                            <rdf:Description rdf:about="&analytics;Log_Function"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#acceleration"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#cylinders"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#displacement"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#horsepower"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#model_year"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#mpg"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#origin"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#weight"/>
                         </owl:oneOf>
                     </owl:Class>
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <rdf:type>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&analytics;hasVariable"/>
-                <owl:allValuesFrom>
-                    <owl:Class>
-                        <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;horsepower"/>
-                            <rdf:Description rdf:about="&analytics;acceleration"/>
-                            <rdf:Description rdf:about="&analytics;mpg"/>
-                            <rdf:Description rdf:about="&analytics;displacement"/>
-                            <rdf:Description rdf:about="&analytics;origin"/>
-                            <rdf:Description rdf:about="&analytics;weight"/>
-                            <rdf:Description rdf:about="&analytics;model_year"/>
-                            <rdf:Description rdf:about="&analytics;cylinders"/>
-                        </owl:oneOf>
-                    </owl:Class>
-                </owl:allValuesFrom>
-            </owl:Restriction>
-        </rdf:type>
-        <hasLinkFunction rdf:resource="&analytics;Identity_Function"/>
-        <hasLinkFunction rdf:resource="&analytics;Log_Function"/>
-        <hasPredictorVariable rdf:resource="&analytics;acceleration"/>
-        <hasPredictorVariable rdf:resource="&analytics;cylinders"/>
-        <hasPredictorVariable rdf:resource="&analytics;displacement"/>
-        <hasPredictorVariable rdf:resource="&analytics;horsepower"/>
-        <hasPredictorVariable rdf:resource="&analytics;model_year"/>
-        <hasResponseVariable rdf:resource="&analytics;mpg"/>
-        <hasPredictorVariable rdf:resource="&analytics;origin"/>
-        <hasPredictorVariable rdf:resource="&analytics;weight"/>
+        <hasPredictorVariable rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#acceleration"/>
+        <hasPredictorVariable rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#cylinders"/>
+        <hasPredictorVariable rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#displacement"/>
+        <hasPredictorVariable rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#horsepower"/>
+        <hasPredictorVariable rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#model_year"/>
+        <hasPredictorVariable rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#origin"/>
+        <hasPredictorVariable rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#weight"/>
+        <hasResponseVariable rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#mpg"/>
+        <hasRepeatedObservations rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasRepeatedObservations>
     </owl:Thing>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GenericSLRModel -->
 
-    <owl:Thing rdf:about="&analytics;GenericSLRModel">
-        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    <owl:Thing rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#GenericSLRModel">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
         <rdf:type>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&analytics;hasVariable"/>
+                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasResidualDistribution"/>
                 <owl:allValuesFrom>
                     <owl:Class>
                         <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;horsepower"/>
-                            <rdf:Description rdf:about="&analytics;mpg"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Normal_Distribution_Instance"/>
                         </owl:oneOf>
                     </owl:Class>
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <hasLinkFunction rdf:resource="&analytics;Identity_Function"/>
-        <hasPredictorVariable rdf:resource="&analytics;horsepower"/>
-        <hasResponseVariable rdf:resource="&analytics;mpg"/>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariable"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#horsepower"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#mpg"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdf:type>
+        <hasPredictorVariable rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#horsepower"/>
+        <hasResidualDistribution rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Normal_Distribution_Instance"/>
+        <hasResponseVariable rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#mpg"/>
+        <hasRepeatedObservations rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasRepeatedObservations>
     </owl:Thing>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Identity_Function -->
 
-    <owl:NamedIndividual rdf:about="&analytics;Identity_Function">
-        <rdf:type rdf:resource="&analytics;Identity_Function"/>
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Identity_Function">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Identity_Function"/>
     </owl:NamedIndividual>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Integer_Variable_Type -->
 
-    <owl:NamedIndividual rdf:about="&analytics;Integer_Variable_Type">
-        <rdf:type rdf:resource="&analytics;Integer"/>
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Integer_Variable_Type">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Integer"/>
     </owl:NamedIndividual>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Log_Function -->
 
-    <owl:NamedIndividual rdf:about="&analytics;Log_Function">
-        <rdf:type rdf:resource="&analytics;Log_Function"/>
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Log_Function">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Log_Function"/>
     </owl:NamedIndividual>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Logit_Function -->
 
-    <owl:NamedIndividual rdf:about="&analytics;Logit_Function">
-        <rdf:type rdf:resource="&analytics;Logit_Function"/>
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Logit_Function">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Logit_Function"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Non_Negative_Continuous_Variable_Type -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Non_Negative_Continuous_Variable_Type">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Non_Negative_Continuous"/>
     </owl:NamedIndividual>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Non_Negative_Integer_Variable_Type -->
 
-    <owl:NamedIndividual rdf:about="&analytics;Non_Negative_Integer_Variable_Type">
-        <rdf:type rdf:resource="&analytics;Non_Negative_Integer"/>
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Non_Negative_Integer_Variable_Type">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Non_Negative_Integer"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Non_Negative_Variable_Type -->
+    <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Normal_Distribution_Instance -->
 
-    <owl:NamedIndividual rdf:about="&analytics;Non_Negative_Variable_Type">
-        <rdf:type rdf:resource="&analytics;Non_Negative_Continuous"/>
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Normal_Distribution_Instance">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Normal_Distribution"/>
     </owl:NamedIndividual>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Ordinal_Variable_Type -->
 
-    <owl:NamedIndividual rdf:about="&analytics;Ordinal_Variable_Type">
-        <rdf:type rdf:resource="&analytics;Ordinal"/>
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Ordinal_Variable_Type">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Ordinal"/>
     </owl:NamedIndividual>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#acceleration -->
 
-    <owl:NamedIndividual rdf:about="&analytics;acceleration">
-        <rdf:type rdf:resource="&analytics;Variable"/>
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#acceleration">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Variable"/>
         <rdf:type>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&analytics;hasVariableType"/>
+                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
                 <owl:allValuesFrom>
                     <owl:Class>
                         <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;Continuous_Variable_Type"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Continuous_Variable_Type"/>
                         </owl:oneOf>
                     </owl:Class>
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <hasVariableType rdf:resource="&analytics;Continuous_Variable_Type"/>
+        <hasVariableType rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Continuous_Variable_Type"/>
     </owl:NamedIndividual>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#cylinders -->
 
-    <owl:NamedIndividual rdf:about="&analytics;cylinders">
-        <rdf:type rdf:resource="&analytics;Variable"/>
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#cylinders">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Variable"/>
         <rdf:type>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&analytics;hasVariableType"/>
+                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
                 <owl:allValuesFrom>
                     <owl:Class>
                         <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;Ordinal_Variable_Type"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Ordinal_Variable_Type"/>
                         </owl:oneOf>
                     </owl:Class>
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <hasVariableType rdf:resource="&analytics;Ordinal_Variable_Type"/>
+        <hasVariableType rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Ordinal_Variable_Type"/>
     </owl:NamedIndividual>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#displacement -->
 
-    <owl:NamedIndividual rdf:about="&analytics;displacement">
-        <rdf:type rdf:resource="&analytics;Variable"/>
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#displacement">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Variable"/>
         <rdf:type>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&analytics;hasVariableType"/>
+                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
                 <owl:allValuesFrom>
                     <owl:Class>
                         <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;Continuous_Variable_Type"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Continuous_Variable_Type"/>
                         </owl:oneOf>
                     </owl:Class>
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <hasVariableType rdf:resource="&analytics;Continuous_Variable_Type"/>
+        <hasVariableType rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Continuous_Variable_Type"/>
     </owl:NamedIndividual>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#horsepower -->
 
-    <owl:NamedIndividual rdf:about="&analytics;horsepower">
-        <rdf:type rdf:resource="&analytics;Variable"/>
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#horsepower">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Variable"/>
         <rdf:type>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&analytics;hasVariableType"/>
+                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
                 <owl:allValuesFrom>
                     <owl:Class>
                         <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;Non_Negative_Variable_Type"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Non_Negative_Continuous_Variable_Type"/>
                         </owl:oneOf>
                     </owl:Class>
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <hasVariableType rdf:resource="&analytics;Non_Negative_Variable_Type"/>
+        <hasVariableType rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Non_Negative_Continuous_Variable_Type"/>
     </owl:NamedIndividual>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#isDomestic -->
 
-    <owl:NamedIndividual rdf:about="&analytics;isDomestic">
-        <rdf:type rdf:resource="&analytics;Variable"/>
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#isDomestic">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Variable"/>
         <rdf:type>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&analytics;hasVariableType"/>
+                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
                 <owl:allValuesFrom>
                     <owl:Class>
                         <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;Binary_Variable_Type"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Binary_Variable_Type"/>
                         </owl:oneOf>
                     </owl:Class>
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <hasVariableType rdf:resource="&analytics;Binary_Variable_Type"/>
+        <hasVariableType rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Binary_Variable_Type"/>
     </owl:NamedIndividual>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#model_year -->
 
-    <owl:NamedIndividual rdf:about="&analytics;model_year">
-        <rdf:type rdf:resource="&analytics;Variable"/>
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#model_year">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Variable"/>
         <rdf:type>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&analytics;hasVariableType"/>
+                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
                 <owl:allValuesFrom>
                     <owl:Class>
                         <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;Integer_Variable_Type"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Integer_Variable_Type"/>
                         </owl:oneOf>
                     </owl:Class>
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <hasVariableType rdf:resource="&analytics;Integer_Variable_Type"/>
+        <hasVariableType rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Integer_Variable_Type"/>
     </owl:NamedIndividual>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#mpg -->
 
-    <owl:NamedIndividual rdf:about="&analytics;mpg">
-        <rdf:type rdf:resource="&analytics;Variable"/>
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#mpg">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Variable"/>
         <rdf:type>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&analytics;hasVariableType"/>
+                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasDistribution"/>
                 <owl:allValuesFrom>
                     <owl:Class>
                         <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;Non_Negative_Variable_Type"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Normal_Distribution_Instance"/>
                         </owl:oneOf>
                     </owl:Class>
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <hasVariableType rdf:resource="&analytics;Non_Negative_Variable_Type"/>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Non_Negative_Continuous_Variable_Type"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdf:type>
     </owl:NamedIndividual>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#origin -->
 
-    <owl:NamedIndividual rdf:about="&analytics;origin">
-        <rdf:type rdf:resource="&analytics;Variable"/>
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#origin">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Variable"/>
         <rdf:type>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&analytics;hasVariableType"/>
+                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
                 <owl:allValuesFrom>
                     <owl:Class>
                         <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;Categorical_Variable_Type"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Categorical_Variable_Type"/>
                         </owl:oneOf>
                     </owl:Class>
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <hasVariableType rdf:resource="&analytics;Categorical_Variable_Type"/>
+        <hasVariableType rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Categorical_Variable_Type"/>
     </owl:NamedIndividual>
     
 
 
     <!-- https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#weight -->
 
-    <owl:NamedIndividual rdf:about="&analytics;weight">
-        <rdf:type rdf:resource="&analytics;Variable"/>
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#weight">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Variable"/>
         <rdf:type>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&analytics;hasVariableType"/>
+                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#hasVariableType"/>
                 <owl:allValuesFrom>
                     <owl:Class>
                         <owl:oneOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="&analytics;Continuous_Variable_Type"/>
+                            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Continuous_Variable_Type"/>
                         </owl:oneOf>
                     </owl:Class>
                 </owl:allValuesFrom>
             </owl:Restriction>
         </rdf:type>
-        <hasVariableType rdf:resource="&analytics;Continuous_Variable_Type"/>
+        <hasVariableType rdf:resource="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Continuous_Variable_Type"/>
     </owl:NamedIndividual>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotations
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Identity_Function">
+        <rdfs:label xml:lang="en">Identity Function</rdfs:label>
+        <terms:description xml:lang="en">The identity function, given a number x, returns x (the identity).</terms:description>
+    </rdf:Description>
+    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Log_Function">
+        <terms:alternative xml:lang="en">Natural Log Function</terms:alternative>
+        <terms:description xml:lang="en">The natural logarithm function, given a number x, produces a result y such that x = exp(y).</terms:description>
+        <rdfs:label xml:lang="en">Log Function</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Logit_Function">
+        <terms:description xml:lang="en">The logit function is the inverse of the logistic transform.</terms:description>
+        <rdfs:label xml:lang="en">Logit Function</rdfs:label>
+    </rdf:Description>
     
 
 
@@ -1444,43 +2507,43 @@ iii) On each trial, the probability of success is p and the probability of failu
      -->
 
     <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
         <owl:members rdf:parseType="Collection">
-            <rdf:Description rdf:about="&analytics;Identity_Function"/>
-            <rdf:Description rdf:about="&analytics;Inverse_Function"/>
-            <rdf:Description rdf:about="&analytics;Log_Function"/>
-            <rdf:Description rdf:about="&analytics;Logit_Function"/>
-            <rdf:Description rdf:about="&analytics;Reciprocal_Function"/>
-            <rdf:Description rdf:about="&analytics;Square_Root_Function"/>
+            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Identity_Function"/>
+            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Inverse_Function"/>
+            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Log_Function"/>
+            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Logit_Function"/>
+            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Reciprocal_Function"/>
+            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Square_Root_Function"/>
         </owl:members>
     </rdf:Description>
     <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&analytics;acceleration"/>
-            <rdf:Description rdf:about="&analytics;cylinders"/>
-            <rdf:Description rdf:about="&analytics;displacement"/>
-            <rdf:Description rdf:about="&analytics;horsepower"/>
-            <rdf:Description rdf:about="&analytics;isDomestic"/>
-            <rdf:Description rdf:about="&analytics;model_year"/>
-            <rdf:Description rdf:about="&analytics;mpg"/>
-            <rdf:Description rdf:about="&analytics;origin"/>
-            <rdf:Description rdf:about="&analytics;weight"/>
+            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Binary_Variable_Type"/>
+            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Categorical_Variable_Type"/>
+            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Continuous_Variable_Type"/>
+            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Integer_Variable_Type"/>
+            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#Ordinal_Variable_Type"/>
         </owl:distinctMembers>
     </rdf:Description>
     <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&analytics;Binary_Variable_Type"/>
-            <rdf:Description rdf:about="&analytics;Categorical_Variable_Type"/>
-            <rdf:Description rdf:about="&analytics;Continuous_Variable_Type"/>
-            <rdf:Description rdf:about="&analytics;Integer_Variable_Type"/>
-            <rdf:Description rdf:about="&analytics;Ordinal_Variable_Type"/>
+            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#acceleration"/>
+            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#cylinders"/>
+            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#displacement"/>
+            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#horsepower"/>
+            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#isDomestic"/>
+            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#model_year"/>
+            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#mpg"/>
+            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#origin"/>
+            <rdf:Description rdf:about="https://raw.githubusercontent.com/scalation/analytics/master/analytics.owl#weight"/>
         </owl:distinctMembers>
     </rdf:Description>
 </rdf:RDF>
 
 
 
-<!-- Generated by the OWL API (version 3.5.0) http://owlapi.sourceforge.net -->
+<!-- Generated by the OWL API (version 4.2.6.20160910-2108) https://github.com/owlcs/owlapi -->
 
